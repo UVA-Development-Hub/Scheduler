@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/UVAMobileDev/Scheduler/issues"
   },
-  "homepage": "https://github.com/UVAMobileDev/Scheduler#readme"
+  "homepage": "https://github.com/UVAMobileDev/Scheduler#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "pug": "^2.0.3"
+  }
 }
