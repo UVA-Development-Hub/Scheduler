@@ -18,9 +18,7 @@ var server = http.createServer(app);
 
 // Pull the correct port from Heroku, or use the default (8000)
 let port = process.env.PORT;
-if (port == null || port == "") {
-    port = 8000;
-}
+if (port == null || port == "") port = 8000;
 
 // Start the server
 server.listen(port);
