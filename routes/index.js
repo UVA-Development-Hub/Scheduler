@@ -11,9 +11,24 @@
 
 var express = require('express');
 var router = express.Router();
+const fetch = require("node-fetch");
+
+var all_classes;
+const url = 'https://api.devhub.virginia.edu/v1/courses';
+fetch(url)
+	.then((resp) => resp.json())
+	.then(function(data) {
+    all_classes = data['class_schedules']['records'];
+	}).catch(function(error) {
+		console.log('Fetch failed!');
+	});
 
 router.use('/', function(req, res, next) {
-  res.render('index', { title: 'UVA Scheduler' });
+  res.render('index', {
+    title: 'UVA Scheduler',
+    uva_classes: all_classes
+  });
+
 });
 
 module.exports = router;

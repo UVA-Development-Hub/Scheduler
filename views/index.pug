@@ -8,5 +8,34 @@ block content
             p If you look in views/index.pug, you can see how this page was rendered dynamically using pug.js and pug templates.
         div.row
             p Familiarity with bootstrap is helpful, as you'll be able to more easily decipher how these templates are structured.
-            p Something new
-            
+        div.row
+        table(class="uva_classes_table")
+              tr
+                  th Subject
+                  th Catalog Number
+                  th Class Number
+                  th Class Title
+                  th Class Topic
+                  th Instructor
+                  th Enrollment Capacity
+                  th Meeting Days
+                  th Class Starting Time
+                  th Class Ending Time
+                  th Semester Number
+                  th Semester
+
+              each uva_class in uva_classes
+                  tr
+                      td=uva_class[0]
+                      td=uva_class[1]
+                      td=uva_class[2]
+                      td=uva_class[3]
+                      td=uva_class[4]
+                      td=uva_class[5]
+                      td=uva_class[6]
+                      td=uva_class[7]
+                      td=uva_class[8]
+                      td=uva_class[9]
+                      td=uva_class[10]
+                      td=uva_class[11]
+                      td=uva_class[12]

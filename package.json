@@ -19,6 +19,7 @@
   "homepage": "https://github.com/UVAMobileDev/Scheduler#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "node-fetch": "^2.6.0",
     "pug": "^2.0.3"
   }
 }
