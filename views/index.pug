@@ -1,6 +1,7 @@
 extends layout
 
 block content
+    script(src="/js/jQuery.js")
     div.container
         div.row
             h3 Welcome to the app's homepage!
@@ -9,6 +10,7 @@ block content
         div.row
             p Familiarity with bootstrap is helpful, as you'll be able to more easily decipher how these templates are structured.
         div.row
+        - var page = 0
         table(class="uva_classes_table")
               tr
                   th Subject
@@ -24,8 +26,8 @@ block content
                   th Semester Number
                   th Semester
 
-              each uva_class in uva_classes
-                  tr
+              each uva_class, index in uva_classes
+                  tr.paged(page=page)
                       td=uva_class[0]
                       td=uva_class[1]
                       td=uva_class[2]
@@ -39,3 +41,9 @@ block content
                       td=uva_class[10]
                       td=uva_class[11]
                       td=uva_class[12]
+
+                      if index % 20 == 19
+                        -page++
+        div.row
+              button.btn.btn-primary(type='submit', onClick="previousPage()") Previous
+              button.btn.btn-primary(type='submit', onClick="nextPage()") Next

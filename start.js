@@ -1,5 +1,7 @@
 // Configure the different routes
 var index = require('./routes/index'); // this line brings in routes/index.js
+var profile = require('./routes/profile');
+
 
 
 
@@ -8,7 +10,15 @@ var index = require('./routes/index'); // this line brings in routes/index.js
 var express = require('express');
 var app = express();
 app.set('view engine', 'pug'); // tell the app to use pug.js to render our templates
+app.use(express.static('public'));
+app.get('/login', function (req, res) {
+  res.render('login') // knows to render login.pug because we did app.set('pug') on line 12
+});
+app.use('/profile', profile);
 app.get('/', index);
+
+
+
 
 
 
