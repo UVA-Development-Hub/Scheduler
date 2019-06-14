@@ -27,7 +27,7 @@ block content
                   th Semester
 
               each uva_class, index in uva_classes
-                  tr.paged(page=page)
+                  tr.paged(page=page, style=("display:None"))
                       td=uva_class[0]
                       td=uva_class[1]
                       td=uva_class[2]
@@ -45,5 +45,15 @@ block content
                       if index % 20 == 19
                         -page++
         div.row
-              button.btn.btn-primary(type='submit', onClick="previousPage()") Previous
-              button.btn.btn-primary(type='submit', onClick="nextPage()") Next
+            button.btn.btn-primary(type='submit', onClick="previousPage()") Previous
+            div(id='button_box')
+            div(id='button_1')
+            div(id='button_2')
+            div(id='button_3')
+            div(id='button_4')
+            div(id='button_5')
+
+
+            button.btn.btn-primary(type='submit', onClick="nextPage()") Next
+        div.row
+            div(id="max_page_div", max_page = page)
