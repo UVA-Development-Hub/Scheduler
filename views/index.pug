@@ -1,10 +1,11 @@
 extends layout
 
-block content
+block customhead
     link(rel="stylesheet", href="/css/tablesorter.theme.blue.css")
     script(src='/js/tablesorter.js')
     script(src="/js/pagination.js")
-    
+
+block content
     div.container
         div.row
             h3 Welcome to the app's homepage!
