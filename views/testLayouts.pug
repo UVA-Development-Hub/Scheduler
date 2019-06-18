@@ -1,0 +1,31 @@
+doctype html
+html
+    head
+        link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css", integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T", crossorigin="anonymous")
+        script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js")
+    body
+        link(rel="stylesheet", href="/css/tablesorter.theme.blue.css")
+        script(src='/js/tablesorter.js')
+        script.
+            $(function() {
+                $("#myTable").tablesorter();
+            });
+        table(id="myTable" class='tablesorter-blue')
+            thead
+                tr
+                    th Test 1
+                    th Test 2
+                    th Test 3
+            tbody
+                tr
+                    td Bob
+                    td 1
+                    td A1
+                tr
+                    td Steve
+                    td 2
+                    td B2
+                tr
+                    td Billy
+                    td 3
+                    td C3

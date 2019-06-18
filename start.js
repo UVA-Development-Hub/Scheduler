@@ -16,7 +16,15 @@ app.get('/login', function (req, res) {
 });
 app.use('/profile', profile);
 app.get('/', index);
-
+app.get('/test', function (req, res) {
+  res.render('testLayouts')
+});
+app.get('/js/tablesorter.js', function(req, res) {
+    res.sendFile(__dirname + '/node_modules/tablesorter/dist/js/jquery.tablesorter.js');
+});
+app.get('/css/tablesorter.theme.blue.css', function(req, res) {
+    res.sendFile(__dirname + '/node_modules/tablesorter/dist/css/theme.blue.css');
+});
 
 
 
