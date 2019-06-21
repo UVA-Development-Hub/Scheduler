@@ -13,6 +13,7 @@ $(document).ready( function() {
 });
 
 function displayPage(pageNumber){
+  currentPage=pageNumber;
   $('.paged').each(function(){
       if(parseInt($(this).attr('page')) ==  pageNumber) { // attr('page') gets data from the class 'page'
           //console.log("page 0");
