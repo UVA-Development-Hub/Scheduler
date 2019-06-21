@@ -15,13 +15,13 @@ block content
             p Familiarity with bootstrap is helpful, as you'll be able to more easily decipher how these templates are structured.
         div.row
         - var page = 0
-        
+
         script.
             $(function() {
                 $("#main_table").tablesorter();
             });
-            
-            
+
+
         table(id="main_table" class="uva_classes_table tablesorter-blue")
             thead
               tr
@@ -38,7 +38,7 @@ block content
                   th Class Ending Time
                   th Semester Number
                   th Semester
-                  
+
             tbody
               each uva_class, index in uva_classes
                   tr.paged(page=page, style=("display:None"))
@@ -60,13 +60,18 @@ block content
                         -page++
         div.row
             button.btn.btn-primary(type='submit', onClick="previousPage()") Previous
-            div(id='button_box')
-            div(id='button_1')
-            div(id='button_2')
-            div(id='button_3')
-            div(id='button_4')
-            div(id='button_5')
 
+            div(id='button_box')
+            button.btn.btn-primary.pageselector()
+            button.btn.btn-primary.pageselector()
+            button.btn.btn-primary.pageselector()
+            button.btn.btn-primary.pageselector()
+            button.btn.btn-primary.pageselector()
+            button.btn.btn-primary.pageselector()
+            button.btn.btn-primary.pageselector()
+            button.btn.btn-primary.pageselector()
+            button.btn.btn-primary.pageselector()
+            button.btn.btn-primary.pageselector() 
 
             button.btn.btn-primary(type='submit', onClick="nextPage()") Next
         div.row
