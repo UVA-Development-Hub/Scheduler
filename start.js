@@ -11,14 +11,16 @@ var express = require('express');
 var app = express();
 app.set('view engine', 'pug'); // tell the app to use pug.js to render our templates
 app.use(express.static('public'));
+
+// Basic pages that live directly off the landing
 app.get('/login', function (req, res) {
   res.render('login') // knows to render login.pug because we did app.set('pug') on line 12
 });
-app.use('/profile', profile);
-app.get('/', index);
+
 app.get('/test', function (req, res) {
-  res.render('testLayouts')
+    res.render('testLayouts')
 });
+
 app.get('/js/tablesorter.js', function(req, res) {
     res.sendFile(__dirname + '/node_modules/tablesorter/dist/js/jquery.tablesorter.js');
 });
@@ -26,8 +28,9 @@ app.get('/css/tablesorter.theme.blue.css', function(req, res) {
     res.sendFile(__dirname + '/node_modules/tablesorter/dist/css/theme.blue.css');
 });
 
-
-
+// Pages which use middleware to render
+app.use('/profile', profile);
+app.get('/', index);
 
 
 // Create an http server with the preconfigured app
