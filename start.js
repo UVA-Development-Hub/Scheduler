@@ -1,24 +1,34 @@
 // Configure the different routes
 var index = require('./routes/index'); // this line brings in routes/index.js
 var profile = require('./routes/profile');
-
+var auth = require('./routes/auth');
 
 
 
 // Create the app, which is used to route user requests around the
 // different templates/pages.
 var express = require('express');
+var session = require('express-session');
 var app = express();
 app.set('view engine', 'pug'); // tell the app to use pug.js to render our templates
 app.use(express.static('public'));
+const sessionConfig = {
+    resave: false,
+    saveUninitialized: false,
+    secret: 'sssHHH',
+    signed: true,
+    //store: new redisStore({ host: 'localhost', port: 6379, client: client,ttl :  260}),
+};
+app.use(session(sessionConfig));
 
 // Basic pages that live directly off the landing
 app.get('/login', function (req, res) {
-  res.render('login') // knows to render login.pug because we did app.set('pug') on line 12
+    req.query.return = '/profile';
+    res.render('login'); // knows to render login.pug because we did app.set('pug') on line 12
 });
 
 app.get('/test', function (req, res) {
-    res.render('testLayouts')
+    res.render('testLayouts');
 });
 
 app.get('/js/tablesorter.js', function(req, res) {
@@ -29,6 +39,7 @@ app.get('/css/tablesorter.theme.blue.css', function(req, res) {
 });
 
 // Pages which use middleware to render
+app.use('/auth', auth);
 app.use('/profile', profile);
 app.get('/', index);
 

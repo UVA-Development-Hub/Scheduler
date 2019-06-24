@@ -1,30 +1,19 @@
 var express = require('express');
 var config = require('./config');
-
-const sessionConfig = {
-  resave: false,
-  saveUninitialized: false,
-  secret: config.get('SECRET'),
-  signed: true,
-  store: new DatastoreStore({
-    dataset: new Datastore({kind: 'express-sessions'}),
-  }),
-};
-
-
+//var RedisStore = require('connect-redis')(express)
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 function extractProfile(profile) {
-  let imageUrl = '';
-  if (profile.photos && profile.photos.length) {
-    imageUrl = profile.photos[0].value;
-  }
-  return {
-    id: profile.id,
-    displayName: profile.displayName,
-    image: imageUrl,
-  };
+    let imageUrl = '';
+    if (profile.photos && profile.photos.length) {
+        imageUrl = profile.photos[0].value;
+    }
+    return {
+        id: profile.id,
+        displayName: profile.displayName,
+        image: imageUrl,
+    };
 }
 
 // OAuth 2-based strategies require a `verify` function which receives the
