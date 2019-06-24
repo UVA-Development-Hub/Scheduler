@@ -31,27 +31,36 @@ function displayPage(pageNumber){
 if (currentPage < 5){
   for(var i=0; i<5;i++ ){
     $(arr[i]).attr("onclick", "displayPage("+ parseInt(i)+")");
-    $(arr[i]).html(parseInt(i));
+    $(arr[i]).html(parseInt(i + 1));
     console.log("test statment");
   }
 
   for(var i=5; i<10;i++ ){
     $(arr[i]).attr("onclick", "displayPage("+ parseInt(i)+")");
-    $(arr[i]).html(parseInt(i));
+    $(arr[i]).html(parseInt(i + 1));
   }
 }
 else {
     for(var i=0; i<5;i++ ){
-      $(arr[i]).attr("onclick", "displayPage("+ parseInt(Math.abs(pageNumber-5+i))+")");
-      $(arr[i]).html(parseInt(pageNumber-5+i));
+      $(arr[i]).attr("onclick", "displayPage("+ parseInt(pageNumber-5+i)+")");
+      $(arr[i]).html(parseInt((pageNumber-5+i) + 1 ));
       console.log("test statment");
     }
 
     for(var i=5; i<10;i++ ){
-      $(arr[i]).attr("onclick", "displayPage("+ parseInt(Math.abs(pageNumber+(i-5)))+")");
-      $(arr[i]).html(parseInt(pageNumber+(i-5)));
+      $(arr[i]).attr("onclick", "displayPage("+ parseInt(pageNumber+i-5)+")");
+      $(arr[i]).html(parseInt((pageNumber+i-5)+ 1));
     }
   }
+
+  $(arr).each(function(){
+    if(parseInt($(this).html())-1 == currentPage){
+      $(this).addClass('btn-success');
+    } else {
+      $(this).removeClass('btn-success');
+    }
+  });
+
 };
 
 
