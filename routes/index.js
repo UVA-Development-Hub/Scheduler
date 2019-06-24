@@ -13,23 +13,21 @@ var express = require('express');
 var router = express.Router();
 const fetch = require("node-fetch");
 
-
-
-	router.use('/', function(req, res, next) {
-	    var all_classes;
-	    const url = 'https://api.devhub.virginia.edu/v1/courses';
-	    fetch(url)
-	    	.then((resp) => resp.json())
-	    	.then(function(data) {
-	            all_classes = data['class_schedules']['records'];
-	            res.render('index', {
-	                uva_classes: all_classes
-	            });
-							}).catch(function(error) {
-								console.log('Fetch failed!');
-	    	});
-
-	});
+router.use('/', function(req, res, next) {
+    var all_classes;
+    const url = 'https://api.devhub.virginia.edu/v1/courses';
+    fetch(url)
+    	.then((resp) => resp.json())
+    	.then(function(data) {
+            all_classes = data['class_schedules']['records'];
+            res.render('index', {
+                uva_classes: all_classes
+            });
+		}).catch(function(error) {
+			console.log('Fetch failed!');
+			res.send('Could not retrieve API data');
+    	});
+});
 
 
 
