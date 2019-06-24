@@ -32,7 +32,7 @@ if (currentPage < 5){
   for(var i=0; i<5;i++ ){
     $(arr[i]).attr("onclick", "displayPage("+ parseInt(i)+")");
     $(arr[i]).html(parseInt(i + 1));
-    console.log("test statment"); 
+    console.log("test statment");
   }
 
   for(var i=5; i<10;i++ ){
@@ -44,7 +44,7 @@ else {
     for(var i=0; i<5;i++ ){
       $(arr[i]).attr("onclick", "displayPage("+ parseInt(pageNumber-5+i)+")");
       $(arr[i]).html(parseInt((pageNumber-5+i) + 1 ));
-      console.log("test statment");
+      console.log("test statment"); 
     }
 
     for(var i=5; i<10;i++ ){
