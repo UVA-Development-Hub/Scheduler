@@ -10,5 +10,30 @@ Any styling that you'd like applied to the entire webapp can be placed into this
 
 .hover-highlight:hover {
     box-shadow: 0 0 10px white;
-    transform: scale(1.2, 1.2);
+    transform: scale(1.05, 1.05);
+}
+
+.flex-item {
+    margin: 0;
+    color: inherit;
+}
+
+.logo-btn {
+    border: 1.75px solid rgb(66, 133 ,244); /* Default is Google Blue. Override if necessary */
+}
+
+.logo-btn .logo-btn-label {
+    display: -webkit-flex;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 9px;
+    background-color: rgb(66, 133, 244); /* Default is Google Blue. Override if necessary */
+    color: white; /* Default text color is white. Override if necessary */
+}
+
+.logo-btn img {
+    max-width: 40px;
+    background-color: white;
+    padding 2px;
 }

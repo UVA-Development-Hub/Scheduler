@@ -6,16 +6,14 @@ block customhead
     script(src="/js/pagination.js")
 
 block content
-    div.container
-        div.row
+    .container
+        .row
             h3 Welcome to the app's homepage!
-        div.row
+        .row
             p If you look in views/index.pug, you can see how this page was rendered dynamically using pug.js and pug templates.
-        div.row
+        .row
             p Familiarity with bootstrap is helpful, as you'll be able to more easily decipher how these templates are structured.
-        div.row
-        - var page = 0
-
+        
         script.
             $(function() {
                 $("#main_table").tablesorter();
@@ -24,57 +22,51 @@ block content
 
         table(id="main_table" class="uva_classes_table tablesorter-blue")
             thead
-              tr
-                  th Subject
-                  th Catalog Number
-                  th Class Section
-                  th Class Number
-                  th Class Title
-                  th Class Topic
-                  th Instructor
-                  th Enrollment Capacity
-                  th Meeting Days
-                  th Class Starting Time
-                  th Class Ending Time
-                  th Semester Number
-                  th Semester
-
+                tr
+                    th Subject
+                    th Catalog Number
+                    th Class Section
+                    th Class Number
+                    th Class Title
+                    th Class Topic
+                    th Instructor
+                    th Enrollment Capacity
+                    th Meeting Days
+                    th Class Starting Time
+                    th Class Ending Time
+                    th Semester Number
+                    th Semester
             tbody
-              each uva_class, index in uva_classes
-                  tr.paged(page=page, style=("display:None"))
-                      td=uva_class[0]
-                      td=uva_class[1]
-                      td=uva_class[2]
-                      td=uva_class[3]
-                      td=uva_class[4]
-                      td=uva_class[5]
-                      td=uva_class[6]
-                      td=uva_class[7]
-                      td=uva_class[8]
-                      td=uva_class[9]
-                      td=uva_class[10]
-                      td=uva_class[11]
-                      td=uva_class[12]
-
-                      if index % 20 == 19
+                - var page = 0
+                each uva_class, index in uva_classes
+                    tr.paged(page=page, style=("display:None"))
+                        td=uva_class[0]
+                        td=uva_class[1]
+                        td=uva_class[2]
+                        td=uva_class[3]
+                        td=uva_class[4]
+                        td=uva_class[5]
+                        td=uva_class[6]
+                        td=uva_class[7]
+                        td=uva_class[8]
+                        td=uva_class[9]
+                        td=uva_class[10]
+                        td=uva_class[11]
+                        td=uva_class[12]
+                    if index % 20 == 19
                         -page++
-        div.row
+        .row
+            #max_page_div(max_page = page)
             button.btn.btn-primary(type='submit', onClick="previousPage()") Previous
-
-            div(id='button_box')
-            button.btn.btn-primary.pageselector()
-            button.btn.btn-primary.pageselector()
-            button.btn.btn-primary.pageselector()
-            button.btn.btn-primary.pageselector()
-            button.btn.btn-primary.pageselector()
-            button.btn.btn-primary.pageselector()
-            button.btn.btn-primary.pageselector()
-            button.btn.btn-primary.pageselector()
-            button.btn.btn-primary.pageselector()
-            button.btn.btn-primary.pageselector()
-
-
-
+            // 10 Buttons to select pages. These 10 never change.
+            button.btn.btn-primary.pageselector
+            button.btn.btn-primary.pageselector
+            button.btn.btn-primary.pageselector
+            button.btn.btn-primary.pageselector
+            button.btn.btn-primary.pageselector
+            button.btn.btn-primary.pageselector
+            button.btn.btn-primary.pageselector
+            button.btn.btn-primary.pageselector
+            button.btn.btn-primary.pageselector
+            button.btn.btn-primary.pageselector
             button.btn.btn-primary(type='submit', onClick="nextPage()") Next
-        div.row
-            div(id="max_page_div", max_page = page)

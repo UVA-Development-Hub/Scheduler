@@ -1,8 +1,15 @@
 extends layout
 
 block content
-    div.container
-        div.row
-            h1 Login Page!
-        div.row
-            a.btn.btn-primary(type='button', href='/auth/login') Login 
+    .container
+        .row
+            // This code to make a small header is awful. Please don't use this elsewhere.
+            h1.display-4
+                small
+                    small Sign into the UVA Scheduler using one of these providers
+        .row
+            a.btn(href='/auth/login')
+                .logo-btn.hover-highlight.form-inline
+                    img(src="https://i.gyazo.com/21f68c897af889dc6120ec663cbb704d.png")
+                    .logo-btn-label
+                        label.flex-item Sign in with Google

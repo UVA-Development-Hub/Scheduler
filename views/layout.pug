@@ -7,6 +7,7 @@ html
         script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js")
         script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js")
         script(src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js")
+        title=title
         block customhead
     body
         // Navigation bar
@@ -29,8 +30,8 @@ html
                     // User is logged in
                     a(href="/profile")
                         img.rounded-circle.hover-highlight(src=imageUrl, style="max-width:35px")
-                else
-                    // User is not logged in, show a login button
+                else if(title != 'Login')
+                    // User is not logged in and we're not on the login page, show a login button
                     a.btn.btn-primary(role="button", href="/login") Login
                 
         // Page content
