@@ -8,7 +8,7 @@ $(document).ready( function() {
   //};
   //console.log($("#button_box"));
   arr= $(".pageselector");
-  displayPage(5);
+  displayPage(0);
 
 });
 
@@ -44,7 +44,7 @@ else {
     for(var i=0; i<5;i++ ){
       $(arr[i]).attr("onclick", "displayPage("+ parseInt(pageNumber-5+i)+")");
       $(arr[i]).html(parseInt((pageNumber-5+i) + 1 ));
-      console.log("test statment"); 
+      console.log("test statment");
     }
 
     for(var i=5; i<10;i++ ){
