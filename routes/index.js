@@ -13,6 +13,27 @@ var express = require('express');
 var router = express.Router();
 const fetch = require("node-fetch");
 
+router.get('/login', function (req, res) {
+    req.query.return = '/profile';
+    res.render('login', {
+        title: 'Login',
+        thevar: 'seventeen'
+    });
+});
+
+router.get('/test', function (req, res) {
+    res.render('testLayouts');
+});
+
+// Retrieve node module files
+router.get('/js/tablesorter.js', function(req, res) {
+    res.sendFile(__dirname + '/node_modules/tablesorter/dist/js/jquery.tablesorter.js');
+});
+router.get('/css/tablesorter.theme.blue.css', function(req, res) {
+    res.sendFile(__dirname + '/node_modules/tablesorter/dist/css/theme.blue.css');
+});
+
+// This is the base landing page. It's always the LAST definition
 router.use('/', function(req, res, next) {
     var all_classes;
     const url = 'https://api.devhub.virginia.edu/v1/courses';

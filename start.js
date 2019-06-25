@@ -26,29 +26,10 @@ const sessionConfig = {
 app.use(session(sessionConfig));
 app.use(passport.initialize());
 
-// Basic pages that live directly off the landing
-app.get('/login', function (req, res) {
-    req.query.return = '/profile';
-    res.render('login'); // knows to render login.pug because we did app.set('pug') on line 15
-});
-
-app.get('/test', function (req, res) {
-    res.render('testLayouts');
-});
-
-
-// Retrieve node module files
-app.get('/js/tablesorter.js', function(req, res) {
-    res.sendFile(__dirname + '/node_modules/tablesorter/dist/js/jquery.tablesorter.js');
-});
-app.get('/css/tablesorter.theme.blue.css', function(req, res) {
-    res.sendFile(__dirname + '/node_modules/tablesorter/dist/css/theme.blue.css');
-});
-
 // Pages which use middleware to render
 app.use('/auth', auth);
 app.use('/profile', profile);
-app.get('/', index);
+app.use('/', index);
 
 
 // Create an http server with the preconfigured app
