@@ -18,7 +18,6 @@ router.get('/login', function (req, res) {
     req.query.return = '/profile';
     res.render('login', {
         title: 'Login',
-        thevar: 'seventeen'
     });
 });
 

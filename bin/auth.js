@@ -42,6 +42,6 @@ passport.use(
 passport.serializeUser((user, callback) => {
   callback(null, user);
 });
-passport.deserializeUser((obj, cb) => {
+passport.deserializeUser((obj, callback) => {
   callback(null, obj);
 });
