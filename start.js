@@ -19,6 +19,8 @@ const sessionConfig = {
     saveUninitialized: false,
     secret: 'sssHHH',
     signed: true,
+    // Todo: store session with Redis. Until this is implemented, auth'ed sessions
+    // will have the ability to spontaneously logout.
     //store: new redisStore({ host: 'localhost', port: 6379, client: client,ttl :  260}),
 };
 app.use(session(sessionConfig));
@@ -27,13 +29,15 @@ app.use(passport.initialize());
 // Basic pages that live directly off the landing
 app.get('/login', function (req, res) {
     req.query.return = '/profile';
-    res.render('login'); // knows to render login.pug because we did app.set('pug') on line 12
+    res.render('login'); // knows to render login.pug because we did app.set('pug') on line 15
 });
 
 app.get('/test', function (req, res) {
     res.render('testLayouts');
 });
 
+
+// Retrieve node module files
 app.get('/js/tablesorter.js', function(req, res) {
     res.sendFile(__dirname + '/node_modules/tablesorter/dist/js/jquery.tablesorter.js');
 });
