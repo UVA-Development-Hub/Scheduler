@@ -11,7 +11,8 @@ function extractProfile(profile) {
     }
     return {
         id: profile.id,
-        displayName: profile.displayName,
+        firstName: profile.name.givenName,
+        lastName: profile.name.familyName,
         image: imageUrl,
     };
 }

@@ -14,5 +14,17 @@ router.get('/login', (req, res, next) => {
     passport.authenticate('google', {scope: ['email', 'profile']})
 );
 
+router.get('/google/callback',
+    // Finish OAuth2 flow using Passport.js
+    passport.authenticate('google'),
+
+    (req, res) => {
+        // Redirects to the last accessed url or to the profile page
+        const redirect = req.session.oauth2return || '/profile';
+        delete req.session.oauth2return;
+        req.session.user = req.user;
+        res.redirect(redirect);
+    }
+);
 
 module.exports = router;

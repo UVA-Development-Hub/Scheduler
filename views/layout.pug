@@ -1,7 +1,37 @@
 html
     head
+        meta(charset="utf-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1")
         link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css", integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T", crossorigin="anonymous")
+        link(rel="stylesheet", href="/css/site.wide.style.css", type="text/css")
         script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js")
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js")
+        script(src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js")
         block customhead
     body
+        // Navigation bar
+        nav.navbar.navbar-expand-sm.bg-dark.navbar-dark
+            a.navbar-brand
+                a(href="https://devhub.virginia.edu", title="Powered by UVA DevHub")
+                    img(style="max-width:40px", src="https://i.gyazo.com/ecac4499a053f97231252f40e0d91ab4.png")
+            ul.navbar-nav
+                li.nav-item
+                    a.nav-link Link 1
+                li.nav-item
+                    a.nav-link Link 2
+                li.nav-item.dropdown
+                    a.nav-link.dropdown-toggle(href="#", data-toggle="dropdown") Dropdown Link
+                    .dropdown-menu
+                        a.dropdown-item Link 4
+                        a.dropdown-item Link 3
+            div(style="position:absolute; right:20px")
+                if(imageUrl)
+                    // User is logged in
+                    a(href="/profile")
+                        img.rounded-circle.hover-highlight(src=imageUrl, style="max-width:35px")
+                else
+                    // User is not logged in, show a login button
+                    a.btn.btn-primary(role="button", href="/login") Login
+                
+        // Page content
         block content

@@ -10,6 +10,8 @@ var auth = require('./routes/auth');
 var express = require('express');
 var session = require('express-session');
 var app = express();
+var passport = require('passport');
+
 app.set('view engine', 'pug'); // tell the app to use pug.js to render our templates
 app.use(express.static('public'));
 const sessionConfig = {
@@ -20,6 +22,7 @@ const sessionConfig = {
     //store: new redisStore({ host: 'localhost', port: 6379, client: client,ttl :  260}),
 };
 app.use(session(sessionConfig));
+app.use(passport.initialize());
 
 // Basic pages that live directly off the landing
 app.get('/login', function (req, res) {
