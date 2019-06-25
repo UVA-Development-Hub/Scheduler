@@ -9,8 +9,9 @@
 // statement. This can be somewhat confusing, but we'll go over it until we're
 // all on the same page.
 
-var express = require('express');
-var router = express.Router();
+var express = require('express'),
+    router = express.Router(),
+    appdir = require('path').dirname(require.main.filename);
 const fetch = require("node-fetch");
 
 router.get('/login', function (req, res) {
@@ -22,15 +23,17 @@ router.get('/login', function (req, res) {
 });
 
 router.get('/test', function (req, res) {
-    res.render('testLayouts');
+    res.render('testLayouts', {
+        title: 'Test Page'
+    });
 });
 
 // Retrieve node module files
 router.get('/js/tablesorter.js', function(req, res) {
-    res.sendFile(__dirname + '/node_modules/tablesorter/dist/js/jquery.tablesorter.js');
+    res.sendFile(appdir + '/node_modules/tablesorter/dist/js/jquery.tablesorter.js');
 });
 router.get('/css/tablesorter.theme.blue.css', function(req, res) {
-    res.sendFile(__dirname + '/node_modules/tablesorter/dist/css/theme.blue.css');
+    res.sendFile(appdir + '/node_modules/tablesorter/dist/css/theme.blue.css');
 });
 
 // This is the base landing page. It's always the LAST definition

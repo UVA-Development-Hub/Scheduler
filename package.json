@@ -24,6 +24,7 @@
     "node-fetch": "^2.6.0",
     "passport": "^0.4.0",
     "passport-google-oauth20": "^2.0.0",
+    "path": "^0.12.7",
     "pug": "^2.0.3",
     "redis": "^2.8.0",
     "tablesorter": "^2.31.1"
