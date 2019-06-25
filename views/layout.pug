@@ -13,7 +13,7 @@ html
         // Navigation bar
         nav.navbar.navbar-expand-sm.bg-dark.navbar-dark
             a.navbar-brand
-                a(href="https://devhub.virginia.edu", title="Powered by UVA DevHub")
+                a(href="https://devhub.virginia.edu", title="Powered by UVA DevHub", target="_blank")
                     img(style="max-width:40px", src="https://i.gyazo.com/ecac4499a053f97231252f40e0d91ab4.png")
             ul.navbar-nav
                 li.nav-item
@@ -33,6 +33,6 @@ html
                 else if(title != 'Login')
                     // User is not logged in and we're not on the login page, show a login button
                     a.btn.btn-primary(role="button", href="/login") Login
-                
+
         // Page content
         block content
