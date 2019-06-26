@@ -15,6 +15,8 @@ if(process.env.GOOGLE_OAUTH2_CLIENT) {
     var credentials = require('../../credentials.js');
     config.google_oauth_client = credentials.google_client;
     config.google_oauth_secret = credentials.google_secret;
+    config.mongo_user = credentials.mongo_user;
+    config.mongo_pass = credentials.mongo_pass;
 }
 
 module.exports = config;
