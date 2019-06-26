@@ -97,16 +97,17 @@ async function getOrCreateUser(profile, callback) {
             getOneUser(profile.id, found_user => {
                 if(found_user.length > 0) {
                     // User retrieved, execute callback with the found user
+                    client.close();
                     callback(found_user);
                 } else {
                     // User not found. Create a new one
                     createUser(profile, created_user => {
+                        client.close();
                         callback(created_user);
                     })
                 }
             });
         }
-        client.close();
     });
 }
 
