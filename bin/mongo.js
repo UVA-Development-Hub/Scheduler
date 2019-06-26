@@ -118,4 +118,5 @@ module.exports = {
     getOneUser,
     createUser,
     searchTerm
+    getTerms
 }
