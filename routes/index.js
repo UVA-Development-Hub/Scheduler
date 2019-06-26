@@ -35,6 +35,13 @@ router.get('/css/tablesorter.theme.blue.css', function(req, res) {
     res.sendFile(appdir + '/node_modules/tablesorter/dist/css/theme.blue.css');
 });
 
+//search page
+router.get('/search', function(req, res){
+    res.render('search', {
+        title : 'Search Page'
+    });
+});
+
 // This is the base landing page. It's always the LAST definition
 router.use('/', function(req, res, next) {
     var all_classes;

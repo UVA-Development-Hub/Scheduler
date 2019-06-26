@@ -1,0 +1,19 @@
+extends layout
+block content
+    div.container
+        div.row
+            p Course Search
+        div.row 
+            form(method='POST' action='/search')
+                div.form-group
+                    label(for='subject') Subject:
+                    input#subject.form-control(type='text', placeholder='eg.ANTH' subject='subject')
+                div.form-group
+                    label(for='classNumber') Class Number:
+                    input#classNumber.form-control(type='text', placeholder='eg.1010' subject='classNumber')
+                div.form-group
+                    label(for='scassTitle') Class Title:
+                    input#classTitle.form-control(type='text', placeholder='' subject='classTitle')                                
+                div.form-group
+                    label(for='instructor') Instructor:
+                    input#instructor.form-control(type='text', placeholder='eg.Bloomfield' subject='instructor')
