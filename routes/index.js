@@ -11,7 +11,8 @@
 
 var express = require('express'),
     router = express.Router(),
-    appdir = require('path').dirname(require.main.filename);
+    appdir = require('path').dirname(require.main.filename),
+    mongo=require("../bin/mongo.js");
 const fetch = require("node-fetch");
 
 router.get('/login', function (req, res) {
@@ -40,7 +41,16 @@ router.get('/search', function(req, res){
     res.render('search', {
         title : 'Search Page'
     });
-}); 
+});
+
+router.post('/search', function(req, res){
+    console.log(req.body.subject);
+
+    res.render('search', {
+        title : 'Search Page'
+    });
+
+});
 
 // This is the base landing page. It's always the LAST definition
 router.use('/', function(req, res, next) {
