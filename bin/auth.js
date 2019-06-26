@@ -1,14 +1,18 @@
-var express = require('express');
-var config = require('./config');
-//var RedisStore = require('connect-redis')(express)
-const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
+var express = require('express'),
+    config = require('./config'),
+    mongo = require('./mongo.js');
+//  RedisStore = require('connect-redis')(express);
+const passport = require('passport'),
+    GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 function extractProfile(profile) {
     let imageUrl = '';
-    if (profile.photos && profile.photos.length) {
-        imageUrl = profile.photos[0].value;
-    }
+    if (profile.photos && profile.photos.length) imageUrl = profile.photos[0].value;
+
+    mongo.getOrCreateUser(profile.id, data => {
+        console.log(data);
+    });
+
     return {
         id: profile.id,
         firstName: profile.name.givenName,
