@@ -12,54 +12,68 @@ block content
         div.row
             p Graduation Year: (todo)
         div.row
-            p Major: (todo)
+            p(id='major1') Major: (todo)
         div.row
-            <div class="dropdown">
-            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                Major Major 1
-            </button>
-            <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">Link 1</a>
-            <a class="dropdown-item" href="#">Link 2</a>
-            <a class="dropdown-item" href="#">Link 3</a>
-            </div>
-            </div> 
+            button.btn.btn-default(type='button', data-toggle='dropdown', class="btn btn-outline-secondary")
+                span.glyphicon.glyphicon-th-list
+                    |  Major 1 
+                    span.caret
+                ul.dropdown-menu.dropdown-toggle(data-toggle="dropdown")
+                    li
+                        a(href="#major1") ...
+                    li 
+                        a(href="#major1") ...
         div.row
             p Major 2: (todo)
         div.row
-            <div class="dropdown">
-            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                Major Major 2
-            </button>
-            <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">Link 1</a>
-            <a class="dropdown-item" href="#">Link 2</a>
-            <a class="dropdown-item" href="#">Link 3</a>
-            </div>
-            </div> 
-        div.row 
+            button.btn.btn-default(type='button', data-toggle='dropdown', class="btn btn-outline-secondary")
+                span.glyphicon.glyphicon-th-list
+                    |  Major 2 
+                    span.caret
+                ul.dropdown-menu.dropdown-toggle(data-toggle="dropdown")
+                    li
+                        a(href="#") ...
+                    li 
+                        a(href="#") ...
+        div.row
             p Minor: (todo)
         div.row
-            <div class="dropdown">
-            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                Minor Minor
-            </button>
-            <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">Link 1</a>
-            <a class="dropdown-item" href="#">Link 2</a>
-            <a class="dropdown-item" href="#">Link 3</a>
-            </div>
-            </div> 
-        div.row 
+            button.btn.btn-default(type='button', data-toggle='dropdown', class="btn btn-outline-secondary")
+                span.glyphicon.glyphicon-th-list
+                    |  Minor 
+                    span.caret
+                ul.dropdown-menu.dropdown-toggle(data-toggle="dropdown")
+                    li
+                        a(href="#") ...
+                    li 
+                        a(href="#") ...
+        div.row
+            p School: (todo)
+        div.row
+            button.btn.btn-default(type='button', data-toggle='dropdown', class="btn btn-outline-secondary")
+                span.glyphicon.glyphicon-th-list
+                    |  Curriculum 
+                    span.caret
+                ul.dropdown-menu.dropdown-toggle(data-toggle="dropdown")
+                    li
+                        a(href="#") College of Arts and Sciences
+                    li
+                        a(href="#") Engineering and Applied Sciences
+                    li 
+                        a(href='#') School of Architecture
+        div.row
             p Curriculum: (todo)
         div.row
-            <div class="dropdown">
-            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                 Curriculum Curriculum
-            </button>
-            <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">New College Curriculum</a>
-            <a class="dropdown-item" href="#">Forums Curriculum</a>
-            <a class="dropdown-item" href="#">Traditional Curriculum</a>
-            </div>
-            </div> 
+            button.btn.btn-default(type='button', data-toggle='dropdown', class="btn btn-outline-secondary")
+                span.glyphicon.glyphicon-th-list
+                    |  Curriculum 
+                    span.caret
+                ul.dropdown-menu.dropdown-toggle(data-toggle="dropdown")
+                    li
+                        a(href="#") New College Curriculum
+                    li 
+                        a(href="#") Forums Curriculum
+                    li 
+                        a(href='#') Traditional Curriculum
+                                        
+                        
