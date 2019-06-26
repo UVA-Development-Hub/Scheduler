@@ -11,6 +11,9 @@ var express = require('express');
 var session = require('express-session');
 var app = express();
 var passport = require('passport');
+var bodyParser=require("body-parser");
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:false}));
 
 app.set('view engine', 'pug'); // tell the app to use pug.js to render our templates
 app.use(express.static('public'));

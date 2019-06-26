@@ -5,15 +5,47 @@ block content
             p Course Search
         div.row 
             form(method='POST' action='/search')
-                div.form-group
+                input#term(type="hidden",value=1192, name="term")
+                div.form-group.form-inline
                     label(for='subject') Subject:
-                    input#subject.form-control(type='text', placeholder='eg.ANTH' subject='subject')
-                div.form-group
+                    input#subject.form-control(type='text', placeholder='eg.ANTH' name='subject')
+                div.form-group.form-inline
                     label(for='classNumber') Class Number:
-                    input#classNumber.form-control(type='text', placeholder='eg.1010' subject='classNumber')
-                div.form-group
-                    label(for='scassTitle') Class Title:
-                    input#classTitle.form-control(type='text', placeholder='' subject='classTitle')                                
-                div.form-group
+                    input#classNumber.form-control(type='text', placeholder='eg.1010' name='classNumber')
+                div.form-group.form-inline
+                    label(for='classTitle') Class Title:
+                    input#classTitle.form-control(type='text', placeholder='' name='classTitle')                                
+                div.form-group.form-inline
                     label(for='instructor') Instructor:
-                    input#instructor.form-control(type='text', placeholder='eg.Bloomfield' subject='instructor')
+                    input#instructor.form-control(type='text', placeholder='eg.Bloomfield' name='instructor')
+                //div.dropdown
+                    button.btn.btn-primary.dropdown-toggle(type="button",data-toggle="dropdown") Meeting Days
+                        div.dropdown-menu
+                            .dropdown-item
+                                input(type="checkbox", name="Monday", value="Monday")
+                            .dropdown-item(href="#") Tuesday
+                            .dropdown-item(href="#") Wednesday
+                            .dropdown-item(href="#") Thursday
+                            .dropdown-item(href="#") Friday
+                .form-group
+                    button.btn.btn-primary(onclick="$('#days').toggle('fast');return false;") Select days
+                    div#days(style="display:none")
+                        input#monday(type="checkbox", value="Monday")
+                        label(for='monday') Monday
+                        br
+                        input#tuesday(type="checkbox", value="Tuesday")
+                        label(for='tuesday') Tuesday
+                        br
+                        input#wednesday(type="checkbox", value="Wednesday")
+                        label(for='wednesday') Wednesday
+                        br
+                        input#thursday(type="checkbox", value="Thursday")
+                        label(for='thursday') Thursday
+                        br
+                        input#friday(type="checkbox", value="Friday")
+                        label(for='friday') Friday
+                        br
+                        input#saturday(type="checkbox", value="Saturday")
+                        label(for='saturday') Saturday
+                button.btn.btn-primary(type="submit") Search
+                     
