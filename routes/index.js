@@ -40,7 +40,7 @@ router.get('/search', function(req, res){
     res.render('search', {
         title : 'Search Page'
     });
-}); 
+});
 
 // This is the base landing page. It's always the LAST definition
 router.use('/', function(req, res, next) {
