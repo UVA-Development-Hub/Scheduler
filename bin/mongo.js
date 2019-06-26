@@ -43,7 +43,7 @@ function getOneUser(id, callback) {
         if(err) raiseMongoError(err, callback);
         else {
             var db = client.db(databases.userdb);
-            db.collection(databases.usercoll).find({'auth_id': id}).toArray(callback);
+            db.collection(databases.usercoll).find({'_id': id}).toArray(callback);
         }
         client.close();
     });
@@ -74,10 +74,29 @@ function createUser(profile, callback) {
                 },
             };
             db.collection(databases.usercoll).insertOne(user);
+            callback(user);
         }
     });
 }
 
+// Gets or creates a user
+function getOrCreateUser(id, profile, callback) {
+    getOneUser(id, found_user => {
+        if(found_user.length > 0) {
+            // User retrieved, execute callback with the found user
+            console.log('Found user');
+            console.log(found_user);
+            callback(found_user);
+        } else {
+            // User not found. Create a new one
+            createUser(profile, created_user => {
+                console.log('Created User');
+                console.log(created_user);
+                callback(created_user);
+            })
+        }
+    });
+}
 
 ////////////////////////////////////////////////
 ///////////// Course API Functions /////////////
@@ -115,7 +134,6 @@ function getTerms(callback) {
 ////////////////////////////////////////////////
 module.exports = {
     getUsers,
-    getOneUser,
-    createUser,
+    getOrCreateUser,
     searchTerm
 }
