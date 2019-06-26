@@ -90,7 +90,7 @@ function createUser(profile, callback) {
 }
 
 // Gets or creates a user
-async function getOrCreateUser(profile, callback) {
+function getOrCreateUser(profile, callback) {
     client.connect( err => {
         if(err) raiseMongoError(err, callback);
         else {
@@ -109,6 +109,11 @@ async function getOrCreateUser(profile, callback) {
             });
         }
     });
+}
+
+// @ specifiers a dictionary of fields which you'd like to update
+function updateUser(id, specifiers, callback) {
+    // TODO: 
 }
 
 ////////////////////////////////////////////////
