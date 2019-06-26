@@ -136,4 +136,5 @@ module.exports = {
     getUsers,
     getOrCreateUser,
     searchTerm
+    getTerms
 }
