@@ -12,6 +12,8 @@ router.get('/', function(req, res) {
             firstName: req.session.user.firstName,
             lastName: req.session.user.lastName,
             imageUrl: req.session.user.image
+            gradYear: req.session.user.
+
         });
 
     } else {
