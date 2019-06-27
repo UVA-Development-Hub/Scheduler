@@ -27,10 +27,10 @@ html
                         a.dropdown-item Link 4
                         a.dropdown-item Link 3
             div(style="position:absolute; right:20px")
-                if(imageUrl)
+                if(user)
                     // User is logged in
                     a(href="/profile")
-                        img.rounded-circle.hover-highlight(src=imageUrl, style="max-width:35px")
+                        img.rounded-circle.hover-highlight(src=user.profileImg, style="max-width:35px")
                 else if(title != 'Login')
                     // User is not logged in and we're not on the login page, show a login button
                     a.btn.btn-primary(role="button", href="/login") Login

@@ -6,7 +6,7 @@ router.get('/new', (req, res) => {
     if(req.session.user) {
         if(req.session.user.displayName == '') {
             // A new user. Ask them to fill out some basic profile info on the new profile page
-            res.render('/profile/new', {
+            res.render('profile/new', {
                 title: 'Update Info',
                 user: req.session.user
             });
@@ -31,13 +31,12 @@ router.get('/', (req, res) => {
     if (req.session.user) {
         // If the user has just joined the site, redirect them to where they can
         // fill out their information
+        console.log("'" + req.session.user.displayName + "'");
         if(req.session.user.displayName == '') res.redirect('/profile/new');
         else {
-            res.render('profile', {
+            res.render('profile/profile', {
                 title: 'User Profile',
-                firstName: req.session.user.firstName,
-                lastName: req.session.user.lastName,
-                imageUrl: req.session.user.profileImg
+                user: req.session.user
             });
         }
     } else {
