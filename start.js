@@ -44,4 +44,8 @@ let port = process.env.PORT;
 if (port == null || port == "") port = 8000;
 
 // Start the server
-server.listen(port);
+var mongo = require('./bin/mongo.js');
+mongo.client.connect(err => {
+    if(err) console.log(err);
+    else server.listen(port);
+})
