@@ -5,7 +5,7 @@ var config = require('./config.js'),
     databases = {
         userdb: 'scheduler-site',
         usercoll: 'users',
-        coursedb: 'course-data',
+        coursedb: 'course_data',
         termcoll: 'terms'
     },
     mongo_options = {

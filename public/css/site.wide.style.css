@@ -3,6 +3,7 @@
 Any styling that you'd like applied to the entire webapp can be placed into this file! :)
 
 */
+
 .hover-highlight {
     transition: all 0.3s ease-in-out;
 }
@@ -43,4 +44,20 @@ Any styling that you'd like applied to the entire webapp can be placed into this
 input {
     margin-left: 5px;
     margin-right: 5px;
+}
+
+.appearing-box {
+    border-radius: 10px;
+    position: absolute;
+    top: 0;
+    padding: 10px;
+    left: 40%;
+}
+
+.appearing-box div {
+    white-space: nowrap;
+}
+
+.pointer {
+    cursor: pointer;
 }
