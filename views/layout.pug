@@ -29,11 +29,60 @@ html
             div(style="position:absolute; right:20px")
                 if(user)
                     // User is logged in
-                    a(href="/profile")
+                    button.btn(onclick="$('#profile-menu').toggle('slow');return false;")
                         img.rounded-circle.hover-highlight(src=user.profileImg, style="max-width:35px")
+                    div.appearing-box(style="position:fixed;top:60;right:0;")
+                        #profile-menu.bg-light(style="display:none;border-radius:10px;padding:10px;")
+                            a(href="/profile")
+                                small My Profile
+                            br
+                            a(href="#")
+                                small View My Data
+                            br
+                            a(href="/logout")
+                                small Logout
                 else if(title != 'Login')
                     // User is not logged in and we're not on the login page, show a login button
                     a.btn.btn-primary(role="button", href="/login") Login
 
         // Page content
         block content
+    br
+    br
+    br
+    br
+    br
+    br
+    footer
+        .footer-container.bg-dark
+            pre &nbsp;
+            .container
+                .row
+                    .col-md-10
+                        small.row
+                            .col-md-4
+                                .row
+                                    a(href="#") Home
+                                .row
+                                    a(href="#") Course Search
+                            .col-md-4
+                                .row
+                                    a(href="#") My Requirements
+                                .row
+                                    a(href="#") Suggested Courses
+                            .col-md-4
+                                if(user)
+                                    .row
+                                        a(href="/profile") My Profile
+                                else
+                                    .row
+                                        a(href="/login") Sign in
+                                .row
+                                    a(href="#") Privacy Policy
+                                .row
+                                    a(href="#") Cookie Usage
+                    .col-md-2
+                        a(href="https://devhub.virginia.edu", title="Powered by UVA DevHub", target="_blank")
+                            img(style="max-width:100px", src="https://i.gyazo.com/09b896c7508bacdbf445ac6d13f3375f.png")
+                
+            pre &nbsp;

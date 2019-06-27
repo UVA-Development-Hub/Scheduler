@@ -22,6 +22,10 @@ router.get('/login', function (req, res) {
     });
 });
 
+router.get('/logout', (req, res) => {
+    res.redirect('/');
+})
+
 router.get('/test', function (req, res) {
     res.render('testLayouts', {
         title: 'Test Page'
