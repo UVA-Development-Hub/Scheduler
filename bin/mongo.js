@@ -86,10 +86,12 @@ function createUser(profile, callback) {
         profileImg: imageUrl,
         cart: [],
         favorites: [],
+        joined: new Date(),
         enrollmentData: {
             enrolled: [], // List of classes they are enrolled in
             school: '', // The user's school (College of A&S, School of Engineering, etc)
             major: '', // The user's chosen major
+            double_major: '', // The user's double major, if they have one
             minor: '', // The user's chosen minor
             expectedGradYear: '', // The year the user expects to graduate in
         },
