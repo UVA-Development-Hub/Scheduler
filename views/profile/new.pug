@@ -3,3 +3,18 @@ extends ../layout
 block content
     .container
         p Future home of the welcome to the site page
+        .row
+            form(method="POST", action="/profile/new")
+                .form-group.form-inline
+                    label Preferred Name:
+                    input.form-control(type="text" name="displayName", value=user.firstName, placeholder="eg. Alex")
+                .form-group.form-inline
+                    label School of Enrollment
+                    input.form-control(type="text", name="school", value=user.enrollmentData.school, placeholder="eg. School of Engineering")
+                .form-group.form-inline
+                    label Major
+                    input.form-control(type="text", name="major", value=user.enrollmentData.major, placeholder="eg. Computer Science (B.S.)")
+                .form-group.form-inline
+                    label Minor
+                    input.form-control(type="text", name="major", value=user.enrollmentData.minor, placeholder="eg. Applied Mathematics")
+                button.btn.btn-success(type="submit") Update My Info
