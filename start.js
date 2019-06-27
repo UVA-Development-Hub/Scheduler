@@ -2,7 +2,7 @@
 var index = require('./routes/index'); // this line brings in routes/index.js
 var profile = require('./routes/profile');
 var auth = require('./routes/auth');
-
+var course = require('./routes/course');
 
 
 // Create the app, which is used to route user requests around the
@@ -34,6 +34,7 @@ app.use(passport.initialize());
 // Pages which use middleware to render
 app.use('/auth', auth);
 app.use('/profile', profile);
+app.use('/course', course);
 app.use('/', index);
 
 
