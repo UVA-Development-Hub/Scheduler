@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var mongo = require('../bin/mongo.js');
 
 router.get('/', function(req, res) {
     if(req.session.user) {
@@ -9,7 +10,7 @@ router.get('/', function(req, res) {
             title: 'User Profile',
             firstName: req.session.user.firstName,
             lastName: req.session.user.lastName,
-            imageUrl: req.session.user.image
+            imageUrl: req.session.user.profileImg
         });
 
     } else {
