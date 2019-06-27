@@ -75,5 +75,13 @@ block content
                         a(href="#") Forums Curriculum
                     li 
                         a(href='#') Traditional Curriculum
-                                        
+                        
+        div.row
+            form(method='POST' action='/search')
+                input#term(type="hidden",value=1192, name="term")
+                div.form-group.form-inline
+                    label(for='password') Current Password:
+                    input#subject.form-control(type='text', name='password')
+        div.row
+            button.btn.btn-primary(type='submit') Update                                        
                         
