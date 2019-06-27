@@ -11,9 +11,11 @@ var express = require('express');
 var session = require('express-session');
 var app = express();
 var passport = require('passport');
-var bodyParser=require("body-parser");
+var bodyParser = require("body-parser");
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 
 app.set('view engine', 'pug'); // tell the app to use pug.js to render our templates
 app.use(express.static('public'));
@@ -46,6 +48,6 @@ if (port == null || port == "") port = 8000;
 // Start the server
 var mongo = require('./bin/mongo.js');
 mongo.client.connect(err => {
-    if(err) console.log(err);
+    if (err) console.log(err);
     else server.listen(port);
 })

@@ -3,7 +3,7 @@ var router = express.Router();
 var mongo = require('../bin/mongo.js');
 
 router.get('/', function(req, res) {
-    if(req.session.user) {
+    if (req.session.user) {
         // User's id can be accessed with req.session.user.id
         // Hit Mongo to get the user's data
         res.render('profile', {
