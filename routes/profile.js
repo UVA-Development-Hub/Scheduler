@@ -10,13 +10,7 @@ router.get('/', function(req, res) {
             title: 'User Profile',
             firstName: req.session.user.firstName,
             lastName: req.session.user.lastName,
-<<<<<<< HEAD
-            imageUrl: req.session.user.image,
-            // gradYear: req.session.user.expectedGradYear
-
-=======
             imageUrl: req.session.user.profileImg
->>>>>>> 75bd8c5147a1e4193839b3f3aba55facfa1c51f9
         });
 
     } else {
