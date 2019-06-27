@@ -19,7 +19,8 @@ Any styling that you'd like applied to the entire webapp can be placed into this
 }
 
 .logo-btn {
-    border: 1.75px solid rgb(66, 133 ,244); /* Default is Google Blue. Override if necessary */
+    border: 1.75px solid rgb(66, 133, 244);
+    /* Default is Google Blue. Override if necessary */
 }
 
 .logo-btn .logo-btn-label {
@@ -28,12 +29,35 @@ Any styling that you'd like applied to the entire webapp can be placed into this
     flex-direction: column;
     align-items: center;
     padding: 9px;
-    background-color: rgb(66, 133, 244); /* Default is Google Blue. Override if necessary */
-    color: white; /* Default text color is white. Override if necessary */
+    /* Default is Google Blue. Override if necessary */
+    background-color: rgb(66, 133, 244);
+    /* Default text color is white. Override if necessary */
+    color: white;
 }
 
 .logo-btn img {
     max-width: 40px;
     background-color: white;
     padding 2px;
+}
+
+input {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.appearing-box {
+    border-radius: 10px;
+    position: absolute;
+    top: 0;
+    padding: 10px;
+    left: 40%;
+}
+
+.appearing-box div {
+    white-space: nowrap;
+}
+
+.pointer {
+    cursor: pointer;
 }

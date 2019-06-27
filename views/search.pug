@@ -5,15 +5,53 @@ block content
             p Course Search
         div.row 
             form(method='POST' action='/search')
-                div.form-group
+                input#term(type="hidden",value=1192, name="term")
+                .form-group.form-inline
+                    select#semester
+                        each term in terms
+                            option(value=term.term_id)=term.name
+                    label(for='semester')
+                div.form-group.form-inline
                     label(for='subject') Subject:
-                    input#subject.form-control(type='text', placeholder='eg.ANTH' subject='subject')
-                div.form-group
+                    input#subject.form-control(type='text', placeholder='eg.ANTH' name='subject')
+                div.form-group.form-inline
                     label(for='classNumber') Class Number:
-                    input#classNumber.form-control(type='text', placeholder='eg.1010' subject='classNumber')
-                div.form-group
-                    label(for='scassTitle') Class Title:
-                    input#classTitle.form-control(type='text', placeholder='' subject='classTitle')                                
-                div.form-group
+                    input#classNumber.form-control(type='text', placeholder='eg.1010' name='classNumber')
+                div.form-group.form-inline
+                    label(for='classTitle') Class Title:
+                    input#classTitle.form-control(type='text', placeholder='' name='classTitle')                                
+                div.form-group.form-inline
                     label(for='instructor') Instructor:
-                    input#instructor.form-control(type='text', placeholder='eg.Bloomfield' subject='instructor')
+                    input#instructor.form-control(type='text', placeholder='eg.Bloomfield' name='instructor')
+                .form-group(style="position:relative")
+                    #day-search
+                        button.btn.btn-dark(onclick="toggleDays('day-search');return false;") Select days &nbsp;
+                            i.fas.fa-angle-right(style="display:none;")
+                            i.fas.fa-angle-down
+                        .appearing-box(style="display:none;")
+                            div
+                                input#monday.pointer(type="checkbox", value="Monday")
+                                label.pointer(for='monday') Monday
+                            div
+                                input#tuesday.pointer(type="checkbox", value="Tuesday")
+                                label.pointer(for='tuesday') Tuesday
+                            div
+                                input#wednesday.pointer(type="checkbox", value="Wednesday")
+                                label.pointer(for='wednesday') Wednesday
+                            div
+                                input#thursday.pointer(type="checkbox", value="Thursday")
+                                label.pointer(for='thursday') Thursday
+                            div
+                                input#friday.pointer(type="checkbox", value="Friday")
+                                label.pointer(for='friday') Friday
+                            div
+                                input#saturday.pointer(type="checkbox", value="Saturday")
+                                label.pointer(for='saturday') Saturday
+                button.btn.btn-success(type="submit", style="margin-right:10px;") Search
+    // Inline scrips go at the end to decrease page loading time
+    script.
+        function toggleDays(id) {
+            $('#' + id + ' .appearing-box').toggle('slow');
+            $('#' + id + ' i.fa-angle-right').toggle('fast');
+            $('#' + id + ' i.fa-angle-down').toggle('fast');
+        }

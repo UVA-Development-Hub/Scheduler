@@ -5,7 +5,7 @@ var config = require('./config.js'),
     databases = {
         userdb: 'scheduler-site',
         usercoll: 'users',
-        coursedb: 'course-data',
+        coursedb: 'course_data',
         termcoll: 'terms'
     },
     mongo_options = {
@@ -28,18 +28,31 @@ const mongoUsername = config.mongo_user,
 // During an error handling event, this function is called to print
 // the error to the console.
 function raiseMongoError(err, callback) {
-    console.log("Encountered a MongoDB Error. See details below");
+    console.log("--------------------------------\nEncountered a MongoDB Error. See details below");
     console.log(err);
     console.log("End Mongo Error.\n--------------------------------");
     callback(err, null);
 }
 
+function raiseFailedPromise(err, place, callback) {
+    console.log("--------------------------------\nPromise resolution failed at " + place + ". See details:");
+    console.log(err);
+    callback(null);
+}
+
 // Returns a list of all users in the database.
 function getUsers(callback){
     client.connect( (err) => {
-        var db = client.db(databases.userdb);
-        db.collection(databases.usercoll).find().sort().toArray(callback);
-        client.close();
+        if(err) raiseMongoError(err, callback);
+        else {
+            var db = client.db(databases.userdb);
+            db.collection(databases.usercoll).find().sort().toArray(callback).then(data => {
+                console.log("Retrieved list of all users");
+                callback(data);
+            }).catch(err => {
+                raiseFailedPromise(err, "getUsers", callback);
+            });
+        }
     });
 }
 
@@ -49,11 +62,11 @@ function getUsers(callback){
 function getOneUser(id, callback) {
     var return_user;
     var db = client.db(databases.userdb);
-    return_promise = db.collection(databases.usercoll).find({'_id': id}).toArray().then(data => {
+    db.collection(databases.usercoll).find({'_id': id}).toArray().then(data => {
+        console.log("Returning results for user " + id);
         callback(data);
     }).catch(err => {
-        console.log('getOneUser promise resolution error:');
-        console.log(err);
+        raiseFailedPromise(err, 'getOneUser', callback);
     });
 }
 
@@ -82,32 +95,38 @@ function createUser(profile, callback) {
         },
     };
     db.collection(databases.usercoll).insertOne(user).then( () => {
+        console.log("User " + profile.id + " created");
         callback(user);
     }).catch(err => {
-        console.log('createUser promise resolution error:');
-        console.log(err);
+        raiseFailedPromise(err, 'createUser', callback);
     });
 }
 
 // Gets or creates a user
-async function getOrCreateUser(profile, callback) {
-    client.connect( err => {
-        if(err) raiseMongoError(err, callback);
-        else {
-            getOneUser(profile.id, found_user => {
-                if(found_user.length > 0) {
-                    // User retrieved, execute callback with the found user
-                    client.close();
-                    callback(found_user);
-                } else {
-                    // User not found. Create a new one
-                    createUser(profile, created_user => {
-                        client.close();
-                        callback(created_user);
-                    })
-                }
-            });
+function getOrCreateUser(profile, callback) {
+    getOneUser(profile.id, found_user => {
+        if(found_user.length > 0) {
+            // User retrieved, execute callback with the found user
+            console.log("User " + profile.id + " is already in the database");
+            callback(found_user[0]);
+        } else {
+            // User not found. Create a new one.
+            createUser(profile, created_user => {
+                callback(created_user);
+            })
         }
+    });
+}
+
+// @ specifiers a dictionary of fields which you'd like to update
+function updateUser(id, specifiers, callback) {
+    console.log("Processing update for user " + id);
+    var db = client.db(databases.userdb);
+    db.collection(databases.usercoll).updateOne({ _id : id }, { $set: specifiers }).then( () => {
+        console.log('Update complete');
+        callback();
+    }).catch( fail => {
+        raiseFailedPromise(fail, 'updateUser', callback);
     });
 }
 
@@ -117,28 +136,22 @@ async function getOrCreateUser(profile, callback) {
 
 // @specifiers a dictionary containing any search constraints
 function searchTerm(term_id, specifiers, callback) {
-    client.connect( (err) => {
-        if(err) {
-            console.log(err)
-            callback(err, null)
-        } else {
-            var db = client.db(databases.coursedb);
-            db.collection('term_' + term_id).find(specifiers).toArray(callback);
-        }
-        client.close();
+    var db = client.db(databases.coursedb);
+    db.collection('term_' + term_id).find(specifiers).toArray().then(results => {
+        console.log("Retrieved search results");
+        callback(results);
+    }).catch(fail => {
+        raiseFailedPromise(fail, 'searchTerm', callback);
     });
 }
 
 function getTerms(callback) {
-    client.connect( (err) => {
-        if(err) {
-            console.log(err);
-            callback(err, null);
-        } else {
-            var db = client.db(databases.coursedb);
-            db.collection(databases.termcoll).find().toArray(callback);
-        }
-        client.close();
+    var db = client.db(databases.coursedb);
+    db.collection(databases.termcoll).find().toArray().then(data => {
+        console.log("Retrieved terms list from Mongo");
+        callback(data);
+    }).catch(fail => {
+        raiseFailedPromise(fail, 'getTerms', callback);
     });
 }
 
@@ -146,8 +159,10 @@ function getTerms(callback) {
 //////////////// Module Exports ////////////////
 ////////////////////////////////////////////////
 module.exports = {
+    client,
     getUsers,
     getOrCreateUser,
     searchTerm,
-    getTerms
+    getTerms,
+    updateUser
 }
