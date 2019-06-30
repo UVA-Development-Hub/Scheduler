@@ -43,19 +43,52 @@ router.get('/search', function(req, res){
         console.log(termsList);
         res.render('search', {
             title : 'Search Page',
-            terms: termsList
+            terms: termsList,
+            results:[]
         });
     });
 });
 
 router.post('/search', function(req, res){
-    console.log(req.body.subject);
+    //console.log(req.body.monday);
+    var thedays = [
+       req.body.monday, // assume for now these are true or false (checked or not)
+       req.body.tuesday,
+       req.body.wednesday,
+       req.body.thursday,
+       req.body.friday,
+       req.body.saturday,
+    ];
+    var daynames = [
+   'M',
+   'T',
+   'W',
+   'R',
+   'F',
+   'S'
+];
+var dayinput = '';
 
-    res.render('search', {
-        title : 'Search Page'
-    });
-
+thedays.forEach((checkbox, index) => {
+   if(checkbox) dayinput = dayinput + daynames[index];
 });
+
+var tosubmit = {};
+if(req.body.subject != '') tosubmit.subject = req.body.subject;
+if(dayinput != '') tosubmit.days = dayinput;
+    console.log(tosubmit);
+
+mongo.getTerms(termsList =>{
+    mongo.searchTerm('1192', tosubmit, results => {
+        res.render('search', {
+            title : 'Search Page',
+            terms: termsList,
+            results: results
+        });
+    });
+});
+});
+
 
 // This is the base landing page. It's always the LAST definition
 router.use('/', function(req, res, next) {
