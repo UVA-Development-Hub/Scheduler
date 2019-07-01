@@ -14,17 +14,17 @@ router.get('/:term/:id', (req, res) => {
         split(req.params.id)
     }
     else {
-        mongo.searchTerm(req.params.term, {req.params.id}, data) => {
+        mongo.searchTerm(req.params.term, req.params.id, data => {
             console.log(data);
             res.render('course/term/id', {
                 id: req.params.id
             });
-        }
+        });
     }
 
     // if it's a number then you have to search for it
     // if it's nemonic you have to break it apart
-    // res.send("Display information on class with catalog (or mnemonic) id " + req.params.id + " from term " + req.params.term + ".");
+    res.send("Display information on class with catalog (or mnemonic) id " + req.params.id + " from term " + req.params.term + ".");
     // res.send(req.params.subject + req.params.catalog_number);
 });
 
