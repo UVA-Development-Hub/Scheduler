@@ -51,7 +51,6 @@ input {
     position: absolute;
     top: 0;
     padding: 10px;
-    left: 40%;
 }
 
 .appearing-box div {
@@ -60,4 +59,20 @@ input {
 
 .pointer {
     cursor: pointer;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    box-shadow: 0 -5px 5px 0 #343a40;
+}
+
+.footer-container {
+    width: 100%;
 }

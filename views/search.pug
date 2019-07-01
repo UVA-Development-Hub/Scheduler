@@ -28,7 +28,7 @@ block content
                         button.btn.btn-dark(onclick="toggleDays('day-search');return false;") Select days &nbsp;
                             i.fas.fa-angle-right(style="display:none;")
                             i.fas.fa-angle-down
-                        .appearing-box(style="display:none;")
+                        .appearing-box(style="display:none;left:40%;")
                             div
                                 input#monday.pointer(type="checkbox", value="Monday")
                                 label.pointer(for='monday') Monday
@@ -48,6 +48,10 @@ block content
                                 input#saturday.pointer(type="checkbox", value="Saturday")
                                 label.pointer(for='saturday') Saturday
                 button.btn.btn-success(type="submit", style="margin-right:10px;") Search
+                .container
+                    .row 
+                        each result in results
+                            p=result.subject +' '+ result.catalog_number
     // Inline scrips go at the end to decrease page loading time
     script.
         function toggleDays(id) {
@@ -55,3 +59,5 @@ block content
             $('#' + id + ' i.fa-angle-right').toggle('fast');
             $('#' + id + ' i.fa-angle-down').toggle('fast');
         }
+    
+                
