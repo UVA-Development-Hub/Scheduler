@@ -16,15 +16,15 @@ router.get('/:term/:id', (req, res) => {
     else {
         mongo.searchTerm(req.params.term, req.params.id, data => {
             console.log(data);
-            res.render('course/term/id', {
-                id: req.params.id
+            res.render('course/term_and_id', {
+                course: data
             });
         });
     }
 
     // if it's a number then you have to search for it
     // if it's nemonic you have to break it apart
-    res.send("Display information on class with catalog (or mnemonic) id " + req.params.id + " from term " + req.params.term + ".");
+    // res.send("Display information on class with catalog (or mnemonic) id " + req.params.id + " from term " + req.params.term + ".");
     // res.send(req.params.subject + req.params.catalog_number);
 });
 
@@ -33,13 +33,13 @@ router.get('/:term', (req, res) => {
        console.log(data);
        res.render('course/term', {
            title: 'Classes in term ' + req.params.term,
-           courses: data,
+           courses: data
            // subject: data.subject
        });
    });
 
 
-    res.send("Display all classes from term " + req.params.term + ".");
+    // res.send("Display all classes from term " + req.params.term + ".");
 });
 
 

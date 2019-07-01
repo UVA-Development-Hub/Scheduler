@@ -1,0 +1,39 @@
+extends  ../layout
+
+block content
+    .container
+        p Display...
+        //- 
+        //- table(id="term_and_id_table" class="terms_and_ids_table tablesorter-blue")
+        //-     thead
+        //-         tr
+        //-             th Subject
+        //-             th Catalog Number
+        //-             th Class Section
+        //-             th SIS ID
+        //-             th Class Title
+        //-             th Instructor
+        //-             th Enrollment Capacity
+        //-             th Meeting Days
+        //-             th Class Starting Time
+        //-             th Class Ending Time
+        //-             th Semester Number
+        //-             th Semester
+        //-     tbody
+        //-         - var page = 0
+        //-         each class_id, index in class_ids
+        //-             tr.paged(page=page, style=(""))
+        //-                 td=class_id[1]
+        //-                 td=class_id[2]
+        //-                 td=class_id[3]
+        //-                 td=class_id[4]
+        //-                 td=class_id[5]
+        //-                 td=class_id[7]
+        //-                 td=class_id[8]
+        //-                 td=class_id[9]
+        //-                 td=class_id[10]
+        //-                 td=class_id[11]
+        //-                 td=class_id[12]
+        //-                 td=class_id[13]
+        //-             if index % 20 == 19
+        //-                 -page++
