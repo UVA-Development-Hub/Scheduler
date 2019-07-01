@@ -163,6 +163,7 @@ function getTerms(callback) {
 module.exports = {
     client,
     getUsers,
+    getOneUser,
     getOrCreateUser,
     searchTerm,
     getTerms,

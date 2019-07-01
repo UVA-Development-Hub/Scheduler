@@ -1,0 +1,14 @@
+form(method="POST", action=sub_to, style="text-align:center;")
+    .form-group
+        label Preferred Name
+        input.form-control(type="text" name="displayName", value=user.firstName, placeholder="eg. Alex", required)
+    .form-group
+        label School of Enrollment
+        input.form-control(type="text", name="school", value=user.enrollmentData.school, placeholder="eg. School of Engineering")
+    .form-group
+        label Major
+        input.form-control(type="text", name="major", value=user.enrollmentData.major, placeholder="eg. Computer Science (B.S.)")
+    .form-group
+        label Minor
+        input.form-control(type="text", name="minor", value=user.enrollmentData.minor, placeholder="eg. Applied Mathematics")
+    button.btn.btn-success(type="submit") Update My Info

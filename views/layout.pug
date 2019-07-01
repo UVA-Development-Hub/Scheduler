@@ -2,26 +2,27 @@ html
     head
         meta(charset="utf-8")
         meta(name="viewport", content="width=device-width, initial-scale=1")
+        link(rel="shortcut icon", href="https://i.gyazo.com/55937316dfda0a175f02c0dc79845bd0.png")
         link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css", integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T", crossorigin="anonymous")
         link(rel="stylesheet", href="https://use.fontawesome.com/releases/v5.7.0/css/all.css", integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ", crossorigin="anonymous")
         link(rel="stylesheet", href="/css/site.wide.style.css", type="text/css")
         script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js")
         script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js")
         script(src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js")
-        title=title
+        title=title + ' | UVA Scheduler'
         block customhead
     body
         // Navigation bar
         nav.navbar.navbar-expand-sm.bg-dark.navbar-dark
             a.navbar-brand
-                a(href="https://devhub.virginia.edu", title="Powered by UVA DevHub", target="_blank")
-                    img(style="max-width:40px", src="https://i.gyazo.com/ecac4499a053f97231252f40e0d91ab4.png")
+                a(href="/", title="Home | UVA Scheduler")
+                    img(style="max-height:30px", src="https://i.gyazo.com/55937316dfda0a175f02c0dc79845bd0.png")
             ul.navbar-nav
                 li.nav-item
                     a.nav-link(href="/") Home
                 li.nav-item
-                    a.nav-link Link 2
-                li.nav-item.dropdown
+                    a.nav-link(href="/search") Search
+                //li.nav-item.dropdown
                     a.nav-link.dropdown-toggle(href="#", data-toggle="dropdown") Dropdown Link
                     .dropdown-menu
                         a.dropdown-item Link 4
@@ -37,7 +38,7 @@ html
                                 small My Profile
                             br
                             a(href="#")
-                                small View My Data
+                                small View Details
                             br
                             a(href="/logout")
                                 small Logout

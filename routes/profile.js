@@ -8,7 +8,8 @@ router.get('/new', (req, res) => {
             // A new user. Ask them to fill out some basic profile info on the new profile page
             res.render('profile/new', {
                 title: 'Update Info',
-                user: req.session.user
+                user: req.session.user,
+                sub_to: '/profile/new'
             });
         } else res.redirect('/profile');
     } else {
@@ -30,8 +31,11 @@ router.post('/new', (req, res) => {
             }
         };
         mongo.updateUser(req.session.user._id, specifiers, done => {
-            // Update complete
-            res.redirect('/profile');
+            // Update the user stored in session
+            mongo.getOneUser(req.session.user._id, user => {
+                req.session.user = user;
+                res.redirect('/profile');
+            });
         });
     } else {
         req.query.return = '/profile/new';

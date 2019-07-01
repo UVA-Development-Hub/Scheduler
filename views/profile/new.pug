@@ -4,20 +4,20 @@ block content
     br
     .container
         .row
-            h3 Welcome to the UVA Scheduler!
-            p Tell us a little bit about yourself! This information is used to your experience on our site.
+            .col-md-3
+            .col-md-6
+                h3.center Welcome to the UVA Scheduler!
+            .col-md-3
+        .row &nbsp;
         .row
-            form(method="POST", action="/profile/new")
-                .form-group.form-inline
-                    label Preferred Name:
-                    input.form-control(type="text" name="displayName", value=user.firstName, placeholder="eg. Alex", required)
-                .form-group.form-inline
-                    label School of Enrollment:
-                    input.form-control(type="text", name="school", value=user.enrollmentData.school, placeholder="eg. School of Engineering")
-                .form-group.form-inline
-                    label Major:
-                    input.form-control(type="text", name="major", value=user.enrollmentData.major, placeholder="eg. Computer Science (B.S.)")
-                .form-group.form-inline
-                    label Minor:
-                    input.form-control(type="text", name="minor", value=user.enrollmentData.minor, placeholder="eg. Applied Mathematics")
-                button.btn.btn-success(type="submit") Update My Info
+            .col-md-3
+            .col-md-3
+                    p Tell us a little bit about yourself! This information is used to improve your experience on our site.
+            .col-md-3
+                p You can update this info at any time by clicking on your profile icon on the top right of the page and selecting "View Deatils"
+            .col-md-3
+        .row
+            .col-md-3
+            .col-md-6
+                include edit-pane
+            .col-md-3
