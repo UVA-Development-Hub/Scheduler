@@ -14,18 +14,29 @@ router.get('/:term/:id', (req, res) => {
         split(req.params.id)
     }
     else {
-        mongo.searchTerm(req.params.term, req.params.id, data => {
+        mongo.searchTerm(req.params.term, {'sis_id': parseInt(req.params.id)}, data => {
             console.log(data);
             res.render('course/term_and_id', {
-                course: data
+                specific_class: data[0]
             });
         });
     }
+    //
+    // if (isNan(req.params.term) && isNan(req.params.id)) {
+    //     console.log("error")
+    //     res.render('course/term_and_id', {
+    //         Error: "Not found"
+    //     })
+    // }
+    //
+    // elif (!(req.params.term && req.params.id in data)) {
+    //     console.log("error")
+    //     res.render('course/term_and_id', {
+    //         Error: "Not found"
+    //     })
 
-    // if it's a number then you have to search for it
-    // if it's nemonic you have to break it apart
-    // res.send("Display information on class with catalog (or mnemonic) id " + req.params.id + " from term " + req.params.term + ".");
-    // res.send(req.params.subject + req.params.catalog_number);
+
+
 });
 
 router.get('/:term', (req, res) => {
@@ -33,7 +44,7 @@ router.get('/:term', (req, res) => {
        console.log(data);
        res.render('course/term', {
            title: 'Classes in term ' + req.params.term,
-           courses: data
+           course_terms_and_ids: data
            // subject: data.subject
        });
    });
