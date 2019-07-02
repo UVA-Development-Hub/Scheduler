@@ -82,12 +82,42 @@ if(req.body.subject != '') tosubmit.subject = req.body.subject;
 if(dayinput != '') tosubmit.days = dayinput;
     console.log(tosubmit);
 
+function tocompare(courseList,course){
+    var ret=-1;
+    for(i=0;i<courseList.length;i++){
+        if(course.subject===courseList[i].subject && course.catalog_number===courseList[i].number){
+            ret=i;
+            break;
+        }
+    }
+    return ret;
+}
+
 mongo.getTerms(termsList =>{
     mongo.searchTerm('1192', tosubmit, results => {
+        var new_result=[];
+        //new_result
+        var itemIndex=0;
+        for (x = 0; x < results.length; x++){
+            itemIndex=tocompare(new_result,results[x]);
+            if(itemIndex>-1){
+                new_result[itemIndex].section.push(results[x]);
+            }
+            else{
+                new_result.push({
+                    subject:results[x].subject,
+                    number: results[x].catalog_number,
+                    section: [
+                        results[x]
+                    ]
+                });
+            }
+        }
+
         res.render('search', {
             title : 'Search Page',
             terms: termsList,
-            results: results
+            results: new_result
         });
     });
 });

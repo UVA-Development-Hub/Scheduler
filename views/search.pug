@@ -49,9 +49,12 @@ block content
                                 label.pointer(for='saturday') Saturday
                 button.btn.btn-success(type="submit", style="margin-right:10px;") Search
                 .container
-                    .row 
-                        each result in results
-                            p=result.subject +' '+ result.catalog_number
+                    each result in results
+                        .container
+                            p=result.subject+result.number
+                                each course in result.section
+                                    .row 
+                                        p=course.section+" "+course.instructor
     // Inline scrips go at the end to decrease page loading time
     script.
         function toggleDays(id) {
