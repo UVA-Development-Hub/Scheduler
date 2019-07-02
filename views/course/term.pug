@@ -2,4 +2,37 @@ extends ../layout
 
 block content
     .container
-        p Display all the classes from the given term here
+        table(id="term_table" class="terms_table tablesorter-blue")
+            thead
+                tr
+                    th ID
+                    th Subject
+                    th Catalog Number
+                    th Class Section
+                    th SIS ID
+                    th Class Title
+                    th Description
+                    th Instructor
+                    th Enrollment Capacity
+                    th Meeting Days
+                    th Class Starting Time
+                    th Class Ending Time
+                    th Semester Number
+                    th Semester
+            tbody
+                each course_term_and_id in course_terms_and_ids
+                    tr
+                        td=course_term_and_id['_id']
+                        td=course_term_and_id['subject']
+                        td=course_term_and_id['catalog_number']
+                        td=course_term_and_id['section']
+                        td=course_term_and_id['sis_id']
+                        td=course_term_and_id['title']
+                        td=course_term_and_id['desc']
+                        td=course_term_and_id['instructor']
+                        td=course_term_and_id['enrollment_max']
+                        td=course_term_and_id['days']
+                        td=course_term_and_id['meeting start']
+                        td=course_term_and_id['meeting_end']
+                        td=course_term_and_id['term_id']
+                        td=course_term_and_id['term_name']

@@ -80,8 +80,6 @@ block content
             form(method='POST' action='/search')
                 input#term(type="hidden",value=1192, name="term")
                 div.form-group.form-inline
-                    label(for='password') Current Password:
-                    input#subject.form-control(type='text', name='password')
         div.row
             form(method='POST' action='/profile')
                 button.btn.btn-primary(type='submit', onClick='updateUser()') Update                                        
