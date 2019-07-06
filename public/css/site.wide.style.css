@@ -80,3 +80,15 @@ footer {
 .center {
     text-align: center;
 }
+
+.wide {
+    width: 100%;
+}
+
+.vertical {
+    position: absolute;
+    margin: 0;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}

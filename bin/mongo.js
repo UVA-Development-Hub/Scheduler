@@ -6,7 +6,8 @@ var config = require('./config.js'),
         userdb: 'scheduler-site',
         usercoll: 'users',
         coursedb: 'course_data',
-        termcoll: 'terms'
+        termcoll: 'terms',
+        programcoll: 'programs',
     },
     mongo_options = {
         useNewUrlParser: true,
@@ -157,6 +158,33 @@ function getTerms(callback) {
     });
 }
 
+// Give a specifying string which will be used to build the dictionary.
+// This is done instead of passing in the dictionary manually in an
+// attempt to simplify how this function can be used. Using the constructed
+// dict, a certain subset of the programs are retrieved
+function getPrograms(specifyingString, callback) {
+    var fields = ['isMainType', 'isCert'];
+    var restrict = {};
+    for(var i = 0; i < specifyingString.length; i++) {
+        switch(specifyingString.charAt(i)) {
+            case 't':
+                restrict[fields[i]] = true;
+                break;
+            case 'f':
+                restrict[fields[i]] = false;
+                break;
+        }
+    }
+    console.log(restrict);
+    var db = client.db(databases.coursedb);
+    db.collection(databases.programcoll).find(restrict).toArray().then(data => {
+        console.log("Retrieved specified program list from Mongo");
+        callback(data);
+    }).catch(fail => {
+        raiseFailedPromise(fail, 'getPrograms', callback);
+    });
+}
+
 ////////////////////////////////////////////////
 //////////////// Module Exports ////////////////
 ////////////////////////////////////////////////
@@ -167,5 +195,6 @@ module.exports = {
     getOrCreateUser,
     searchTerm,
     getTerms,
+    getPrograms,
     updateUser
 }

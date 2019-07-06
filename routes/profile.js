@@ -6,10 +6,16 @@ router.get('/new', (req, res) => {
     if(req.session.user) {
         if(req.session.user.displayName == '') {
             // A new user. Ask them to fill out some basic profile info on the new profile page
-            res.render('profile/new', {
-                title: 'Update Info',
-                user: req.session.user,
-                sub_to: '/profile/new'
+            // 'tx' indicates programs of major types (major/minor) and that we don't care ('x')
+            // about the second specifier type
+            mongo.getPrograms('tx', data => {
+                console.log(data);
+                res.render('profile/new', {
+                    title: 'Update Info',
+                    user: req.session.user,
+                    programs: data,
+                    sub_to: '/profile/new'
+                });
             });
         } else res.redirect('/profile');
     } else {
