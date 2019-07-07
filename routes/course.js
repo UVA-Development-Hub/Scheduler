@@ -12,25 +12,27 @@ router.get('/:term/:id', (req, res) => {
     // mongo.getTerms('', {sis_id: req.params.id}, )
     if (isNaN(req.params.id)) {
         split(req.params.id)
+        // console.log("Error")
+        // res.render('course/term_and_id', {
+        //     Error: "Not found"
+        // })
     }
     else {
         mongo.searchTerm(req.params.term, {'sis_id': parseInt(req.params.id)}, data => {
             console.log(data);
             res.render('course/term_and_id', {
-                specific_class: data[0]
+                specific_class: data[0],
             });
         });
     }
-    //
+
     // if (isNan(req.params.term) && isNan(req.params.id)) {
-    //     console.log("error")
     //     res.render('course/term_and_id', {
     //         Error: "Not found"
     //     })
     // }
     //
     // elif (!(req.params.term && req.params.id in data)) {
-    //     console.log("error")
     //     res.render('course/term_and_id', {
     //         Error: "Not found"
     //     })

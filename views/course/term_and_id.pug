@@ -1,8 +1,11 @@
 extends  ../layout
 
+block customhead
+    link(rel="stylesheet", href="/css/tablesorter.theme.blue.css")
+    script(src='/js/tablesorter.js')
+
 block content
     .container
-        p Display...
         table(id="term_and_id_table" class="terms_and_ids_table tablesorter-blue")
             thead
                 tr
@@ -11,7 +14,6 @@ block content
                     th Class Section
                     th SIS ID
                     th Class Title
-                    th Description
                     th Instructor
                     th Enrollment Capacity
                     th Meeting Days
@@ -26,11 +28,23 @@ block content
                         td=specific_class['section']
                         td=specific_class['sis_id']
                         td=specific_class['title']
-                        td=specific_class['desc']
                         td=specific_class['instructor']
                         td=specific_class['enrollment_max']
                         td=specific_class['days']
-                        td=specific_class['meeting start']
+                        td=specific_class['meeting_start']
                         td=specific_class['meeting_end']
                         td=specific_class['term_id']
                         td=specific_class['term_name']
+            style.
+                body {
+                    background-color: White
+                 } 
+                 table {
+                     font-size: 14px
+                 }
+                 
+    .row    
+        if specific_class.length == 0
+            p
+                | Error
+                 
