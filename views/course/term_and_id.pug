@@ -22,6 +22,7 @@ block content
                     th Semester Number
                     th Semester
             tbody
+                if specific_class
                     tr
                         td=specific_class['subject']
                         td=specific_class['catalog_number']
@@ -35,6 +36,9 @@ block content
                         td=specific_class['meeting_end']
                         td=specific_class['term_id']
                         td=specific_class['term_name']
+                else
+                    p
+                        | Results not found
             style.
                 body {
                     background-color: White
@@ -42,9 +46,4 @@ block content
                  table {
                      font-size: 14px
                  }
-                 
-    .row    
-        if specific_class.length == 0
-            p
-                | Error
                  
