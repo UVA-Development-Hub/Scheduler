@@ -48,13 +48,16 @@ block content
                                 input#saturday.pointer(type="checkbox", value="Saturday")
                                 label.pointer(for='saturday') Saturday
                 button.btn.btn-success(type="submit", style="margin-right:10px;") Search
-                .container
-                    each result in results
-                        .container
-                            p=result.subject+result.number
-                                each course in result.section
-                                    .row 
-                                        p=course.section+" "+course.instructor
+    .container
+        each result in results
+            div
+                p=result.subject+result.number+" - "+result.title
+            button.btn.btn-dark.course-btn &nbsp;
+                i.fas.fa-angle-right(style="display:none;")
+                i.fas.fa-angle-down
+            div(style="display:none;")
+                each course in result.section
+                    p=course.section+" "+course.instructor
     // Inline scrips go at the end to decrease page loading time
     script.
         function toggleDays(id) {
@@ -62,5 +65,15 @@ block content
             $('#' + id + ' i.fa-angle-right').toggle('fast');
             $('#' + id + ' i.fa-angle-down').toggle('fast');
         }
+        
+        $(document).ready(function(){
+        $(".course-btn").each(function(){
+            $(this).click(function(){
+                $(this).children().toggle();
+                $(this).next().toggle();
+            })
+            
+        })
+        });
     
                 
