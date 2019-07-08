@@ -162,24 +162,16 @@ function getTerms(callback) {
 // This is done instead of passing in the dictionary manually in an
 // attempt to simplify how this function can be used. Using the constructed
 // dict, a certain subset of the programs are retrieved
-function getPrograms(specifyingString, callback) {
-    var fields = ['isMainType', 'isCert'];
-    var restrict = {};
-    for(var i = 0; i < specifyingString.length; i++) {
-        switch(specifyingString.charAt(i)) {
-            case 't':
-                restrict[fields[i]] = true;
-                break;
-            case 'f':
-                restrict[fields[i]] = false;
-                break;
-        }
-    }
-    console.log(restrict);
+function getPrograms(typelist, callback) {
     var db = client.db(databases.coursedb);
-    db.collection(databases.programcoll).find(restrict).toArray().then(data => {
+    db.collection(databases.programcoll).find({'type': { '$in': typelist}}).toArray().then(data => {
+        var formatted = {};
+        data.forEach(doc => {
+            if(formatted[doc.type] == undefined) formatted[doc.type] = [doc];
+            else formatted[doc.type].push(doc);
+        });
         console.log("Retrieved specified program list from Mongo");
-        callback(data);
+        callback(formatted);
     }).catch(fail => {
         raiseFailedPromise(fail, 'getPrograms', callback);
     });

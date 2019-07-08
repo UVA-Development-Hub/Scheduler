@@ -8,12 +8,12 @@ router.get('/new', (req, res) => {
             // A new user. Ask them to fill out some basic profile info on the new profile page
             // 'tx' indicates programs of major types (major/minor) and that we don't care ('x')
             // about the second specifier type
-            mongo.getPrograms('tx', data => {
-                console.log(data);
+            mongo.getPrograms(['major', 'minor'], data => {
                 res.render('profile/new', {
                     title: 'Update Info',
                     user: req.session.user,
-                    programs: data,
+                    majors: data['major'],
+                    minors: data['minor'],
                     sub_to: '/profile/new'
                 });
             });
