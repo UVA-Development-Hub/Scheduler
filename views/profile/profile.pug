@@ -1,86 +1,49 @@
 extends ../layout
 
 block content
-    div.container
-        div.row
-            h1.display-4
+    .container
+        .row
+            h1.display-4(style="margin-top:15px;")
                 small='Hi, ' + user.displayName + '!'
-        div.row
-            p='Full Name: ' + user.firstName + ' \'' + user.displayName + '\' ' + user.lastName
-        div.row
-            p Student ID: (todo)
-        //- div.row
-            //- p='Graduation Year: ' + gradYear
-        div.row
-            p(id='major1') Major: (todo)
-        div.row
-            button.btn.btn-default(type='button', data-toggle='dropdown', class="btn btn-outline-secondary")
-                span.glyphicon.glyphicon-th-list
-                    |  Major 1 
-                    span.caret
-                ul.dropdown-menu.dropdown-toggle(data-toggle="dropdown")
-                    li
-                        a(href="#major1") ...
-                    li 
-                        a(href="#major1") ...
-        div.row
-            p Major 2: (todo)
-        div.row
-            button.btn.btn-default(type='button', data-toggle='dropdown', class="btn btn-outline-secondary")
-                span.glyphicon.glyphicon-th-list
-                    |  Major 2 
-                    span.caret
-                ul.dropdown-menu.dropdown-toggle(data-toggle="dropdown")
-                    li
-                        a(href="#") ...
-                    li 
-                        a(href="#") ...
-        div.row
-            p Minor: (todo)
-        div.row
-            button.btn.btn-default(type='button', data-toggle='dropdown', class="btn btn-outline-secondary")
-                span.glyphicon.glyphicon-th-list
-                    |  Minor 
-                    span.caret
-                ul.dropdown-menu.dropdown-toggle(data-toggle="dropdown")
-                    li
-                        a(href="#") ...
-                    li 
-                        a(href="#") ...
-        div.row
-            p School: (todo)
-        div.row
-            button.btn.btn-default(type='button', data-toggle='dropdown', class="btn btn-outline-secondary")
-                span.glyphicon.glyphicon-th-list
-                    |  School 
-                    span.caret
-                ul.dropdown-menu.dropdown-toggle(data-toggle="dropdown")
-                    li
-                        a(href="#") College of Arts and Sciences
-                    li
-                        a(href="#") Engineering and Applied Sciences
-                    li 
-                        a(href='#') School of Architecture
-        div.row
-            p Curriculum: (todo)
-        div.row
-            button.btn.btn-default(type='button', data-toggle='dropdown', class="btn btn-outline-secondary")
-                span.glyphicon.glyphicon-th-list
-                    |  Curriculum 
-                    span.caret
-                ul.dropdown-menu.dropdown-toggle(data-toggle="dropdown")
-                    li
-                        a(href="#") New College Curriculum
-                    li 
-                        a(href="#") Forums Curriculum
-                    li 
-                        a(href='#') Traditional Curriculum
-                        
-        div.row
-            form(method='POST' action='/search')
-                input#term(type="hidden",value=1192, name="term")
-                div.form-group.form-inline
-        div.row
-            form(method='POST' action='/profile')
-                button.btn.btn-primary(type='submit', onClick='updateUser()') Update                                        
-                        
+        .row
+            .col-md-2.outline
+                .row
+                    h4.center.section-title My Info
+                    hr
+                .row
+                    p Major: Computer Science (B.S.)
+                .row
+                    p 2nd Major: Electrical Engineering
+                .row
+                    p Minor: Mathematics
+                .row
+                    p School of Engineering and Applied Science (SEAS)
+                .row
+                    p Gratuating in 2021
+                .row
+                    a.btn.bg-uva-blue(href="/profile/edit") Edit My Info
+            .col-md-8.outline
+                .row
+                    h4.center.section-title Weekly Schedule for Fall 2019
+            .col-md-2.outline
+                .row
+                    h4.center.section-title Shopping Cart
+                .row
+                    p CS 2150
+                .row
+                    p CS 3710
+        .row
+            .col-md-2.outline
+                .row
+                    h4.center.section-title External Links
+                    hr
+                .row
+                    if(user.enrollmentData.major)
+                        a.btn.bg-uva-orange(style="margin-bottom:4px;width:100%;", href="#") Major Requirements
+                        if(user.enrollmentData.double_major)
+                            a.btn.bg-uva-orange(style="margin-bottom:4px;width:100%;", href="#") 2nd Major Requirements
+                    if(user.enrollmentData.minor)
+                        a.btn.bg-uva-orange(style="margin-bottom:4px;width:100%;", href="#") Minor Requirements
+                    a.btn.bg-uva-orange(style="margin-bottom:4px;width:100%;", href="https://sisuva.admin.virginia.edu/ihprd/signon.html" target="_blank") UVA SIS
+            .col-md-10.outline
+                h3.center.section-title This space for rent

@@ -66,11 +66,16 @@ html {
     min-height: 100%;
 }
 
+body {
+    height: 100%;
+}
+
 footer {
     position: absolute;
     bottom: 0;
+    height: 75px;
     width: 100%;
-    box-shadow: 0 -5px 5px 0 #343a40;
+    box-shadow: 0 -5px 3px 2px #232d4b;
 }
 
 .footer-container {
@@ -91,4 +96,37 @@ footer {
     top: 50%;
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
+}
+
+.bg-uva-blue {
+    background-color: #232d4b;
+    color: #e2e2e2;
+}
+
+.bg-uva-blue:hover {
+    color: white;
+}
+
+.bg-uva-blue a {
+    color: #e2e2e2;
+}
+
+.bg-uva-orange {
+    background-color: #e57200;
+    color: #212529;
+}
+
+.bg-uva-orange:hover {
+    color: black;
+}
+
+.outline {
+    border: 1px solid white;
+}
+
+.section-title {
+    width: 96%;
+    padding-bottom: 2px;
+    border-bottom: 2px inset #212529;
+    transform: translateX(+2%);
 }
