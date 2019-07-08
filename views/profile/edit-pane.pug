@@ -9,8 +9,14 @@ form(method="POST", action=sub_to, style="text-align:center;")
                     input.form-control(type="text" name="displayName", value=user.firstName, placeholder="eg. Alex", required)
                 .form-group
                     label School of Enrollment
-                    input.form-control(type="text", name="school", value=user.enrollmentData.school, placeholder="eg. School of Engineering")
-        .row.form-group
+                    select.form-control(name="school")
+                        if(user.enrollmentData.school == 'SEAS')
+                            option(value="CLAS") College of Arts &amp; Sciences (CLAS)
+                            option(value="SEAS", selected) School of Engineering and Applied Science (SEAS)
+                        else
+                            option(value="CLAS", selected) College of Arts &amp; Sciences (CLAS)
+                            option(value="SEAS") School of Engineering and Applied Science (SEAS)
+        .row
             .col-md-12
                 .row
                     .col-md-6.center
@@ -21,13 +27,35 @@ form(method="POST", action=sub_to, style="text-align:center;")
                             input#double_major(type="checkbox")
                 .row
                     .col-md-12.form-group
-                        select.form-control
-                            each program in programs
-                                option(value=program.name)=program.name
-                        input.form-control(type="text", name="major", value=user.enrollmentData.major, placeholder="eg. Computer Science (B.S.)")
+                        select.form-control#major(name="major")
+                            option(value="--") --
+                            each major in majors
+                                if(user.enrollmentData.major == major.name)
+                                    option(value=major.name, selected)=major.name
+                                else
+                                    option(value=major.name)=major.name
                         div(style="height:5px")
-                        input.form-control.wide#double_major_input(style="display:none;", type="text", name="double_major", value=user.enrollmentData.double_major, placeholder="eg. Electrical Engineering")
-        .form-group
-            label Minor
-            input.form-control(type="text", name="minor", value=user.enrollmentData.minor, placeholder="eg. Applied Mathematics")
+                        select.form-control#double_major_input(style="display:none;", name="double_major")
+                            option(value="--") --
+                            each major in majors
+                                if(user.enrollmentData.double_major == major.name)
+                                    option(value=major.name, selected)=major.name
+                                else
+                                    option(value=major.name)=major.name
+        .row
+            .col-md-12
+                .form-group
+                    label Minor
+                    select.form-control(name="minor")
+                        option(value="--") --
+                        each major in majors
+                            if(user.enrollmentData.minor == major.name)
+                                option(value=major.name, selected)=major.name
+                            else
+                                option(value=major.name)=major.name
+                        each minor in minors
+                            if(user.enrollmentData.minor == minor.name)
+                                option(value=minor.name, selected)=minor.name
+                            else
+                                option(value=minor.name)=minor.name
         button.btn.btn-success(type="submit") Update My Info
