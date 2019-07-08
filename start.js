@@ -9,6 +9,9 @@ var course = require('./routes/course');
 // different templates/pages.
 var express = require('express');
 var session = require('express-session');
+var config = require('./bin/config.js');
+var client = require('redis').createClient(config.redis_url);
+var RedisStore = require('connect-redis')(session);
 var app = express();
 var passport = require('passport');
 var bodyParser = require("body-parser");
@@ -26,6 +29,12 @@ const sessionConfig = {
     signed: true,
     // Todo: store session with Redis. Until this is implemented, auth'ed sessions
     // will have the ability to spontaneously logout.
+    store: new RedisStore({
+        host: config.redis_url,
+        port: '6379',
+        client: client,
+        ttl: 86400
+    })
     //store: new redisStore({ host: 'localhost', port: 6379, client: client,ttl :  260}),
 };
 app.use(session(sessionConfig));
