@@ -107,6 +107,7 @@ mongo.getTerms(termsList =>{
                 new_result.push({
                     subject:results[x].subject,
                     number: results[x].catalog_number,
+                    title: results[x].title,
                     section: [
                         results[x]
                     ]
