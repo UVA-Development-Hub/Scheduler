@@ -28,7 +28,7 @@ form(method="POST", action=sub_to, style="text-align:center;")
                 .row
                     .col-md-12.form-group
                         select.form-control#major(name="major")
-                            option(value="--") --
+                            option(value="") --
                             each major in majors
                                 if(user.enrollmentData.major == major.name)
                                     option(value=major.name, selected)=major.name
@@ -36,7 +36,7 @@ form(method="POST", action=sub_to, style="text-align:center;")
                                     option(value=major.name)=major.name
                         div(style="height:5px")
                         select.form-control#double_major_input(style="display:none;", name="double_major")
-                            option(value="--") --
+                            option(value="") --
                             each major in majors
                                 if(user.enrollmentData.double_major == major.name)
                                     option(value=major.name, selected)=major.name
@@ -47,7 +47,7 @@ form(method="POST", action=sub_to, style="text-align:center;")
                 .form-group
                     label Minor
                     select.form-control(name="minor")
-                        option(value="--") --
+                        option(value="") --
                         each major in majors
                             if(user.enrollmentData.minor == major.name)
                                 option(value=major.name, selected)=major.name
