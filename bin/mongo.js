@@ -177,6 +177,16 @@ function getPrograms(typelist, callback) {
     });
 }
 
+function getProgramInfo(name, callback) {
+    var db = client.db(databases.coursedb);
+    db.collection(databases.programcoll).find({'name': name).toArray().then(data => {
+        console.log('Retrieved program info from Mongo.');
+        callback(program[0]);
+    }).catch(fail => {
+        raiseFailedPromise(fail, 'getProgramInfo', callback);
+    });
+}
+
 ////////////////////////////////////////////////
 //////////////// Module Exports ////////////////
 ////////////////////////////////////////////////
@@ -188,5 +198,6 @@ module.exports = {
     searchTerm,
     getTerms,
     getPrograms,
+    getProgramInfo,
     updateUser
 }
