@@ -8,8 +8,9 @@ block content
                 small
                     small Sign into the UVA Scheduler using one of these providers
         .row
-            a.btn(href='/auth/login')
-                .logo-btn.hover-highlight.form-inline
-                    img(src="https://i.gyazo.com/21f68c897af889dc6120ec663cbb704d.png")
-                    .logo-btn-label
-                        label.flex-item Sign in with Google
+            a.btn.logo-container(href='/auth/login')
+                .logo-btn
+                    .logo-btn-img
+                        img(src="https://i.gyazo.com/21f68c897af889dc6120ec663cbb704d.png")
+                    .logo-btn-label.center
+                        .vertical(style="width:100%;") Sign in with Google
