@@ -2,48 +2,226 @@ extends  ../layout
 
 block customhead
     link(rel="stylesheet", href="/css/tablesorter.theme.blue.css")
+    link(rel="stylesheet", href="/css/course_style_sheet.css")
     script(src='/js/tablesorter.js')
 
 block content
     .container
-        table(id="term_and_id_table" class="terms_and_ids_table tablesorter-blue")
-            thead
-                tr
-                    th Subject
-                    th Catalog Number
-                    th Class Section
-                    th SIS ID
-                    th Class Title
-                    th Instructor
-                    th Enrollment Capacity
-                    th Meeting Days
-                    th Class Starting Time
-                    th Class Ending Time
-                    th Semester Number
-                    th Semester
-            tbody
-                if specific_class
-                    tr
-                        td=specific_class['subject']
-                        td=specific_class['catalog_number']
-                        td=specific_class['section']
-                        td=specific_class['sis_id']
-                        td=specific_class['title']
-                        td=specific_class['instructor']
-                        td=specific_class['enrollment_max']
-                        td=specific_class['days']
-                        td=specific_class['meeting_start']
-                        td=specific_class['meeting_end']
-                        td=specific_class['term_id']
-                        td=specific_class['term_name']
-                else
-                    p
-                        | Results not found
-            style.
-                body {
-                    background-color: White
-                 } 
-                 table {
-                     font-size: 14px
-                 }
+        .row
+            .col-md-4.first_box
+                .row
+                p.center.section-title=specific_class['subject'] + " " + specific_class['catalog_number'] + "-" + specific_class['section']
+            .col-md-6.second_box
+                .row
+                p.center.section-title Empty 
+            .col-md-2.third_box
+                .row
+                p.center.section-title="Capacity:" + " " + specific_class['enrollment_max']
+        .row
+            .col-md-4.fourth_box
+                .row
+                p.center.section-title=specific_class['title']
+            .col-md-7.fifth_box
+                .row
+                p.center.section-title="Instructor:" + " " + specific_class['instructor']
+            .col-md-1.sixth_box
+                p.center.section-title=specific_class['sis_id']
+        .row
+            .col-md-2.seventh_box
+                .row
+                p.center.section-title Empty
+            .col-md-8.center.eigth_box
+                .row
+                p.center.section-title Caldendar
+            .col-md-2.ninth_box
+                .row
+                p.center.section-title Empty
+        .row
+            .col-md-12.tenth_box
+                .row
+                p.center.section-title="Course Description:" + " " + specific_class['desc']        
+        
+    //-     table(id="term_and_id_table" class="terms_and_ids_table tablesorter-blue")
+    //-         thead
+    //-             tr(style="Display:None")
+    //-                 th Subject
+    //-                 th Catalog Number
+    //-                 th Class Section
+    //-                 th SIS ID
+    //-                 th Class Title
+    //-                 th Instructor
+    //-                 th Enrollment Capacity
+    //-                 th Meeting Days
+    //-                 th Class Starting Time
+    //-                 th Class Ending Time
+    //-                 th Semester Number
+    //-                 th Semester
+    //-         tbody
+    //-             if specific_class
+    //-                 tr(style="Display:None")
+    //-                     td=specific_class['subject']
+    //-                     td=specific_class['catalog_number']
+    //-                     td=specific_class['section']
+    //-                     td=specific_class['sis_id']
+    //-                     td=specific_class['title']
+    //-                     td=specific_class['instructor']
+    //-                     td=specific_class['enrollment_max']
+    //-                     td=specific_class['days']
+    //-                     td=specific_class['meeting_start']
+    //-                     td=specific_class['meeting_end']
+    //-                     td=specific_class['term_id']
+    //-                     td=specific_class['term_name']
+    //-             else
+    //-                 p
+    //-                     | Results not found
+    //-         style.
+    //-             body {
+    //-                 background-color: White
+    //-              } 
+    //-              table {
+    //-                  font-size: 14px
+    //-              }
+    //-     div(class="subject").row
+    //-         h6 Subject:
+    //-     div.row
+    //-         td=specific_class['subject']
+    //-     div.row
+    //-         p 
+    //-     div.row
+    //-         h6 Catalog Number:
+    //-     div.row
+    //-         td=specific_class['catalog_number']
+    //-     div.row
+    //-         p
+    //-     div.row
+    //-         h6 Class Title:
+    //-     div.row
+    //-         td=specific_class['title']
+    //-     div.row
+    //-         p
+    //-     div.row
+    //-         h6 Instructor:
+    //-     div.row
+    //-         td=specific_class['instructor']
+    //-     div.row
+    //-         p
+    //-     div.row
+    //-         h6 Class Section:
+    //-     div.row
+    //-         td=specific_class['section']
+    //-     div.row
+    //-         p
+    //-     div.row
+    //-         h6 Semester:
+    //-     div.row
+    //-         td=specific_class['term_name']
+    //-     div.row
+    //-         p
+    //-     div.row
+    //-         h6 Enrollment Capacity
+    //-     div.row
+    //-         td=specific_class['enrollment_max']
+    //-     div.row
+    //-         p
+    //-     div.row
+    //-         h6 Meeting Days:
+    //-     div.row
+    //-         td=specific_class['days']
+    //-     div.row
+    //-         p
+    //-     div.row
+    //-         h6 Class Starting Time:
+    //-     div.row
+    //-         td=specific_class['meeting_start']
+    //-     div.row
+    //-         p
+    //-     div.row
+    //-         h6 Class Ending Time:
+    //-     div.row
+    //-         td=specific_class['meeting_end']
+    //- 
+    //- doctype html
+    //- head
+    //-     title CSS Template
+    //-     meta(charset='utf-8')
+    //-     meta(name='viewport' content='width=device-width, initial-scale=1')
+    //-     style.
+    //-         * {
+    //-         box-sizing: border-box;
+    //-         }
+    //-         body {
+    //-         font-family: Arial, Helvetica, sans-serif;
+    //-         }
+    //-         /* Style the header */
+    //-         header {
+    //-         background-color: #232d4b;
+    //-         padding: 30px;
+    //-         text-align: center;
+    //-         font-size: 35px;
+    //-         color: white;
+    //-         }
+    //-         /* Create two columns/boxes that floats next to each other */
+    //-         nav {
+    //-         float: left;
+    //-         width: 30%;
+    //-         /* height: 300px; /* only for demonstration, should be removed */ */
+    //-         background: #ccc;
+    //-         padding: 20px;
+    //-         }
+    //-         /* Style the list inside the menu */
+    //-         nav ul {
+    //-         list-style-type: none;
+    //-         padding: 0;
+    //-         }
+    //-         article {
+    //-         float: left;
+    //-         padding: 20px;
+    //-         width: 70%;
+    //-         background-color: #f1f1f1;
+    //-         height: 300px; /* only for demonstration, should be removed */
+    //-         }
+    //-         /* Clear floats after the columns */
+    //-         section:after {
+    //-         content: "";
+    //-         display: table;
+    //-         clear: both;
+    //-         }
+    //-         /* Style the f
+    //-         /* Responsive layout - makes the two columns/boxes stack on top of each other instead of next to each other, on small screens */
+    //-         @media (max-width: 600px) {
+    //-         nav, article {
+    //-         width: 100%;
+    //-         height: auto;
+    //-         }
+    //-         }
+    //- header
+    //-     h2 
+    //-     td=specific_class['subject']
+    //-     td=specific_class['catalog_number']
+    //- section
+    //-     nav
+    //-         ul
+    //-             li
+    //-                 p Class 
+    //-             li
+    //-                 p Class
+    //-             li
+    //-                 p Class
+    //-         article
+    //-             h1 Subject
+    //-             p
+    //-               td=specific_class['subject'] 
+    //-             p
+    //-               td=specific_class['days']
+        
+
+
+            
+                
+            
+                
+        
+                 
+                 
+                 
                  
