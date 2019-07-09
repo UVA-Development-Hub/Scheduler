@@ -15,6 +15,7 @@ var RedisStore = require('connect-redis')(session);
 var app = express();
 var passport = require('passport');
 var bodyParser = require("body-parser");
+var cookieParser = require("cookie-parser");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false
@@ -22,6 +23,7 @@ app.use(bodyParser.urlencoded({
 
 app.set('view engine', 'pug'); // tell the app to use pug.js to render our templates
 app.use(express.static('public'));
+app.use(cookieParser());
 const sessionConfig = {
     resave: false,
     saveUninitialized: false,
