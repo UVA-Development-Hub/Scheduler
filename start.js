@@ -10,12 +10,11 @@ var course = require('./routes/course');
 var express = require('express');
 var session = require('express-session');
 var config = require('./bin/config.js');
-var client = require('redis').createClient(config.redis_url);
+//var client = require('redis').createClient();
 var RedisStore = require('connect-redis')(session);
 var app = express();
 var passport = require('passport');
 var bodyParser = require("body-parser");
-var cookieParser = require("cookie-parser");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false
@@ -23,21 +22,18 @@ app.use(bodyParser.urlencoded({
 
 app.set('view engine', 'pug'); // tell the app to use pug.js to render our templates
 app.use(express.static('public'));
-app.use(cookieParser());
 const sessionConfig = {
+    secret: 'sssHHH',
     resave: false,
     saveUninitialized: false,
-    secret: 'sssHHH',
-    signed: true,
     // Todo: store session with Redis. Until this is implemented, auth'ed sessions
     // will have the ability to spontaneously logout.
-    store: new RedisStore({
-        host: config.redis_url,
-        port: '6379',
+    /*store: new RedisStore({
+        host: '192.168.0.140',
+        port: 6379,
         client: client,
-        ttl: 86400
-    })
-    //store: new redisStore({ host: 'localhost', port: 6379, client: client,ttl :  260}),
+        ttl: 260
+    })/**/
 };
 app.use(session(sessionConfig));
 app.use(passport.initialize());
