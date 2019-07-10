@@ -160,11 +160,7 @@ footer {
     transform: translateX(+2%);
 }
 
-button {
-    width: 100px;
-    height: 30px;
-    line-height: 30px;
-    vertical-align: middle;
-    position: relative;
-    font-size: 100px;
+button.pageselector {
+    width: 75px;
+    padding: 10px;
 }
