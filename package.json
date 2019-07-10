@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/UVAMobileDev/Scheduler#readme",
   "dependencies": {
+    "@fullcalendar/core": "^4.2.0",
     "body-parser": "^1.19.0",
     "chart.js": "^2.8.0",
     "connect-redis": "^3.4.1",
@@ -25,6 +26,7 @@
     "dragula": "^3.7.2",
     "express": "^4.17.1",
     "express-session": "^1.16.2",
+    "fullcalendar": "^3.10.0",
     "mongodb": "^3.2.7",
     "node-fetch": "^2.6.0",
     "passport": "^0.4.0",
