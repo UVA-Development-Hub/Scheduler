@@ -3,6 +3,8 @@ extends ../layout
 block customhead
     link(rel="stylesheet", href="/css/tablesorter.theme.blue.css")
     script(src='/js/tablesorter.js')
+    script(src="/js/pagination.js")
+
 
 block content
     .container
@@ -22,8 +24,9 @@ block content
                     th Semester Number
                     th Semester
             tbody
-                each course_term_and_id in course_terms_and_ids
-                    tr
+                - var page = 0
+                each course_term_and_id, index in course_terms_and_ids
+                    tr.paged(page=page)
                         td=course_term_and_id['subject']
                         td=course_term_and_id['catalog_number']
                         td=course_term_and_id['section']
@@ -36,8 +39,24 @@ block content
                         td=course_term_and_id['meeting_end']
                         td=course_term_and_id['term_id']
                         td=course_term_and_id['term_name']
+                    if index % 20 == 19
+                        -page++
         .row    
             if course_terms_and_ids.length == 0
                 p
                     | Results not found
+        .row
+            #max_page_div(max_page = page)
+            button.btn.btn-primary(type='submit', onClick="previousPage()") Previous
+            button.btn.btn-primary.pageselector
+            button.btn.btn-primary.pageselector
+            button.btn.btn-primary.pageselector
+            button.btn.btn-primary.pageselector
+            button.btn.btn-primary.pageselector
+            button.btn.btn-primary.pageselector
+            button.btn.btn-primary.pageselector
+            button.btn.btn-primary.pageselector
+            button.btn.btn-primary.pageselector
+            button.btn.btn-primary.pageselector
+            button.btn.btn-primary(type='submit', onClick="nextPage()") Next
             
