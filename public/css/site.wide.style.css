@@ -158,3 +158,12 @@ footer {
     border-bottom: 2px inset #212529;
     transform: translateX(+2%);
 }
+
+button {
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    vertical-align: middle;
+    position: relative;
+    font-size: 100px;
+}
