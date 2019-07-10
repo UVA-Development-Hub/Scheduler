@@ -10,13 +10,13 @@ block content
         .row
             .col-md-4.first_box
                 .row
-                p.center.section-title=specific_class['subject'] + " " + specific_class['catalog_number'] + "-" + specific_class['section']
+                p.center=specific_class['subject'] + " " + specific_class['catalog_number'] + "-" + specific_class['section']
             .col-md-6.second_box
                 .row
-                p.center.section-title Empty 
+                p.center 
             .col-md-2.third_box
                 .row
-                p.center.section-title="Capacity:" + " " + specific_class['enrollment_max']
+                p.center="Capacity:" + " " + specific_class['enrollment_max']
         .row
             .col-md-4.fourth_box
                 .row
@@ -29,17 +29,21 @@ block content
         .row
             .col-md-2.seventh_box
                 .row
-                p.center.section-title Empty
+                p.center
             .col-md-8.center.eigth_box
                 .row
-                p.center.section-title Caldendar
+                p.center Caldendar
             .col-md-2.ninth_box
                 .row
-                p.center.section-title Empty
+                p.center
         .row
             .col-md-12.tenth_box
                 .row
-                p.center.section-title="Course Description:" + " " + specific_class['desc']        
+                p.center="Course Description:" + " " + specific_class['desc']
+        .row
+            .col-md-12.eleventh_box
+                .row
+                p.center="Grade Data:"        
         
     //-     table(id="term_and_id_table" class="terms_and_ids_table tablesorter-blue")
     //-         thead
