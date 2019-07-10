@@ -9,5 +9,6 @@
 }
 
 .third_section{
-    text-align: center;
+    text-align: auto;
+    font-size: 20px;
 }
