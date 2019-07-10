@@ -24,6 +24,18 @@ router.get('/new', (req, res) => {
     }
 });
 
+router.get('/edit', (req, res) => {
+    if(req.session.user) {
+        res.render('profile/edit'), {
+            title: 'Edit My Details',
+            user: req.session.user
+        }
+    } else {
+        req.query.return = '/profile/edit';
+        res.redirect('/auth/login');
+    }
+});
+
 // Handle the information sumbission by updating the user's info
 router.post('/new', (req, res) => {
     if(req.session.user) {
@@ -36,7 +48,7 @@ router.post('/new', (req, res) => {
                 minor: req.body.minor
             }
         };
-        mongo.updateUser(req.session.user._id, specifiers, done => {
+        mongo.updateUser(req.session.user._id, specifiers, () => {
             // Update the user stored in session
             mongo.getOneUser(req.session.user._id, user => {
                 req.session.user = user;
@@ -48,6 +60,25 @@ router.post('/new', (req, res) => {
         res.redirect('/auth/login');
     }
 });
+
+router.post('/edit', (req, res) => {
+    var specifiers = {
+        displayName: req.body.displayName,
+        enrollmentData: {
+            school: req.body.school,
+            major: req.body.major,
+            double_major: req.body.double_major,
+            minor: req.body.minor
+        }
+    };
+    mongo.updateUser(req.session.user._id, specifiers, () => {
+        mongo.getOneUser(req.session.user._id, user => {
+            req.session.user = user;
+            res.redirect('/profile');
+        });
+    });
+});
+
 
 router.get('/', (req, res) => {
     if (req.session.user) {
