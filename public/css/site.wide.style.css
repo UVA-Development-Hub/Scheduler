@@ -72,6 +72,7 @@ input {
 
 html {
     position: relative;
+    height: 100%;
     background-color: #232d4b;
 }
 
