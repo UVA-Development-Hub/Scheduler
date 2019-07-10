@@ -10,7 +10,10 @@ html
         script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js")
         script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js")
         script(src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js")
-        title=title + ' | UVA Scheduler'
+        if(title)
+            title=title + ' | UVA Scheduler'
+        else
+            title=' | UVA Scheduler'
         block customhead
     body
         // Navigation bar
@@ -30,18 +33,17 @@ html
                         a.dropdown-item Link 3
             div(style="position:absolute; right:20px")
                 if(user)
-                    // User is logged in
-                    button.btn(onclick="$('#profile-menu').toggle('slow');return false;")
+                    a(onclick="$('#profile-menu').toggle('slow');return false;")
                         img.rounded-circle.hover-highlight(src=user.profileImg, style="max-width:35px")
                     div.appearing-box(style="position:fixed;top:60;right:0;")
                         #profile-menu.bg-light(style="display:none;border-radius:10px;padding:10px;")
-                            a(href="/profile")
+                            a.btn.btn-elegant(href="/profile", style="width:90px;padding:5px;")
                                 small My Profile
                             br
-                            a(href="#")
-                                small View Details
+                            a.btn.btn-elegant(href="/profile/edit", style="width:90px;padding:5px;")
+                                small Edit Details
                             br
-                            a(href="/logout")
+                            a.btn.btn-elegant(href="/logout", style="width:90px;padding:5px;")
                                 small Logout
                 else if(title != 'Login')
                     // User is not logged in and we're not on the login page, show a login button

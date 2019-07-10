@@ -17,7 +17,7 @@ var passport = require('passport');
 var bodyParser = require("body-parser");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-    extended: false
+    extended: true
 }));
 
 app.set('view engine', 'pug'); // tell the app to use pug.js to render our templates

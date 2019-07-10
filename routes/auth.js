@@ -20,6 +20,7 @@ router.get('/google/callback',
 
     (req, res) => {
         // Redirects to the last accessed url or to the profile page
+        console.log(req.session.oauth2return);
         const redirect = req.session.oauth2return || '/profile';
         delete req.session.oauth2return;
         req.session.user = req.user;
