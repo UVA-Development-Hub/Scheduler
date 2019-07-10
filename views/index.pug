@@ -1,72 +1,39 @@
 extends layout
 
 block customhead
-    link(rel="stylesheet", href="/css/tablesorter.theme.blue.css")
+    //- link(rel="stylesheet", href="/css/tablesorter.theme.blue.css")
     script(src='/js/tablesorter.js')
     script(src="/js/pagination.js")
+    link(rel="stylesheet", href="/css/index.css")
+
 
 block content
     .container
         .row
-            h3 Welcome to the app's homepage!
+            .col-md-2
+            .col-md-4.first_section
+                h1.center.section-title UVA Scheduler
+                h4 Designed to integrate Lous List with scheduling tools. The UVA Scheduler makes signing up for classes a breeze.
+            .col-md-1
+            .col-md-4.second_section
+                a.btn.bg-uva-blue(href="/course") Browse Catalog
+                .row
+                a.btn.bg-uva-blue(href="/index") Explore Subjects
+                .row
+                a.btn.bg-uva-blue(href="/login") Login or Sign Up
         .row
-            p If you look in views/index.pug, you can see how this page was rendered dynamically using pug.js and pug templates.
+            p
         .row
-            p Familiarity with bootstrap is helpful, as you'll be able to more easily decipher how these templates are structured.
-
-        script.
-            $(function() {
-                $("#main_table").tablesorter();
-            });
-
-
-        table(id="main_table" class="uva_classes_table tablesorter-blue")
-            thead
-                tr
-                    th Subject
-                    th Catalog Number
-                    th Class Section
-                    th Class Number
-                    th Class Title
-                    th Class Topic
-                    th Instructor
-                    th Enrollment Capacity
-                    th Meeting Days
-                    th Class Starting Time
-                    th Class Ending Time
-                    th Semester Number
-                    th Semester
-            tbody
-                - var page = 0
-                each uva_class, index in uva_classes
-                    tr.paged(page=page, style=("display:None"))
-                        td=uva_class[0]
-                        td=uva_class[1]
-                        td=uva_class[2]
-                        td=uva_class[3]
-                        td=uva_class[4]
-                        td=uva_class[5]
-                        td=uva_class[6]
-                        td=uva_class[7]
-                        td=uva_class[8]
-                        td=uva_class[9]
-                        td=uva_class[10]
-                        td=uva_class[11]
-                        td=uva_class[12]
-                    if index % 20 == 19
-                        -page++
+            p
         .row
-            #max_page_div(max_page = page)
-            button.btn.btn-primary(type='submit', onClick="previousPage()") Previous
-            // 10 Buttons to select pages. These 10 never change.
-            button.btn.btn-primary.pageselector
-            button.btn.btn-primary.pageselector
-            button.btn.btn-primary.pageselector
-            button.btn.btn-primary.pageselector
-            button.btn.btn-primary.pageselector
-            button.btn.btn-primary.pageselector
-            button.btn.btn-primary.pageselector
-            button.btn.btn-primary.pageselector
-            button.btn.btn-primary.pageselector
-            button.btn.btn-primary.pageselector
-            button.btn.btn-primary(type='submit', onClick="nextPage()") Next
+            .col-md-4
+                p 
+            .col-md-4.third_section
+                h1.center.section-title How it works
+                ol
+                    li Find the classes you want
+                    li Add them to your cart
+                    li Use one of them to export tools to load your scheduler into SIS!
+                //- h3.center 1) Find the classes you want
+                //- h3.center 2) Add them to your cart
+                //- h3.center 3) Use one of them to export tools to load your scheduler into SIS!
