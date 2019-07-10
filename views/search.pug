@@ -5,7 +5,7 @@ block content
             p Course Search
         div.row 
             form(method='POST' action='/search')
-                input#term(type="hidden",value=1192, name="term")
+                input#term(type="hidden", name="term")
                 .form-group.form-inline
                     select#semester
                         each term in terms
@@ -57,7 +57,44 @@ block content
                 i.fas.fa-angle-down
             div(style="display:none;")
                 each course in result.section
-                    p=course.section+" "+course.instructor
+                    .row
+                        .col-md-4.first_box
+                            .row
+                            p.center=course.subject + " " + course.catalog_number + "-" + course.section
+                        .col-md-6.second_box
+                            .row
+                            p.center 
+                        .col-md-2.third_box
+                            .row
+                            p.center="Capacity:" + " " + course.enrollment_max
+                    .row
+                        .col-md-4.fourth_box
+                            .row
+                            p.center.section-title=course.title
+                        .col-md-7.fifth_box
+                            .row
+                            p.center.section-title="Instructor:" + " " + course.instructor
+                        .col-md-1.sixth_box
+                            p.center.section-title=course.sis_id
+                    .row
+                        .col-md-2.seventh_box
+                            .row
+                            p.center
+                        .col-md-8.center.eigth_box
+                            .row
+                            p.center Caldendar
+                        .col-md-2.ninth_box
+                            .row
+                            p.center
+                    .row
+                        .col-md-12.tenth_box
+                            .row
+                            p.center="Course Description:" + " " + course.desc
+                    .row
+                        .col-md-12.eleventh_box
+                            .row
+                            p.center="Grade Data:"
+                    //p=course.section+" "+course.instructor
     // Inline scrips go at the end to decrease page loading time
     script.
         function toggleDays(id) {
