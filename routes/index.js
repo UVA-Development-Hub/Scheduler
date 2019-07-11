@@ -53,76 +53,69 @@ router.get('/search', function(req, res){
 });
 
 router.post('/search', function(req, res){
-    //console.log(req.body.monday);
     var thedays = [
-       req.body.monday, // assume for now these are true or false (checked or not)
+       req.body.monday,
        req.body.tuesday,
        req.body.wednesday,
        req.body.thursday,
        req.body.friday,
        req.body.saturday,
-    ];
-    var daynames = [
-   'M',
-   'T',
-   'W',
-   'R',
-   'F',
-   'S'
-];
-var dayinput = '';
+   ], daynames = [
+       'M',
+       'T',
+       'W',
+       'R',
+       'F',
+       'S'
+   ], dayinput = '',
+   tosubmit = {};
 
-thedays.forEach((checkbox, index) => {
-   if(checkbox) dayinput = dayinput + daynames[index];
-});
+    thedays.forEach((checkbox, index) => {
+       if(checkbox) dayinput = dayinput + daynames[index];
+    });
 
-var tosubmit = {};
-if(req.body.subject != '') tosubmit.subject = req.body.subject;
-if(dayinput != '') tosubmit.days = dayinput;
+    if(req.body.subject != '') tosubmit.subject = req.body.subject.toUpperCase();
+    if(dayinput != '') tosubmit.days = dayinput;
     console.log(tosubmit);
 
-function tocompare(courseList,course){
-    var ret=-1;
-    for(i=0;i<courseList.length;i++){
-        if(course.subject===courseList[i].subject && course.catalog_number===courseList[i].number){
-            ret=i;
-            break;
+    function tocompare(courseList,course){
+        var ret=-1;
+        for(i=0;i<courseList.length;i++){
+            if(course.subject === courseList[i].subject && course.catalog_number === courseList[i].number){
+                ret=i;
+                break;
+            }
         }
+        return ret;
     }
-    return ret;
-}
 
-
-mongo.getTerms(termsList =>{
-    //console.log('term: ' + req.body.term_id);
-    mongo.searchTerm(req.body.term_id, tosubmit, results => {
-        var new_result=[];
-        //new_result
-        var itemIndex=0;
-        for (x = 0; x < results.length; x++){
-            itemIndex=tocompare(new_result,results[x]);
-            if(itemIndex>-1){
-                new_result[itemIndex].section.push(results[x]);
+    mongo.getTerms(termsList => {
+        //console.log('term: ' + req.body.term_id);
+        mongo.searchTerm(req.body.term_id, tosubmit, results => {
+            var new_result = [],
+                itemIndex = 0;
+            for (x = 0; x < results.length; x++){
+                itemIndex = tocompare(new_result,results[x]);
+                if(itemIndex > -1) new_result[itemIndex].section.push(results[x]);
+                else {
+                    new_result.push({
+                        subject:results[x].subject,
+                        number: results[x].catalog_number,
+                        title: results[x].title,
+                        section: [
+                            results[x]
+                        ]
+                    });
+                }
             }
-            else{
-                new_result.push({
-                    subject:results[x].subject,
-                    number: results[x].catalog_number,
-                    title: results[x].title,
-                    section: [
-                        results[x]
-                    ]
-                });
-            }
-        }
 
-        res.render('search', {
-            title : 'Search Page',
-            terms: termsList,
-            results: new_result
+            res.render('search', {
+                title : 'Search Page',
+                terms: termsList,
+                results: new_result
+            });
         });
     });
-});
 });
 
 
