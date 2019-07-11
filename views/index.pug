@@ -8,29 +8,29 @@ block customhead
 
 
 block content
-    .container
+    div
+        div(style="position:absolute;left:0;width:100%;min-height:350px;height:100%;overflow:hidden;")
+            img(src="https://i.gyazo.com/3325793b9d5d1f212eefdcd729c178d9.jpg", style="height:100%-15px;position:absolute;left:-10%")
+        .container(style="padding-top:25px")
+            .row
+                .col-md-2
+                .col-md-4.first_section.uva-text-white
+                    h1.center.section-title UVA Scheduler
+                    p Designed to integrate Lous List with scheduling tools. The UVA Scheduler makes signing up for classes a breeze.
+                .col-md-1
+                .col-md-4.second_section
+                    a.btn.bg-uva-orange(href="/course", style="width:250px;") Browse Catalog
+                    a.btn.bg-uva-orange(href="/index", style="width:250px;") Explore Subjects
+                    a.btn.bg-uva-orange(href="/login", style="width:250px;") Login or Sign Up
+    .container.uva-text-white
         .row
             .col-md-2
-            .col-md-4.first_section
-                h1.center.section-title UVA Scheduler
-                p Designed to integrate Lous List with scheduling tools. The UVA Scheduler makes signing up for classes a breeze.
-            .col-md-1
-            .col-md-4.second_section
-                a.btn.bg-uva-blue(href="/course") Browse Catalog
-                .row
-                a.btn.bg-uva-blue(href="/index") Explore Subjects
-                .row
-                a.btn.bg-uva-blue(href="/login") Login or Sign Up
-        .row
-            .col-md-4
-                p 
-            .col-md-4.third_section
-                
-                h1.center.section-title How it works
+            .col-md-4.center
+                h1.section-title How it works
                 ol
                     li Find the classes you want
                     li Add them to your cart
                     li Use one of them to export tools to load your scheduler into SIS!
-                //- h3.center 1) Find the classes you want
-                //- h3.center 2) Add them to your cart
-                //- h3.center 3) Use one of them to export tools to load your scheduler into SIS!
+            .col-md-2
+            .col-md-2.fourth_section
+                img.image(src="https://hhaexchange.com/wp-content/uploads/2018/07/Scheduling-and-Referrals.svg")

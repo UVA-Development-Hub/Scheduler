@@ -140,6 +140,16 @@ footer {
     color: #e2e2e2;
 }
 
+.bg-uva-blue.btn {
+    padding-left: .90em;
+    padding-right: .90em;
+}
+
+.uva-text-white {
+    color: white;
+    text-shadow: 0 0 2px #636363, 0 0 2px #636363, 0 0 2px #636363;
+}
+
 .bg-uva-orange {
     background-color: #e57200;
     color: #212529;
@@ -147,6 +157,11 @@ footer {
 
 .bg-uva-orange:hover {
     color: black;
+}
+
+.bg-uva-orange.btn {
+    padding-left: .90em;
+    padding-right: .90em;
 }
 
 .outline {
