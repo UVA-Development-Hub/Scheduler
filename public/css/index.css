@@ -1,14 +1,27 @@
-.first_section{
+#home_description{
     text-align: center;
     line-height: 1.8;
 }
 
-.second_section{
+#home_buttons{
     text-align: center;
     line-height: 10;
 }
 
-.third_section{
-    text-align: auto;
+#site_information{
     font-size: 20px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+#calendar_image{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+@media (max-width:1024px) {
+  #calendar_image {
+    display: none;
+  }
 }

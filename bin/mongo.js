@@ -8,6 +8,7 @@ var config = require('./config.js'),
         coursedb: 'course_data',
         termcoll: 'terms',
         programcoll: 'programs',
+        gradesdb: 'course_grades'
     },
     mongo_options = {
         useNewUrlParser: true,
@@ -188,6 +189,20 @@ function getProgramInfo(name, callback) {
 }
 
 ////////////////////////////////////////////////
+////////////// Grade Distribution //////////////
+////////////////////////////////////////////////
+
+function searchGrades(subject, number, callback) {
+    var db = client.db(databases.gradesdb);
+    db.collection(subject).find(number).toArray().then(results => {
+        console.log("Retrieved search results");
+        callback(results);
+    }).catch(fail => {
+        raiseFailedPromise(fail, 'searchGrades', callback);
+    });
+}
+
+////////////////////////////////////////////////
 //////////////// Module Exports ////////////////
 ////////////////////////////////////////////////
 module.exports = {
@@ -199,5 +214,6 @@ module.exports = {
     getTerms,
     getPrograms,
     getProgramInfo,
-    updateUser
+    updateUser,
+    searchGrades
 }
