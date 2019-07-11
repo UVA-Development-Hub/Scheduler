@@ -72,24 +72,26 @@ router.post('/search', function(req, res){
        req.body.thursday,
        req.body.friday,
        req.body.saturday,
-   ], daynames = [
-       'M',
-       'T',
-       'W',
-       'R',
-       'F',
-       'S'
-   ], dayinput = '',
-   tosubmit = {};
+    ],
+        daynames = [
+           'M',
+           'T',
+           'W',
+           'R',
+           'F',
+           'S'
+    ],
+        dayinput = '',
+        tosubmit = {};
 
     thedays.forEach((checkbox, index) => {
-       if(checkbox) dayinput = dayinput + daynames[index];
+        if(checkbox) dayinput = dayinput + daynames[index];
     });
 
     if(req.body.subject != '') tosubmit.subject = req.body.subject.toUpperCase();
     if(dayinput != '') tosubmit.days = dayinput;
     console.log(tosubmit);
-if (req.body.catalog_number !='') tosubmit.catalog_number =req.body.catalog_number;
+    if (req.body.catalog_number !='') tosubmit.catalog_number =req.body.catalog_number;
 
     function tocompare(courseList,course){
         var ret=-1;
@@ -106,7 +108,7 @@ if (req.body.catalog_number !='') tosubmit.catalog_number =req.body.catalog_numb
         //console.log('term: ' + req.body.term_id);
         mongo.searchTerm(req.body.term_id, tosubmit, results => {
             var new_result = [],
-                itemIndex = 0;
+            itemIndex = 0;
             for (x = 0; x < results.length; x++){
                 itemIndex = tocompare(new_result,results[x]);
                 if(itemIndex > -1) new_result[itemIndex].section.push(results[x]);
@@ -122,11 +124,12 @@ if (req.body.catalog_number !='') tosubmit.catalog_number =req.body.catalog_numb
                 }
             }
 
-        res.render('search', {
-            title : 'Search Page',
-            terms: termsList,
-            results: new_result,
-            input: req.body
+            res.render('search', {
+                title : 'Search Page',
+                terms: termsList,
+                results: new_result,
+                input: req.body
+            });
         });
     });
 });
