@@ -47,7 +47,19 @@ router.get('/search', function(req, res){
         res.render('search', {
             title : 'Search Page',
             terms: termsList,
-            results:[]
+            results:[],
+            input: {
+                'subject': '',
+                'catalog_number': '',
+                'classTitle' :'',
+                'instructor' : '',
+                'monday' : false,
+                'tuesday' : false,
+                'wednesday' : false,
+                'thursday' : false,
+                'friday' : false,
+                'saturday' : false,
+            }
         });
     });
 });

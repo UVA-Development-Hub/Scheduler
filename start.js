@@ -8,7 +8,7 @@ var course = require('./routes/course');
 // Create the app, which is used to route user requests around the
 // different templates/pages.
 var express = require('express');
-var session = require('express-session');
+var session = require('cookie-session');
 var config = require('./bin/config.js');
 //var client = require('redis').createClient();
 var RedisStore = require('connect-redis')(session);
