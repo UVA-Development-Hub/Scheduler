@@ -66,31 +66,31 @@ html
         .footer-container.bg-uva-blue
             pre &nbsp;
             .container
-                .row
-                    .col-md-10
+                .row.center
+                    .col-sm-10
                         small.row
-                            .col-md-4
-                                .row
+                            .col-sm-4
+                                .col-sm-12
                                     a(href="#") Home
-                                .row
+                                .col-sm-12
                                     a(href="#") Course Search
-                            .col-md-4
-                                .row
+                            .col-sm-4
+                                .col-sm-12
                                     a(href="#") My Requirements
-                                .row
+                                .col-sm-12
                                     a(href="#") Suggested Courses
-                            .col-md-4
+                            .col-sm-4
                                 if(user)
-                                    .row
+                                    .col-sm-12
                                         a(href="/profile") My Profile
                                 else
-                                    .row
+                                    .col-sm-12.center
                                         a(href="/login") Sign in
-                                .row
+                                .col-sm-12
                                     a(href="#") Privacy Policy
-                                .row
+                                .col-sm-12
                                     a(href="#") Cookie Usage
-                    .col-md-2
+                    .col-sm-2
                         a(href="https://devhub.virginia.edu", title="Powered by UVA DevHub", target="_blank")
                             img(style="max-width:100px", src="https://i.gyazo.com/09b896c7508bacdbf445ac6d13f3375f.png")
                 
