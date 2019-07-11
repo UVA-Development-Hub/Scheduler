@@ -130,19 +130,9 @@ mongo.getTerms(termsList =>{
 
 // This is the base landing page. It's always the LAST definition
 router.use('/', function(req, res, next) {
-    var all_classes;
-    const url = 'https://api.devhub.virginia.edu/v1/courses';
-    fetch(url)
-    	.then((resp) => resp.json())
-    	.then(function(data) {
-            all_classes = data['class_schedules']['records'];
-            res.render('index', {
-                uva_classes: all_classes
-            });
-		}).catch(function(error) {
-			console.log('Fetch failed!');
-			res.send('Could not retrieve API data');
-    	});
+    res.render('index', {
+        title: 'Home'
+    });
 });
 
 

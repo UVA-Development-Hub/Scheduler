@@ -6,6 +6,7 @@ html
         link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css", integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T", crossorigin="anonymous")
         link(rel="stylesheet", href="https://use.fontawesome.com/releases/v5.7.0/css/all.css", integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ", crossorigin="anonymous")
         link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.3/css/mdb.min.css")
+        link(rel="stylesheet", href="https://fonts.googleapis.com/icon?family=Material+Icons")
         link(rel="stylesheet", href="/css/site.wide.style.css", type="text/css")
         script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js")
         script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js")
@@ -18,37 +19,47 @@ html
     body
         // Navigation bar
         nav.navbar.navbar-expand-sm.bg-uva-blue
-            a.navbar-brand
-                a(href="/", title="Home | UVA Scheduler")
-                    img(style="max-height:30px", src="https://i.gyazo.com/55937316dfda0a175f02c0dc79845bd0.png")
-            ul.navbar-nav
-                li.nav-item
-                    a.nav-link(href="/") Home
-                li.nav-item
-                    a.nav-link(href="/search") Search
-                //li.nav-item.dropdown
-                    a.nav-link.dropdown-toggle(href="#", data-toggle="dropdown") Dropdown Link
-                    .dropdown-menu
-                        a.dropdown-item Link 4
-                        a.dropdown-item Link 3
-            div(style="position:absolute; right:20px")
-                if(user)
-                    a(onclick="$('#profile-menu').toggle('slow');return false;")
-                        img.rounded-circle.hover-highlight(src=user.profileImg, style="max-width:35px")
-                    div.appearing-box(style="position:fixed;top:60;right:0;")
-                        #profile-menu.bg-light(style="display:none;border-radius:10px;padding:10px;")
-                            a.btn.btn-elegant(href="/profile", style="width:90px;padding:5px;")
-                                small My Profile
-                            br
-                            a.btn.btn-elegant(href="/profile/edit", style="width:90px;padding:5px;")
-                                small Edit Details
-                            br
-                            a.btn.btn-elegant(href="/logout", style="width:90px;padding:5px;")
-                                small Logout
-                else if(title != 'Login')
-                    // User is not logged in and we're not on the login page, show a login button
-                    a.btn.btn-primary(role="button", href="/login") Login
-
+            a.navbar-brand(href='/', title="Home | UVA Scheduler")
+                img(style="max-height:30px", src="https://i.gyazo.com/55937316dfda0a175f02c0dc79845bd0.png")
+            button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarSupportedContent-555' aria-controls='navbarSupportedContent-555' aria-expanded='false' aria-label='Toggle navigation')
+                span.navbar-toggler-icon
+                    i.fas.fa-bars.vertical(style="color:white;")
+            #navbarSupportedContent-555.collapse.navbar-collapse
+                ul.navbar-nav.mr-auto
+                    li.nav-item.active
+                        a.nav-link(href='#')
+                            | Home
+                            span.sr-only (current)
+                    li.nav-item
+                        a.nav-link(href='#')
+                            | Search
+                    li.nav-item
+                        a.nav-link(href='#')
+                            | Explore
+                    //li.nav-item.dropdown
+                        a#navbarDropdownMenuLink-555.nav-link.dropdown-toggle(data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+                            | Dropdown
+                        .dropdown-menu.dropdown-secondary(aria-labelledby='navbarDropdownMenuLink-555')
+                            a.dropdown-item(href='#') Action
+                            a.dropdown-item(href='#') Another action
+                            a.dropdown-item(href='#') Something else here
+                ul.navbar-nav.ml-auto.nav-flex-icons
+                    // -- Creates a "messages" sort of icon -- li.nav-item
+                        a.nav-link.waves-effect.waves-light
+                            | 1
+                            i.fas.fa-envelope
+                    if(user)
+                        li.nav-item.avatar.dropdown
+                            a#navbarDropdownMenuLink-55.nav-link.dropdown-toggle(data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+                                img.rounded-circle.z-depth-0(src=user.profileImg alt='avatar image' style="max-width:30px;")
+                                .dropdown-menu.dropdown-menu-lg-right.dropdown-secondary(aria-labelledby='navbarDropdownMenuLink-55')
+                                    a.dropdown-item(href='/profile') My Profile
+                                    a.dropdown-item(href='/profile/edit') Edit My Details
+                                    a.dropdown-item(href='/logout') Logout
+                    else if(title != 'Login')
+                        li.nav-item
+                            a.nav-link.btn.bg-uva-orange(href="/login")
+                                | Login
         // Page content
         block content
     footer
