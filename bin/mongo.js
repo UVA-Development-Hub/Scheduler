@@ -214,5 +214,6 @@ module.exports = {
     getTerms,
     getPrograms,
     getProgramInfo,
-    updateUser
+    updateUser,
+    searchGrades
 }

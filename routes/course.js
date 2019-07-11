@@ -33,11 +33,16 @@ router.get('/:term/:id', (req, res) => {
         });
     }
     else {
-        mongo.searchTerm(req.params.term, {'sis_id': parseInt(req.params.id)}, data => {
-            /*mongo.searchGrades(, grades => {
-
-            });/**/
+      mongo.searchTerm(req.params.term, {'sis_id': parseInt(req.params.id)}, data => {
+        console.log(data[0]['subject'], data[0]['catalog_number'])
+        mongo.searchGrades(data[0]['subject'], data[0]['catalog_number'], grades => {
+          //res.send(grades);
+          res.render('course/term_and_id', {
+            specific_class: data[0],
+            grades: grades[0]
+          });
         });
+      });
     }
 
     // if (isNan(req.params.term) && isNan(req.params.id)) {
