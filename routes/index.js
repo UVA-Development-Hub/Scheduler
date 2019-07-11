@@ -53,7 +53,6 @@ router.get('/search', function(req, res){
                 'catalog_number': '',
                 'classTitle' :'',
                 'instructor' : '',
-                'terms' : '',
                 'monday' : false,
                 'tuesday' : false,
                 'wednesday' : false,
@@ -102,32 +101,6 @@ if (req.body.catalog_number !='') tosubmit.catalog_number =req.body.catalog_numb
         }
         return ret;
     }
-<<<<<<< HEAD
-    return ret;
-}
-
-
-mongo.getTerms(termsList =>{
-    //;.console.log('term: ' + req.body.term_id);
-    mongo.searchTerm(req.body.term_id, tosubmit, results => {
-        var new_result=[];
-        //new_result
-        var itemIndex=0;
-        for (x = 0; x < results.length; x++){
-            itemIndex=tocompare(new_result,results[x]);
-            if(itemIndex>-1){
-                new_result[itemIndex].section.push(results[x]);
-            }
-            else{
-                new_result.push({
-                    subject:results[x].subject,
-                    number: results[x].catalog_number,
-                    title: results[x].title,
-                    section: [
-                        results[x]
-                    ]
-                });
-=======
 
     mongo.getTerms(termsList => {
         //console.log('term: ' + req.body.term_id);
@@ -147,22 +120,13 @@ mongo.getTerms(termsList =>{
                         ]
                     });
                 }
->>>>>>> 30b07bb34818732849bf06f99486bf9a7cb8fe14
             }
 
-<<<<<<< HEAD
         res.render('search', {
             title : 'Search Page',
             terms: termsList,
             results: new_result,
             input: req.body
-=======
-            res.render('search', {
-                title : 'Search Page',
-                terms: termsList,
-                results: new_result
-            });
->>>>>>> 30b07bb34818732849bf06f99486bf9a7cb8fe14
         });
     });
 });
