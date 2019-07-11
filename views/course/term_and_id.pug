@@ -2,37 +2,36 @@ extends  ../layout
 
 block customhead
     link(rel="stylesheet", href="/css/tablesorter.theme.blue.css")
-    link(rel="stylesheet", href="/css/course_style_sheet.css")
     script(src='/js/tablesorter.js')
 
 block content
-    .container
+    .container(style="font-size: 20px")
         .row
-            .col-md-4.first_box
+            .col-md-4
                 p.center=specific_class['subject'] + " " + specific_class['catalog_number'] + "-" + specific_class['section']
-            .col-md-6.second_box
+            .col-md-6
                 p.center 
-            .col-md-2.third_box
+            .col-md-2
                 p.center="Capacity:" + " " + specific_class['enrollment_max']
         .row
-            .col-md-4.fourth_box
+            .col-md-4
                 p.center.section-title=specific_class['title']
-            .col-md-7.fifth_box
+            .col-md-7
                 p.center.section-title="Instructor:" + " " + specific_class['instructor']
-            .col-md-1.sixth_box
+            .col-md-1
                 p.center.section-title=specific_class['sis_id']
         .row
-            .col-md-2.seventh_box
+            .col-md-2
                 p.center
-            .col-md-8.center.eigth_box
+            .col-md-8.center
                 p.center Caldendar
-            .col-md-2.ninth_box
+            .col-md-2
                 p.center
         .row
-            .col-md-12.tenth_box
+            .col-md-12
                 p.center="Course Description:" + " " + specific_class['desc']
         .row
-            .col-md-12.eleventh_box
+            .col-md-12
                 p.center="Grade Data:" 
 
             
