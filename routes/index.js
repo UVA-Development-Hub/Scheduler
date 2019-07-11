@@ -44,7 +44,6 @@ router.get('/css/tablesorter.theme.blue.css', function(req, res) {
 router.get('/search', function(req, res){
     // Get the terms list so you can pick a semester
     mongo.getTerms(termsList => {
-        console.log(termsList);
         res.render('search', {
             title : 'Search Page',
             terms: termsList,
