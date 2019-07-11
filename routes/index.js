@@ -48,7 +48,20 @@ router.get('/search', function(req, res){
         res.render('search', {
             title : 'Search Page',
             terms: termsList,
-            results:[]
+            results:[],
+            input: {
+                'subject': '',
+                'catalog_number': '',
+                'classTitle' :'',
+                'instructor' : '',
+                'terms' : '',
+                'monday' : false,
+                'tuesday' : false,
+                'wednesday' : false,
+                'thursday' : false,
+                'friday' : false,
+                'saturday' : false,
+            }
         });
     });
 });
@@ -81,6 +94,7 @@ var tosubmit = {};
 if(req.body.subject != '') tosubmit.subject = req.body.subject;
 if(dayinput != '') tosubmit.days = dayinput;
     console.log(tosubmit);
+if (req.body.catalog_number !='') tosubmit.catalog_number =req.body.catalog_number;
 
 function tocompare(courseList,course){
     var ret=-1;
@@ -95,7 +109,7 @@ function tocompare(courseList,course){
 
 
 mongo.getTerms(termsList =>{
-    //console.log('term: ' + req.body.term_id);
+    //;.console.log('term: ' + req.body.term_id);
     mongo.searchTerm(req.body.term_id, tosubmit, results => {
         var new_result=[];
         //new_result
@@ -120,7 +134,8 @@ mongo.getTerms(termsList =>{
         res.render('search', {
             title : 'Search Page',
             terms: termsList,
-            results: new_result
+            results: new_result,
+            input: req.body
         });
     });
 });

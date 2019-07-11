@@ -17,15 +17,18 @@ block content
                         .form-group.form-inline
                             label(for='semester', style= "margin-right:10px;") Search Courses From 
                             select#semester.form-control(type='text', placeholder='' name='term_id')
-                                each term in terms
-                                    option(value=term.term_id)=term.name
+                                each term,i in terms
+                                    if i==terms.length-1
+                                        option(value=term.term_id, selected)=term.name
+                                    else
+                                        option(value=term.term_id)=term.name
                     .row
                         div.form-group.form-inline
                             label(for='subject') Subject:
                             input#subject.form-control(type='text', placeholder='eg.ANTH' name='subject')
                         div.form-group.form-inline
-                            label(for='classNumber') Class Number:
-                            input#classNumber.form-control(type='text', placeholder='eg.1010' name='classNumber')
+                            label(for='catalog_number') Class Number:
+                            input#catalog_number.form-control(type='text', placeholder='eg.1010' name='catalog_number')
                     .row
                         div.form-group.form-inline
                             label(for='classTitle') Class Title:
