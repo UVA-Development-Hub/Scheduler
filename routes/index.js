@@ -93,11 +93,10 @@ function tocompare(courseList,course){
     return ret;
 }
 
-var termID = "";
-if(req.body.term_id != "") tosubmit.term_id=req.body.term_id;
 
 mongo.getTerms(termsList =>{
-    mongo.searchTerm(termID, tosubmit, results => {
+    //console.log('term: ' + req.body.term_id);
+    mongo.searchTerm(req.body.term_id, tosubmit, results => {
         var new_result=[];
         //new_result
         var itemIndex=0;
