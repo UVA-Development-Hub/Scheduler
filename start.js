@@ -8,11 +8,11 @@ var course = require('./routes/course');
 // Create the app, which is used to route user requests around the
 // different templates/pages.
 var express = require('express');
-var session = require('cookie-session');
-var config = require('./bin/config.js');
-//var client = require('redis').createClient();
-//var RedisStore = require('connect-redis')(session);
+var session = require('express-session');
 var app = express();
+var config = require('./bin/config.js');
+var client = require('redis').createClient();
+var RedisStore = require('connect-redis')(session);
 var passport = require('passport');
 var bodyParser = require("body-parser");
 app.use(bodyParser.json());
@@ -28,11 +28,11 @@ const sessionConfig = {
     saveUninitialized: false,
     // Todo: store session with Redis. Until this is implemented, auth'ed sessions
     // will have the ability to spontaneously logout.
-    /*store: new RedisStore({
-        host: '192.168.0.140',
+    store: new RedisStore({
+        host: 'localhost',
         port: 6379,
         client: client,
-        ttl: 260
+        ttl: 3600
     })/**/
 };
 app.use(session(sessionConfig));
@@ -48,10 +48,18 @@ app.use('/', index);
 // Create an http server with the preconfigured app
 var http = require('http');
 var server = http.createServer(app);
-
 // Pull the correct port from Heroku, or use the default (8000)
 let port = process.env.PORT;
 if (port == null || port == "") port = 8000;
+
+client.on('ready', success => {
+    console.log("Redis is ready");
+});
+
+client.on('error',err => {
+    console.log("Error in Redis:");
+    console.log(err);
+});
 
 // Start the server
 var mongo = require('./bin/mongo.js');
