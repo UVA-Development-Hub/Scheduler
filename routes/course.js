@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mongo = require('../bin/mongo.js');
+var asyc = require('async');
 
 
 
@@ -12,17 +13,30 @@ router.get('/:term/:id', (req, res) => {
     // mongo.getTerms('', {sis_id: req.params.id}, )
     if (isNaN(req.params.id)) {
         split(req.params.id)
-        // console.log("Error")
-        // res.render('course/term_and_id', {
-        //     Error: "Not found"
-        // })
+
+        // Parallel accepts two arguments: a) an array of async functions, and a single function that
+        // explains what to do when they're all finished. Access the info with data[i] where i is the
+        // i_th async function.
+        asyc.parallel([
+            callback => {
+                mongo.searchTerm(req.params.term, {'sis_id': parseInt(req.params.id)}, callback);
+            },
+            callback => {
+                // get grade data
+                //mongo.searchGrades()
+            }
+        ], function(err, data) {
+            res.render('course/term_and_mid', {
+                specific_class: data[0][0],
+                grades: data[1],
+            });
+        });
     }
     else {
         mongo.searchTerm(req.params.term, {'sis_id': parseInt(req.params.id)}, data => {
-            console.log(data);
-            res.render('course/term_and_id', {
-                specific_class: data[0],
-            });
+            /*mongo.searchGrades(, grades => {
+
+            });/**/
         });
     }
 
