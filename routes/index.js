@@ -39,12 +39,6 @@ router.get('/js/tablesorter.js', function(req, res) {
 router.get('/css/tablesorter.theme.blue.css', function(req, res) {
     res.sendFile(appdir + '/node_modules/tablesorter/dist/css/theme.blue.css');
 });
-router.get('/js/Chart.js', function(req, res) {
-    res.sendFile(appdir + '/node_modules/chart.js/dist/Chart.js');
-});
-router.get('/css/Chart.css', function(req, res) {
-    res.sendFile(appdir + '/node_modules/chart.js/dist/Chart.css');
-});
 
 //search page
 router.get('/search', function(req, res){
@@ -65,7 +59,8 @@ router.get('/search', function(req, res){
                 'thursday' : false,
                 'friday' : false,
                 'saturday' : false,
-            }
+            },
+            user: req.session.user
         });
     });
 });
@@ -134,7 +129,9 @@ router.post('/search', function(req, res){
                 title : 'Search Page',
                 terms: termsList,
                 results: new_result,
-                input: req.body
+                input: req.body,
+                selected_term: req.body.term_id,
+                user: req.session.user
             });
         });
     });

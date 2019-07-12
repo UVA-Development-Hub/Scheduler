@@ -17,8 +17,12 @@ block content
                         .form-group.form-inline
                             label(for='semester', style= "margin-right:10px;") Search Courses From 
                             select#semester.form-control(type='text', placeholder='' name='term_id')
+                                - var marked = false
                                 each term,i in terms
-                                    if i==terms.length-1
+                                    if selected_term == term.term_id
+                                        option(value=term.term_id, selected)=term.name
+                                        - marked = true
+                                    else if i==terms.length-1 && !marked
                                         option(value=term.term_id, selected)=term.name
                                     else
                                         option(value=term.term_id)=term.name

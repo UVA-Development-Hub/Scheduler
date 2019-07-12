@@ -49,7 +49,7 @@ router.get('/:term/:id', (req, res) => {
             res.render('course/term_and_mid', {
                 class_info: data[1]['value'],
                 grades: false,
-                title : subject+course_number,
+                title : subject+" "+course_number,
                 user: req.session.user,
 
             });
@@ -80,7 +80,7 @@ router.get('/:term/:id', (req, res) => {
               res.render('course/term_and_id', {
                 specific_class: data[0],
                 grades: false,
-                title: data[0]['subject']+data[0]['catalog_number'],
+                title: data[0]['subject']+" "+data[0]['catalog_number'],
                 user: req.session.user,
 
               });
