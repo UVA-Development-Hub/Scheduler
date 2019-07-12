@@ -28,8 +28,8 @@ passport.use(
 );
 
 passport.serializeUser((user, callback) => {
-  callback(null, user);
+    callback(null, user);
 });
 passport.deserializeUser((obj, callback) => {
-  callback(null, obj);
+    callback(null, obj);
 });

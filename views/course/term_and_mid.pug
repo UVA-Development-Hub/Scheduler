@@ -1,5 +1,5 @@
 extends  ../layout
-//This is for the mnemonic id sitch.
+
 block customhead
     link(rel="stylesheet", href="/css/tablesorter.theme.blue.css")
     link(rel="stylesheet", href="/css/course_style_sheet.css")
@@ -9,28 +9,26 @@ block content
     .container
         .row
             .col-md-4.first_box
-                p.center=specific_class['subject'] + " " + specific_class['catalog_number'] + "-" + specific_class['section']
+                p.center=class_info[0]['subject']+class_info[0]['catalog_number']
             .col-md-6.second_box
                 p.center 
-            .col-md-2.third_box
-                p.center="Capacity:" + " " + specific_class['enrollment_max']
         .row
             .col-md-4.fourth_box
-                p.center.section-title=specific_class['title']
+                p.center.section-title=class_info[0]['title']
             .col-md-7.fifth_box
-                p.center.section-title="Instructor:" + " " + specific_class['instructor']
+                p.center.section-title="Instructor:"
             .col-md-1.sixth_box
-                p.center.section-title=specific_class['sis_id']
+                p.center.section-title=""
         .row
             .col-md-2.seventh_box
                 p.center
             .col-md-8.center.eigth_box
-                p.center Caldendar
+                p.center Calendar
             .col-md-2.ninth_box
                 p.center
         .row
             .col-md-12.tenth_box
-                p.center="Course Description:" + " " + specific_class['desc']
+                p.center="Course Description:"
         .row
             .col-md-12.eleventh_box
                 p.center="Grade Data:" 

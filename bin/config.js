@@ -2,7 +2,7 @@ var config = {};
 
 config.mongo_user = process.env.MONGO_USERNAME;
 config.mongo_pass = process.env.MONGO_PASSWORD;
-config.redis_url = process.env.REDIS_URL || '192.168.0.140';
+config.redis_url = process.env.REDIS_URL || 'localhost';
 config.mongo_url = 'mongodb+srv://' + config.mongo_user + ':' + config.mongo_pass + '@userdata-r5w4z.mongodb.net/test?retryWrites=true&w=majority';
 config.redirect_uri = process.env.REDIRECT_URI || 'http://localhost:8000/auth/google/callback';
 
