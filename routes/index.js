@@ -16,7 +16,7 @@ var express = require('express'),
 const fetch = require("node-fetch");
 
 router.get('/login', function (req, res) {
-    if(req.session.passport.user) res.redirect('/profile');
+    if(req.session.user) res.redirect('/profile');
     else {
         req.query.return = '/profile';
         res.render('login', {
@@ -26,13 +26,14 @@ router.get('/login', function (req, res) {
 });
 
 router.get('/logout', (req, res) => {
+    req.session.destroy();
     res.redirect('/');
 })
 
 router.get('/test', function (req, res) {
     res.render('testLayouts', {
         title: 'Test Page',
-        user: req.session.passport.user,
+        user: req.session.user,
     });
 });
 
@@ -50,7 +51,7 @@ router.get('/search', function(req, res){
     mongo.getTerms(termsList => {
         res.render('search', {
             title : 'Search Page',
-            user: req.session.passport.user,
+            user: req.session.user,
             terms: termsList,
             results:[],
             input: {
@@ -145,7 +146,7 @@ router.post('/search', function(req, res){
 router.use('/', function(req, res, next) {
     res.render('index', {
         title: 'Home',
-        user: req.session.passport.user
+        user: req.session.user
     });
 });
 
