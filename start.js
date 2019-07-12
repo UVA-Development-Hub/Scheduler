@@ -1,69 +1,72 @@
-// Configure the different routes
-var index = require('./routes/index'); // this line brings in routes/index.js
-var profile = require('./routes/profile');
-var auth = require('./routes/auth');
-var course = require('./routes/course');
+// Require the various route handling middlewares.
+var index = require('./routes/index'),
+    profile = require('./routes/profile'),
+    auth = require('./routes/auth'),
+    course = require('./routes/course');
 
 
-// Create the app, which is used to route user requests around the
-// different templates/pages.
-var express = require('express');
-var session = require('express-session');
-var app = express();
-var config = require('./bin/config.js');
-var client = require('redis').createClient();
-var RedisStore = require('connect-redis')(session);
-var passport = require('passport');
-var bodyParser = require("body-parser");
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
+// Create the app instance and configure all its innerworkings.
+var express = require('express'),
+    session = require('express-session'),
+    config = require('./bin/config.js'), // Load config variables
+    app = express(), // Create app instance
+    mongo = require('./bin/mongo.js'), // Include Mongo handler
+    client = require('redis').createClient(), // Create the client to connect to Redis
+    RedisStore = require('connect-redis')(session), // Configure the store
+    passport = require('passport'), // Passport used to handle authentication
+    bodyParser = require("body-parser");
+app.use(bodyParser.json()), // Use json format for the body parser
+app.use(bodyParser.urlencoded({// and also use extended encoded urls
     extended: true
 }));
 
-app.set('view engine', 'pug'); // tell the app to use pug.js to render our templates
-app.use(express.static('public'));
-const sessionConfig = {
+app.set('view engine', 'pug'); // Set default engine to pugjs
+app.use(express.static('public')); // Tell node where to find our static files
+const sessionConfig = { // Configure session store
     secret: 'sssHHH',
     resave: false,
     saveUninitialized: false,
-    // Todo: store session with Redis. Until this is implemented, auth'ed sessions
-    // will have the ability to spontaneously logout.
     store: new RedisStore({
         host: 'localhost',
         port: 6379,
         client: client,
         ttl: 3600
-    })/**/
+    })
 };
-app.use(session(sessionConfig));
-app.use(passport.initialize());
+app.use(session(sessionConfig)); // Apply the session configuration
+app.use(passport.initialize()); // Create the passport instance the app will use
 
-// Pages which use middleware to render
+// Link different page urls the various route handling middlewares
 app.use('/auth', auth);
 app.use('/profile', profile);
 app.use('/course', course);
 app.use('/', index);
 
 
-// Create an http server with the preconfigured app
+// Initialize http server using the app configured above
 var http = require('http');
 var server = http.createServer(app);
-// Pull the correct port from Heroku, or use the default (8000)
-let port = process.env.PORT;
+let port = process.env.PORT; // Use either the Heroku port or 8000
 if (port == null || port == "") port = 8000;
 
+// After the client has successfully connected to the Redis instance, it prints
+// a success message.
 client.on('ready', success => {
     console.log("Redis is ready");
 });
 
+// If there is an error in connecting to the Redis instance, this error handler
+// will be called repeatedly until the issue is resolved.
 client.on('error',err => {
     console.log("Error in Redis:");
     console.log(err);
 });
 
-// Start the server
-var mongo = require('./bin/mongo.js');
+// Start the server after establishing a connection to Mongo.
 mongo.client.connect(err => {
-    if (err) console.log(err);
-    else server.listen(port);
+    if (err) console.log(err); // Mongo could not connect. Log the error.
+    else { // Connected to Mongo, start server.
+        console.log("Mongo is ready");
+        server.listen(port);
+    }
 })
