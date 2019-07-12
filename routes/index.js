@@ -136,6 +136,7 @@ router.post('/search', function(req, res){
                 terms: termsList,
                 results: new_result,
                 input: req.body,
+                selected_term: req.body.term_id,
                 user: req.session.user
             });
         });
