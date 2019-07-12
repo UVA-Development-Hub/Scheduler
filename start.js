@@ -11,7 +11,7 @@ var express = require('express'),
     config = require('./bin/config.js'), // Load config variables
     app = express(), // Create app instance
     mongo = require('./bin/mongo.js'), // Include Mongo handler
-    client = require('redis').createClient(), // Create the client to connect to Redis
+    client = require('redis').createClient(config.redis_url), // Create the client to connect to Redis
     RedisStore = require('connect-redis')(session), // Configure the store
     passport = require('passport'), // Passport used to handle authentication
     bodyParser = require("body-parser");
@@ -27,7 +27,7 @@ const sessionConfig = { // Configure session store
     resave: false,
     saveUninitialized: false,
     store: new RedisStore({
-        host: config.redis_url,
+        host: 'localhost',
         port: 6379,
         client: client,
         ttl: 3600
