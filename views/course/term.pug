@@ -31,7 +31,7 @@ block content
                     tbody
                         - var page = 0
                         each course_term_and_id, index in course_terms_and_ids
-                            tr.paged(page=page)
+                            tr.paged(page=page, style=("display:None"))
                                 td=course_term_and_id['subject']
                                 td=course_term_and_id['catalog_number']
                                 td=course_term_and_id['section']

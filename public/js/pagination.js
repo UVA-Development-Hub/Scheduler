@@ -28,6 +28,7 @@ function displayPage(pageNumber){
       }
 
     })
+
 if (currentPage < 5){
   for(var i=0; i<5;i++ ){
     $(arr[i]).attr("onclick", "displayPage("+ parseInt(i)+")");
@@ -40,6 +41,7 @@ if (currentPage < 5){
     $(arr[i]).html(parseInt(i + 1));
   }
 }
+
 else {
     for(var i=0; i<5;i++ ){
       $(arr[i]).attr("onclick", "displayPage("+ parseInt(pageNumber-5+i)+")");
