@@ -6,8 +6,9 @@ router.get('/new', (req, res) => {
     if(req.session.user) {
         if(req.session.user.displayName == '') {
             // A new user. Ask them to fill out some basic profile info on the new profile page
-            // 'tx' indicates programs of major types (major/minor) and that we don't care ('x')
-            // about the second specifier type
+            // To request program info, pass in an array of the types you want back.
+            // The data is handed back as a dictionary which maps each array element
+            // to a list of data.
             mongo.getPrograms(['major', 'minor'], data => {
                 res.render('profile/new', {
                     title: 'Update Info',
@@ -29,20 +30,19 @@ router.get('/edit', (req, res) => {
         mongo.getPrograms(['major', 'minor'], data => {
             res.render('profile/edit', {
                 title: 'Edit My Details',
-                majors: ['major'],
-                minors: ['minor'],
+                majors: data['major'],
+                minors: data['minor'],
                 user: req.session.user,
                 sub_to: '/profile/edit'
             });
         });
     } else {
-        req.query.return = '/profile/edit';
+        req.session.oauth2return = '/profile/edit';
         res.redirect('/auth/login');
     }
 });
 
 router.post('/edit', (req, res) => {
-    console.log("post");
     if(req.session.user) {
         console.log(req.session.user.firstName);
         res.render('profile/edit'), {
@@ -51,7 +51,7 @@ router.post('/edit', (req, res) => {
             sub_to: '/profile/edit'
         }
     } else {
-        req.query.return = '/profile/edit';
+        req.session.oauth2return = '/profile/edit';
         res.redirect('/auth/login');
     }
 });
@@ -76,7 +76,7 @@ router.post('/new', (req, res) => {
             });
         });
     } else {
-        req.query.return = '/profile/new';
+        req.session.oauth2return = '/profile/new';
         res.redirect('/auth/login');
     }
 });
@@ -111,10 +111,7 @@ router.get('/', (req, res) => {
                 user: req.session.user
             });
         }
-    } else {
-        req.query.return = '/profile';
-        res.redirect('/auth/login')
-    }
+    } else res.redirect('/auth/login')
 });
 
 module.exports = router;
