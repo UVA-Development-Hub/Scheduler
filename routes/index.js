@@ -39,6 +39,12 @@ router.get('/js/tablesorter.js', function(req, res) {
 router.get('/css/tablesorter.theme.blue.css', function(req, res) {
     res.sendFile(appdir + '/node_modules/tablesorter/dist/css/theme.blue.css');
 });
+router.get('/js/Chart.js', function(req, res) {
+    res.sendFile(appdir + '/node_modules/chart.js/dist/Chart.js');
+});
+router.get('/css/Chart.css', function(req, res) {
+    res.sendFile(appdir + '/node_modules/chart.js/dist/Chart.css');
+});
 
 //search page
 router.get('/search', function(req, res){
