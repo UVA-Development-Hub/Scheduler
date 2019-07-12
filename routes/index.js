@@ -16,10 +16,13 @@ var express = require('express'),
 const fetch = require("node-fetch");
 
 router.get('/login', function (req, res) {
-    req.query.return = '/profile';
-    res.render('login', {
-        title: 'Login',
-    });
+    if(req.session.passport.user) res.redirect('/profile');
+    else {
+        req.query.return = '/profile';
+        res.render('login', {
+            title: 'Login',
+        });
+    }
 });
 
 router.get('/logout', (req, res) => {
@@ -28,7 +31,8 @@ router.get('/logout', (req, res) => {
 
 router.get('/test', function (req, res) {
     res.render('testLayouts', {
-        title: 'Test Page'
+        title: 'Test Page',
+        user: req.session.passport.user,
     });
 });
 
@@ -46,6 +50,7 @@ router.get('/search', function(req, res){
     mongo.getTerms(termsList => {
         res.render('search', {
             title : 'Search Page',
+            user: req.session.passport.user,
             terms: termsList,
             results:[],
             input: {
@@ -126,6 +131,7 @@ router.post('/search', function(req, res){
 
             res.render('search', {
                 title : 'Search Page',
+                user: req.session.passport.user,
                 terms: termsList,
                 results: new_result,
                 input: req.body
@@ -138,10 +144,9 @@ router.post('/search', function(req, res){
 // This is the base landing page. It's always the LAST definition
 router.use('/', function(req, res, next) {
     res.render('index', {
-        title: 'Home'
+        title: 'Home',
+        user: req.session.passport.user
     });
 });
-
-
 
 module.exports = router;
