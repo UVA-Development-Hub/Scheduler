@@ -27,7 +27,7 @@ const sessionConfig = { // Configure session store
     resave: false,
     saveUninitialized: false,
     store: new RedisStore({
-        host: 'localhost',
+        host: config.redis_url,
         port: 6379,
         client: client,
         ttl: 3600
