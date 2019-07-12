@@ -55,13 +55,13 @@ else {
     }
   }
 
-// if (currentPage > numberOfPages){
-//       for(var i = 0; i < numberOfPages; i++){
-//           $(arr[i]).attr("onclick", "displayPage("+ parseInt(i - N)+")");
-//           $(arr[i]).html(parseInt(i + 1));
-//           console.log("test statment");
-//       }
-//   }
+if (currentPage == numberOfPages){
+      for(var i = 0; i < numberOfPages; i++){
+          $(arr[i]).attr("onclick", "displayPage("+ parseInt(pageNumber-numberOfPages-i)+")");
+          $(arr[i]).html(parseInt(pageNumber-i-numberOfPages) - 1);
+          console.log("test statment");
+      }
+  }
 
 
   $(arr).each(function(){
