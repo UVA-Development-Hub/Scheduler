@@ -31,34 +31,31 @@ router.get('/:term/:id', (req, res) => {
         // Parallel accepts two arguments: a) an array of async functions, and a single function that
         // explains what to do when they're all finished. Access the info with data[i] where i is the
         // i_th async function.
-        async.parallel({
-            one: function(callback) {
+        async.parallel([
+            async.reflect(function(callback) {
                 // get grade data
                 mongo.searchGrades(subject, course_number, callback);
-            },
-            two: function(callback){
+            }),
+            async.reflect(function(callback){
                 mongo.searchTerm(req.params.term, {'subject': subject, 'catalog_number': course_number}, callback);
-            }
-        }, function(err, data) {
-          if (err){
-            throw err;
-          }
+            })
+        ], function(err, data) {
+          //console.log(data[1]['value']);
           res.render('course/term_and_mid', {
-              specific_class: data[one],
-              grades: data[two],
+              class_info: data[1]['value'],
+              grades: data[0]['value'],
           });
       });
     }
 
 
     else {
-      mongo.searchTerm(req.params.term, {'sis_id': parseInt(req.params.id)}, data => {
-        //console.log(data[0]['subject'], data[0]['catalog_number'])
+      mongo.searchTerm(req.params.term, {'sis_id': parseInt(req.params.id)}, (err, data) => {
         if (!(data[0])){
           res.send("Course not found.")
         }
         else{
-          mongo.searchGrades(data[0]['subject'], data[0]['catalog_number'], grades => {
+          mongo.searchGrades(data[0]['subject'], data[0]['catalog_number'], (err,grades) => {
             //res.send(grades);
             res.render('course/term_and_id', {
               specific_class: data[0],
