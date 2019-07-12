@@ -106,7 +106,7 @@ router.post('/search', function(req, res){
 
     mongo.getTerms(termsList => {
         //console.log('term: ' + req.body.term_id);
-        mongo.searchTerm(req.body.term_id, tosubmit, results => {
+        mongo.searchTerm(req.body.term_id, tosubmit, (err, results) => {
             var new_result = [],
             itemIndex = 0;
             for (x = 0; x < results.length; x++){
