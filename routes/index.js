@@ -65,7 +65,8 @@ router.get('/search', function(req, res){
                 'thursday' : false,
                 'friday' : false,
                 'saturday' : false,
-            }
+            },
+            user: req.session.user
         });
     });
 });
@@ -135,7 +136,9 @@ router.post('/search', function(req, res){
                 user: req.session.passport.user,
                 terms: termsList,
                 results: new_result,
-                input: req.body
+                input: req.body,
+                selected_term: req.body.term_id,
+                user: req.session.user
             });
         });
     });

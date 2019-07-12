@@ -40,11 +40,30 @@ router.get('/:term/:id', (req, res) => {
                 mongo.searchTerm(req.params.term, {'subject': subject, 'catalog_number': course_number}, callback);
             })
         ], function(err, data) {
-          //console.log(data[1]['value']);
-          res.render('course/term_and_mid', {
-              class_info: data[1]['value'],
-              grades: data[0]['value'],
-          });
+          console.log(data[1]['value']);
+          if(!data[1]['value'][0]){
+            res.send("Course not found.")
+          }
+          if(!data[0]){
+            //No grades -- explicit false
+            res.render('course/term_and_mid', {
+                class_info: data[1]['value'],
+                grades: false,
+                title : subject+" "+course_number,
+                user: req.session.user,
+
+            });
+          }
+          else{
+            //Grades exist
+            res.render('course/term_and_mid', {
+                class_info: data[1]['value'],
+                grades: data[0]['value'],
+                title : subject+course_number,
+                user: req.session.user,
+
+            });
+          }
       });
     }
 
@@ -55,12 +74,26 @@ router.get('/:term/:id', (req, res) => {
           res.send("Course not found.")
         }
         else{
-          mongo.searchGrades(data[0]['subject'], data[0]['catalog_number'], (err,grades) => {
-            //res.send(grades);
-            res.render('course/term_and_id', {
-              specific_class: data[0],
-              grades: grades[0]['grades']
-            });
+          mongo.searchGrades(data[0]['subject'], data[0]['catalog_number'], (err, grades) => {
+            if(!grades[0]){
+              //No grades -- explicit false.
+              res.render('course/term_and_id', {
+                specific_class: data[0],
+                grades: false,
+                title: data[0]['subject']+" "+data[0]['catalog_number'],
+                user: req.session.user,
+
+              });
+            }
+            else{
+              //Grades.
+              res.render('course/term_and_id', {
+                specific_class: data[0],
+                grades: grades[0]['grades'],
+                title: data[0]['subject']+data[0]['catalog_number'],
+                user: req.session.user,
+              });
+            }
           });
         }
       });
@@ -86,7 +119,8 @@ router.get('/:term', (req, res) => {
        console.log(data);
        res.render('course/term', {
            title: 'Classes in term ' + req.params.term,
-           course_terms_and_ids: data
+           course_terms_and_ids: data,
+           user: req.session.user,
            // subject: data.subject
        });
    });

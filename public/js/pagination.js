@@ -28,6 +28,7 @@ function displayPage(pageNumber){
       }
 
     })
+
 if (currentPage < 5){
   for(var i=0; i<5;i++ ){
     $(arr[i]).attr("onclick", "displayPage("+ parseInt(i)+")");
@@ -40,6 +41,7 @@ if (currentPage < 5){
     $(arr[i]).html(parseInt(i + 1));
   }
 }
+
 else {
     for(var i=0; i<5;i++ ){
       $(arr[i]).attr("onclick", "displayPage("+ parseInt(pageNumber-5+i)+")");
@@ -52,6 +54,15 @@ else {
       $(arr[i]).html(parseInt((pageNumber+i-5)+ 1));
     }
   }
+
+// if (currentPage > numberOfPages){
+//       for(var i = 0; i < numberOfPages; i++){
+//           $(arr[i]).attr("onclick", "displayPage("+ parseInt(i - N)+")");
+//           $(arr[i]).html(parseInt(i + 1));
+//           console.log("test statment");
+//       }
+//   }
+
 
   $(arr).each(function(){
     if(parseInt($(this).html())-1 == currentPage){
