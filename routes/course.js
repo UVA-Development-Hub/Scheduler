@@ -50,6 +50,8 @@ router.get('/:term/:id', (req, res) => {
                 class_info: data[1]['value'],
                 grades: false,
                 title : subject+course_number,
+                user: req.session.user,
+
             });
           }
           else{
@@ -58,6 +60,8 @@ router.get('/:term/:id', (req, res) => {
                 class_info: data[1]['value'],
                 grades: data[0]['value'],
                 title : subject+course_number,
+                user: req.session.user,
+
             });
           }
       });
@@ -77,6 +81,8 @@ router.get('/:term/:id', (req, res) => {
                 specific_class: data[0],
                 grades: false,
                 title: data[0]['subject']+data[0]['catalog_number'],
+                user: req.session.user,
+
               });
             }
             else{
@@ -85,6 +91,7 @@ router.get('/:term/:id', (req, res) => {
                 specific_class: data[0],
                 grades: grades[0]['grades'],
                 title: data[0]['subject']+data[0]['catalog_number'],
+                user: req.session.user,
               });
             }
           });
@@ -112,7 +119,8 @@ router.get('/:term', (req, res) => {
        console.log(data);
        res.render('course/term', {
            title: 'Classes in term ' + req.params.term,
-           course_terms_and_ids: data
+           course_terms_and_ids: data,
+           user: req.session.user,
            // subject: data.subject
        });
    });
