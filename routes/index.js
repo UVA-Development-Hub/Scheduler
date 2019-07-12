@@ -141,6 +141,21 @@ router.post('/search', function(req, res){
     });
 });
 
+// Page which explains how our site uses cookies to improve user experience.
+router.use('/cookies', (req, res, next) => {
+    res.render('info/cookies', {
+        title: 'Cookies',
+        user: req.session.user,
+    });
+});
+
+// Page explaining how a user's data is collected, stored, and used.
+router.use('/privacy', (req, res, next) => {
+    res.render('info/privacy', {
+        title: 'Cookies',
+        user: req.session.user,
+    });
+});
 
 // This is the base landing page. It's always the LAST definition
 router.use('/', function(req, res, next) {
