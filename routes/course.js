@@ -42,9 +42,9 @@ router.get('/:term/:id', (req, res) => {
         ], function(err, data) {
           console.log(data[1]['value']);
           if(!data[1]['value'][0]){
-            res.send("Course not found.")
+            res.send("Course not found.");
           }
-          if(!data[0]){
+          else if(!data[0]['value']){
             //No grades -- explicit false
             res.render('course/term_and_mid', {
                 class_info: data[1]['value'],
@@ -71,7 +71,7 @@ router.get('/:term/:id', (req, res) => {
     else {
       mongo.searchTerm(req.params.term, {'sis_id': parseInt(req.params.id)}, (err, data) => {
         if (!(data[0])){
-          res.send("Course not found.")
+          res.send("Course not found.");
         }
         else{
           mongo.searchGrades(data[0]['subject'], data[0]['catalog_number'], (err, grades) => {
