@@ -82,7 +82,7 @@ router.get('/:term/:id', (req, res) => {
 });
 
 router.get('/:term', (req, res) => {
-    mongo.searchTerm(req.params.term, {}, data => {
+    mongo.searchTerm(req.params.term, {}, (err, data) => {
        console.log(data);
        res.render('course/term', {
            title: 'Classes in term ' + req.params.term,
