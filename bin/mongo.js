@@ -142,7 +142,6 @@ function updateUser(id, specifiers, callback) {
 function searchTerm(term_id, specifiers, callback) {
     var db = client.db(databases.coursedb);
     db.collection('term_' + term_id).find(specifiers).toArray().then(results => {
-        console.log("Retrieved search results");
         callback(results);
     }).catch(fail => {
         raiseFailedPromise(fail, 'searchTerm', callback);
@@ -194,8 +193,7 @@ function getProgramInfo(name, callback) {
 
 function searchGrades(subject, number, callback) {
     var db = client.db(databases.gradesdb);
-    db.collection(subject).find(number).toArray().then(results => {
-        console.log("Retrieved search results");
+    db.collection(subject).find({'catalog_number':number}).toArray().then(results => {
         callback(results);
     }).catch(fail => {
         raiseFailedPromise(fail, 'searchGrades', callback);
