@@ -9,7 +9,7 @@ $(document).ready( function() {
   //console.log($("#button_box"));
   arr= $(".pageselector");
   displayPage(0);
-
+console.log(numberOfPages);
 });
 
 function displayPage(pageNumber){
@@ -39,6 +39,19 @@ if (currentPage < 5){
   for(var i=5; i<10;i++ ){
     $(arr[i]).attr("onclick", "displayPage("+ parseInt(i)+")");
     $(arr[i]).html(parseInt(i + 1));
+  }
+}
+
+else if (currentPage > parseInt(numberOfPages-10)){
+  for(var i=0; i<5;i++ ){
+    $(arr[i]).attr("onclick", "displayPage("+ parseInt(i+numberOfPages-10)+")");
+    $(arr[i]).html(parseInt(i + 1+numberOfPages-10));
+    console.log("test statment");
+  }
+
+  for(var i=5; i<10;i++ ){
+    $(arr[i]).attr("onclick", "displayPage("+ parseInt(i+numberOfPages-10)+")");
+    $(arr[i]).html(parseInt(i + 1+numberOfPages-10));
   }
 }
 
