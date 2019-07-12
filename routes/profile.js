@@ -26,9 +26,29 @@ router.get('/new', (req, res) => {
 
 router.get('/edit', (req, res) => {
     if(req.session.user) {
+        mongo.getPrograms(['major', 'minor'], data => {
+            res.render('profile/edit', {
+                title: 'Edit My Details',
+                majors: ['major'],
+                minors: ['minor'],
+                user: req.session.user,
+                sub_to: '/profile/edit'
+            });
+        });
+    } else {
+        req.query.return = '/profile/edit';
+        res.redirect('/auth/login');
+    }
+});
+
+router.post('/edit', (req, res) => {
+    console.log("post");
+    if(req.session.user) {
+        console.log(req.session.user.firstName);
         res.render('profile/edit'), {
             title: 'Edit My Details',
-            user: req.session.user
+            user: req.session.user,
+            sub_to: '/profile/edit'
         }
     } else {
         req.query.return = '/profile/edit';
