@@ -16,19 +16,24 @@ var express = require('express'),
 const fetch = require("node-fetch");
 
 router.get('/login', function (req, res) {
-    req.query.return = '/profile';
-    res.render('login', {
-        title: 'Login',
-    });
+    if(req.session.user) res.redirect('/profile');
+    else {
+        req.query.return = '/profile';
+        res.render('login', {
+            title: 'Login',
+        });
+    }
 });
 
 router.get('/logout', (req, res) => {
+    req.session.destroy();
     res.redirect('/');
 })
 
 router.get('/test', function (req, res) {
     res.render('testLayouts', {
-        title: 'Test Page'
+        title: 'Test Page',
+        user: req.session.user,
     });
 });
 
@@ -39,12 +44,6 @@ router.get('/js/tablesorter.js', function(req, res) {
 router.get('/css/tablesorter.theme.blue.css', function(req, res) {
     res.sendFile(appdir + '/node_modules/tablesorter/dist/css/theme.blue.css');
 });
-router.get('/js/Chart.js', function(req, res) {
-    res.sendFile(appdir + '/node_modules/chart.js/dist/Chart.js');
-});
-router.get('/css/Chart.css', function(req, res) {
-    res.sendFile(appdir + '/node_modules/chart.js/dist/Chart.css');
-});
 
 //search page
 router.get('/search', function(req, res){
@@ -52,6 +51,7 @@ router.get('/search', function(req, res){
     mongo.getTerms(termsList => {
         res.render('search', {
             title : 'Search Page',
+            user: req.session.user,
             terms: termsList,
             results:[],
             input: {
@@ -133,6 +133,7 @@ router.post('/search', function(req, res){
 
             res.render('search', {
                 title : 'Search Page',
+                user: req.session.passport.user,
                 terms: termsList,
                 results: new_result,
                 input: req.body,
@@ -143,14 +144,28 @@ router.post('/search', function(req, res){
     });
 });
 
+// Page which explains how our site uses cookies to improve user experience.
+router.use('/cookies', (req, res, next) => {
+    res.render('info/cookies', {
+        title: 'Cookies',
+        user: req.session.user,
+    });
+});
+
+// Page explaining how a user's data is collected, stored, and used.
+router.use('/privacy', (req, res, next) => {
+    res.render('info/privacy', {
+        title: 'Cookies',
+        user: req.session.user,
+    });
+});
 
 // This is the base landing page. It's always the LAST definition
 router.use('/', function(req, res, next) {
     res.render('index', {
-        title: 'Home'
+        title: 'Home',
+        user: req.session.user
     });
 });
-
-
 
 module.exports = router;
