@@ -55,6 +55,15 @@ else {
     }
   }
 
+// if (currentPage > numberOfPages){
+//       for(var i = 0; i < numberOfPages; i++){
+//           $(arr[i]).attr("onclick", "displayPage("+ parseInt(i - N)+")");
+//           $(arr[i]).html(parseInt(i + 1));
+//           console.log("test statment");
+//       }
+//   }
+
+
   $(arr).each(function(){
     if(parseInt($(this).html())-1 == currentPage){
       $(this).addClass('btn-success');
