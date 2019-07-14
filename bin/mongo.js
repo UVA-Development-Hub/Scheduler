@@ -126,9 +126,12 @@ function getOrCreateUser(profile, callback) {
 function updateUser(id, specifiers, callback) {
     console.log("Processing update for user " + id);
     var db = client.db(databases.userdb);
-    db.collection(databases.usercoll).updateOne({ _id : id }, { $set: specifiers }).then( () => {
-        console.log('Update complete');
-        callback();
+    db.collection(databases.usercoll).findOneAndUpdate({ _id : id }, { $set: specifiers }, { returnOriginal: false }).then( status => {
+        if(!status.ok) raiseMongoError(status);
+        else {
+            console.log('Update complete');
+            callback(status.value);
+        }
     }).catch( fail => {
         raiseFailedPromise(fail, 'updateUser', callback);
     });

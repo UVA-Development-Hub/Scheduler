@@ -44,12 +44,19 @@ router.get('/edit', (req, res) => {
 
 router.post('/edit', (req, res) => {
     if(req.session.user) {
-        console.log(req.session.user.firstName);
-        res.render('profile/edit'), {
-            title: 'Edit My Details',
-            user: req.session.user,
-            sub_to: '/profile/edit'
-        }
+        var specifiers = {
+            displayName: req.body.displayName,
+            enrollmentData: {
+                school: req.body.school,
+                major: req.body.major,
+                double_major: req.body.double_major,
+                minor: req.body.minor
+            }
+        };
+        mongo.updateUser(req.session.user._id, specifiers, new_usr => {
+            req.session.user = new_usr;
+            res.redirect('/profile');
+        });
     } else {
         req.session.oauth2return = '/profile/edit';
         res.redirect('/auth/login');
