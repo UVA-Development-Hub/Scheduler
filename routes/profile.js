@@ -75,35 +75,15 @@ router.post('/new', (req, res) => {
                 minor: req.body.minor
             }
         };
-        mongo.updateUser(req.session.user._id, specifiers, () => {
+        mongo.updateUser(req.session.user._id, specifiers, new_usr => {
             // Update the user stored in session
-            mongo.getOneUser(req.session.user._id, user => {
-                req.session.user = user;
-                res.redirect('/profile');
-            });
+            req.session.user = new_usr;
+            res.redirect('/profile');
         });
     } else {
         req.session.oauth2return = '/profile/new';
         res.redirect('/auth/login');
     }
-});
-
-router.post('/edit', (req, res) => {
-    var specifiers = {
-        displayName: req.body.displayName,
-        enrollmentData: {
-            school: req.body.school,
-            major: req.body.major,
-            double_major: req.body.double_major,
-            minor: req.body.minor
-        }
-    };
-    mongo.updateUser(req.session.user._id, specifiers, () => {
-        mongo.getOneUser(req.session.user._id, user => {
-            req.session.user = user;
-            res.redirect('/profile');
-        });
-    });
 });
 
 
