@@ -2,7 +2,8 @@
 var index = require('./routes/index'),
     profile = require('./routes/profile'),
     auth = require('./routes/auth'),
-    course = require('./routes/course');
+    course = require('./routes/course'),
+    subject = require('./routes/subject');
 
 
 // Create the app instance and configure all its innerworkings.
@@ -40,7 +41,9 @@ app.use(passport.initialize()); // Create the passport instance the app will use
 app.use('/auth', auth);
 app.use('/profile', profile);
 app.use('/course', course);
+// app.use('/subject', subject);
 app.use('/', index);
+
 
 
 // Initialize http server using the app configured above
