@@ -93,17 +93,22 @@ else {
 
 
 function nextPage(){
-    /*if(currentPage==parseInt(numberOfPages-1)){
+    if(currentPage==parseInt(numberOfPages)){
         displayPage(currentPage);
-    }*/
+    }
 
-    //else{
-  currentPage++;
-  displayPage(currentPage);
-//}
+    else{
+      currentPage++;
+      displayPage(currentPage);
+}
 };
 
 function previousPage(){
-  currentPage--;
-  displayPage(currentPage);
+    if(currentPage==0){
+        displayPage(currentPage);
+    } else{
+        currentPage--;
+        displayPage(currentPage);
+    }
+
 };
