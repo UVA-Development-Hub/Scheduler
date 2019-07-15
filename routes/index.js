@@ -97,12 +97,13 @@ router.post('/search', function(req, res){
 
     thedays.forEach((checkbox, index) => {
         if(checkbox) dayinput = dayinput + daynames[index];
+        
     });
 
     if (req.body.catalog_number !='') tosubmit.catalog_number =req.body.catalog_number;
     if(req.body.subject != '') tosubmit.subject = req.body.subject.toUpperCase();
     if(dayinput != '') tosubmit.days = dayinput;
-
+//console.log(tosubmit.days);
     function tocompare(courseList,course){
         var ret = -1;
         for(var i = 0; i < courseList.length; i++) {
