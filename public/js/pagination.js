@@ -32,6 +32,7 @@ function displayPage(pageNumber){
 for(var i=numberOfPages;i<10;i++){
     $(arr[i+1]).hide();
 }
+
 if (currentPage < 5){
   for(var i=0; i<5;i++ ){
     $(arr[i]).attr("onclick", "displayPage("+ parseInt(i)+")");
