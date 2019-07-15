@@ -71,50 +71,58 @@ block content
 
     .container
         each result in results
-            div
-                p=result.subject+result.number+" - "+result.title
-            button.btn.btn-dark.course-btn &nbsp;
-                i.fas.fa-angle-right(style="display:none;")
-                i.fas.fa-angle-down
-            div(style="display:none;")
-                each course in result.section
-                    .row
-                        .col-md-4.first_box
-                            .row
-                            p.center=course.subject + " " + course.catalog_number + "-" + course.section + " "+ course.term_name
-                        .col-md-6.second_box
-                            .row
-                            p.center 
-                        .col-md-2.third_box
-                            .row
-                            p.center="Capacity:" + " " + course.enrollment_max
-                    .row
-                        .col-md-4.fourth_box
-                            .row
-                            p.center.section-title=course.title
-                        .col-md-7.fifth_box
-                            .row
-                            p.center.section-title="Instructor:" + " " + course.instructor
-                        .col-md-1.sixth_box
-                            p.center.section-title=course.sis_id
-                    .row
-                        .col-md-2.seventh_box
-                            .row
-                            p.center
-                        .col-md-8.center.eigth_box
-                            .row
-                            p.center Calendar
-                        .col-md-2.ninth_box
-                            .row
-                            p.center
-                    .row
-                        .col-md-12.tenth_box
-                            .row
-                            p.center="Course Description:" + " " + course.desc
-                    .row
-                        .col-md-12.eleventh_box
-                            .row
-                            p.center="Grade Data:"
+            .row
+                // Top bar for the name and expanding controls
+                .col-md-12
+                    .row.form-inline
+                        button.btn.bg-uva-blue(type='button' onclick="$(this).parent().parent().next().toggle('slow');$(this).find('i').toggle();return false;" style='font-size:18px;padding:10px;')
+                            i.fa.fa-plus-square
+                            i.fa.fa-minus-square(style='display:none;')
+                        div(style='margin-left:10px;')
+                                p.vertical=result.subject + ' ' + result.number + ' - ' + result.title
+                // Column container for all sections
+                .col-md-12(style='display:none;')
+                    table(style="width:100%;")
+                        tbody
+                            each course, i in result.section
+                                tr
+                                    td
+                                        div(style="margin-top:15px;margin-bottom:15px;padding-left:5px;padding-right:5px;")
+                                            // A single section. Comes in two parts:
+                                            // A button which contains the section header info
+                                            button(onclick="$(this).next().toggle('fast')" style="width:100%;padding:2px;background-color:inherit;outline:none;border:none")
+                                                .row.section-title(style="margin-left:-10px;")
+                                                    .col-sm-2
+                                                        b
+                                                            p=course.sis_id + ' - ' + course.section
+                                                    .col-sm-6
+                                                        b
+                                                            p=course.instructor
+                                                    .col-sm-2
+                                                        b
+                                                            p=course.enrollment_max
+                                                    .col-sm-2
+                                                        b
+                                                            p (0/0) WL
+                                            // ... and a div which contains everything else
+                                            div(style="display:none;")
+                                                .row
+                                                    .col-md-9
+                                                        p Future home of the calendar
+                                                        p=course.days
+                                                        p=course.meeting_start
+                                                        p=course.meeting_end
+                                                    .col-md-3
+                                                        if(course.desc.length > 0)
+                                                            p=course.desc
+                                                        else
+                                                            p A description for this course is not available :(
+                                                .row
+                                                    .col-md-12
+                                                        p
+                                                        | Grade data is fetched by combining the instructor with the subject and number. It does not factor in labs/discussions or their instructors, etc.
+                                                        p Future home of the grade distribution information!
+
                     
     // Inline scrips go at the end to decrease page loading time
     script.
@@ -123,15 +131,3 @@ block content
             $('#' + id + ' i.fa-angle-right').toggle('fast');
             $('#' + id + ' i.fa-angle-down').toggle('fast');
         }
-        
-        $(document).ready(function(){
-        $(".course-btn").each(function(){
-            $(this).click(function(){
-                $(this).children().toggle();
-                $(this).next().toggle();
-            })
-            
-        })
-        });
-        
-        

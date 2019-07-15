@@ -136,7 +136,6 @@ router.post('/search', function(req, res){
 
         res.render('search', {
             title : 'Search Page',
-            user: req.session.passport.user,
             terms: data[0],
             results: new_result,
             input: req.body,
