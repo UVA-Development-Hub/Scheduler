@@ -153,7 +153,7 @@ function searchTerm(term_id, specifiers, callback) {
 
 function getTerms(callback) {
     var db = client.db(databases.coursedb);
-    db.collection(databases.termcoll).find().toArray().then(data => {
+    db.collection(databases.termcoll).find().sort({"_id":1}).toArray().then(data => {
         console.log("Retrieved terms list from Mongo");
         callback(null, data);
     }).catch(fail => {
