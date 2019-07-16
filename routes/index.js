@@ -54,7 +54,7 @@ router.get('/css/chart.css', function(req, res) {
 //search page
 router.get('/search', function(req, res){
     // Get the terms list so you can pick a semester
-    mongo.getTerms(termsList => {
+    mongo.getTerms((err,termsList) => {
         res.render('search', {
             title : 'Search Page',
             user: req.session.user,
@@ -97,7 +97,7 @@ router.post('/search', function(req, res){
 
     thedays.forEach((checkbox, index) => {
         if(checkbox) dayinput = dayinput + daynames[index];
-        
+
     });
 
     if (req.body.catalog_number !='') tosubmit.catalog_number =req.body.catalog_number;
@@ -124,6 +124,7 @@ router.post('/search', function(req, res){
             mongo.searchTerm(req.body.term_id, tosubmit, callback);
         })
     ], (err, data) => {
+        console.log(req.body.term_id);
         var new_result = [],
             itemIndex = 0;
         for (x = 0; x < data[1]['value'].length; x++) {
@@ -143,7 +144,7 @@ router.post('/search', function(req, res){
 
         res.render('search', {
             title : 'Search Page',
-            terms: data[0],
+            terms: data[0]['value'],
             results: new_result,
             input: req.body,
             selected_term: req.body.term_id,
