@@ -24,7 +24,10 @@ form(method="POST", action=sub_to, style="text-align:center;")
                     .col-md-6.center
                         .form-group.form-inline
                             label Double Major
-                            input#double_major(type="checkbox")
+                            if(user.enrollmentData.double_major)
+                                input#double_major(name ="hasDouble" type="checkbox" checked)
+                            else
+                                input#double_major(name ="hasDouble" type="checkbox")
                 .row
                     .col-md-12.form-group
                         select.form-control#major(name="major")
