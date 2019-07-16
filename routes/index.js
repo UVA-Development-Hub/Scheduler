@@ -124,7 +124,6 @@ router.post('/search', function(req, res){
             mongo.searchTerm(req.body.term_id, tosubmit, callback);
         })
     ], (err, data) => {
-        console.log(req.body.term_id);
         var new_result = [],
             itemIndex = 0;
         for (x = 0; x < data[1]['value'].length; x++) {
