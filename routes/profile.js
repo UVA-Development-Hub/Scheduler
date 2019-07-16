@@ -44,6 +44,7 @@ router.get('/edit', (req, res) => {
 
 router.post('/edit', (req, res) => {
     if(req.session.user) {
+        if(!req.body.hasDouble) req.body.double_major = '';
         var specifiers = {
             displayName: req.body.displayName,
             enrollmentData: {
