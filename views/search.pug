@@ -19,13 +19,13 @@ block content
                             select#semester.form-control(type='text', placeholder='' name='term_id')
                                 - var marked = false
                                 each term,i in terms
-                                    if selected_term == term.term_id
-                                        option(value=term.term_id, selected)=term.name
+                                    if selected_term == term._id
+                                        option(value=term._id, selected)=term.name
                                         - marked = true
                                     else if i==terms.length-1 && !marked
-                                        option(value=term.term_id, selected)=term.name
+                                        option(value=term._id, selected)=term.name
                                     else
-                                        option(value=term.term_id)=term.name
+                                        option(value=term._id)=term.name
                     .row
                         div.form-group.form-inline
                             label(for='subject') Subject:
