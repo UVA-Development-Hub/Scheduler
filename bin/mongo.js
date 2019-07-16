@@ -155,7 +155,7 @@ function getTerms(callback) {
     var db = client.db(databases.coursedb);
     db.collection(databases.termcoll).find().toArray().then(data => {
         console.log("Retrieved terms list from Mongo");
-        callback(data);
+        callback(null, data);
     }).catch(fail => {
         raiseFailedPromise(fail, 'getTerms', callback);
     });
