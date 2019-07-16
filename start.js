@@ -41,7 +41,7 @@ app.use(passport.initialize()); // Create the passport instance the app will use
 app.use('/auth', auth);
 app.use('/profile', profile);
 app.use('/course', course);
-// app.use('/subject', subject);
+app.use('/subject', subject);
 app.use('/', index);
 
 
