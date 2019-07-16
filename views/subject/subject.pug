@@ -1,11 +1,97 @@
 extends  ../layout
 
+block customhead
+    link(rel="stylesheet", href="/css/tablesorter.theme.blue.css")
+    script(src='/js/tablesorter.js')
+    script(src="/js/pagination.js")
+
 block content
-    .container
+    .container  
         div.row
-            p Subjects
-        //- div.row
-        //-     if course_subjects.length == 0
-        //-         p(style="font-size: 40px")
-        //-             | Results not found
-            //- p.vertical=result.subject + ' ' + result.number + ' - ' + result.title
+            if course_subjects.length == 0
+                p(style="font-size: 40px")
+                    | Results not found
+            else
+                table(id="course_subjects" class="course_table tablesorter-blue")
+                    thead
+                        tr
+                            th SIS ID
+                            th Subject
+                            th Catalog Number
+                            th Section
+                            th Type
+                            th Credits
+                            th Title
+                            th Status 
+                            th Enrollment
+                            th Description
+                    tbody
+                        - var page = 0
+                        each course, index in course_subjects
+                            tr.paged(page=page)
+                                td=course_subjects[0]["sis_id"]
+                                td=course_subjects[0]["subject"]
+                                td=course_subjects[10]["catalog_number"]
+                                td=course_subjects[0]["section"]
+                                td=course_subjects[0]["type"]
+                                td=course_subjects[0]["credits"]
+                                td=course_subjects[0]["title"]
+                                td=course_subjects[0]["status"]
+                                td=course_subjects[0]["enrollement"]
+                                td=course_subjects[0]["desc"]
+                                -i++
+                            if index % 20 == 19
+                                -page++
+                    //- tbody
+                    //-     - var page = 0
+                    //-     - var i = 0
+                    //-     each course, index in course_subjects[i]
+                    //-         tr.paged(page=page)
+                    //-             td=course[i]["sis_id"]
+                    //-             td=course[i]["subject"]
+                    //-             td=course[i]["catalog_number"]
+                    //-             td=course[i]["section"]
+                    //-             td=course[i]["type"]
+                    //-             td=course[i]["credits"]
+                    //-             td=course[i]["title"]
+                    //-             td=course[i]["status"]
+                    //-             td=course[i]["enrollement"]
+                    //-             td=course[i]["desc"]
+                    //-             -i++
+                    //-         if index % 20 == 19
+                    //-             -page++
+                    //- tbody
+                    //-     - var page = 0
+                    //-     each course, index in course_subjects
+                    //-         - for (i = 0; i < course_subjects.length; i++) {
+                    //-             tr.paged(page=page)
+                    //-                 td=course[i]["sis_id"]
+                    //-                 td=course[i]["subject"]
+                    //-                 td=course[i]["catalog_number"]
+                    //-                 td=course[i]["section"]
+                    //-                 td=course[i]["type"]
+                    //-                 td=course[i]["credits"]
+                    //-                 td=course[i]["title"]
+                    //-                 td=course[i]["status"]
+                    //-                 td=course[i]["enrollement"]
+                    //-                 td=course[i]["desc"]
+                    //-             -}
+                    //-         if index % 20 == 19
+                    //-             -page++
+                        
+            div.row
+                    #max_page_div(max_page = page)
+                    button.btn.btn-primary(type='submit', onClick="previousPage()") Previous
+                    button.btn.btn-primary.pageselector
+                    button.btn.btn-primary.pageselector
+                    button.btn.btn-primary.pageselector
+                    button.btn.btn-primary.pageselector
+                    button.btn.btn-primary.pageselector
+                    button.btn.btn-primary.pageselector
+                    button.btn.btn-primary.pageselector
+                    button.btn.btn-primary.pageselector
+                    button.btn.btn-primary.pageselector
+                    button.btn.btn-primary.pageselector
+                    button.btn.btn-primary(type='submit', onClick="nextPage()") Next
+                    
+                    
