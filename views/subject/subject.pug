@@ -39,7 +39,7 @@ block content
             //-                     td=course_subjects[i]["credits"]
             //-                     td=course_subjects[i]["title"]
             //-                     td=course_subjects[i]["status"]
-            //-                     td=course_subjects[i]["enrollement"]
+            //-                     td=course_subjects[i]["enrollment"]
             //-                     td=course_subjects[i]["desc"]
             //-                     td=course_subjects[i]["instructors"]
             //-                 if i % 20 == 19
@@ -93,5 +93,16 @@ block content
                                                     .col-sm-2
                                                         b
                                                             p (0/0) WL
+                                            div(style="display:none;")
+                                                .row
+                                                    .col-md-9
+                                                        p=course_section["credits"]
+                                                        p=course_section["status"]
+                                                        //- p=course_section["enrollment"]
+                                                    .col-md-3
+                                                        if(course_section.desc.length > 0)
+                                                            p=course_section.desc
+                                                        else
+                                                            p A description for this course is not available :(
                     
                     
