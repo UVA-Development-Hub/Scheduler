@@ -12,54 +12,7 @@ block content
                 p(style="font-size: 40px")
                     | Results not found
             else
-            
-            //-     table(id="course_subjects" class="course_table tablesorter-blue")
-            //-         thead
-            //-             tr
-            //-                 th SIS ID
-            //-                 th Subject
-            //-                 th Catalog Number
-            //-                 th Section
-            //-                 th Type
-            //-                 th Credits
-            //-                 th Title
-            //-                 th Status 
-            //-                 th Enrollment
-            //-                 th Description
-            //-                 th Instructor
-            //-         tbody
-            //-             - var page = 0
-            //-             each course, i in course_subjects
-            //-                 tr.paged(page=page)
-            //-                     td=course_subjects[i]["sis_id"]
-            //-                     td=course_subjects[i]["subject"]
-            //-                     td=course_subjects[i]["catalog_number"]
-            //-                     td=course_subjects[i]["section"]
-            //-                     td=course_subjects[i]["type"]
-            //-                     td=course_subjects[i]["credits"]
-            //-                     td=course_subjects[i]["title"]
-            //-                     td=course_subjects[i]["status"]
-            //-                     td=course_subjects[i]["enrollment"]
-            //-                     td=course_subjects[i]["desc"]
-            //-                     td=course_subjects[i]["instructors"]
-            //-                 if i % 20 == 19
-            //-                     -page++
-            //- 
-            //- 
-            //- div.row
-            //-         #max_page_div(max_page = page)
-            //-         button.btn.btn-primary(type='submit', onClick="previousPage()") Previous
-            //-         button.btn.btn-primary.pageselector
-            //-         button.btn.btn-primary.pageselector
-            //-         button.btn.btn-primary.pageselector
-            //-         button.btn.btn-primary.pageselector
-            //-         button.btn.btn-primary.pageselector
-            //-         button.btn.btn-primary.pageselector
-            //-         button.btn.btn-primary.pageselector
-            //-         button.btn.btn-primary.pageselector
-            //-         button.btn.btn-primary.pageselector
-            //-         button.btn.btn-primary.pageselector
-            //-         button.btn.btn-primary(type='submit', onClick="nextPage()") Next
+                
     .container
         each course, i in course_subjects
             .row
@@ -86,18 +39,18 @@ block content
                                                             p=course_section["sis_id"] + ' - ' + course_section["section"]
                                                     .col-sm-6
                                                         b
-                                                            p= course_section["instructors"]
+                                                            p="Instructor(s):" + " " + course_section["instructors"]
                                                     .col-sm-2
                                                         b
-                                                            p=course_section["enrollment_max"]
+                                                            p="Max Enrollment: " + course_section["enrollment"]['of']
                                                     .col-sm-2
                                                         b
-                                                            p (0/0) WL
+                                                            p=course_section["type"]
                                             div(style="display:none;")
                                                 .row
                                                     .col-md-9
-                                                        p=course_section["credits"]
-                                                        p=course_section["status"]
+                                                        p="Credits" + course_section["credits"]
+                                                        p="Status" + course_section["status"]
                                                         //- p=course_section["enrollment"]
                                                     .col-md-3
                                                         if(course_section.desc.length > 0)
