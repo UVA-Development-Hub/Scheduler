@@ -44,7 +44,8 @@ router.get('/:term/:id', (req, res) => {
           if(!data[1]['value'][0]){
             res.send("Course not found.");
           }
-          else if(!data[0]['value']){
+          else if(!data[1]['value']){
+              console.log(data[1]['value'])
             //No grades -- explicit false
             res.render('course/term_and_mid', {
                 class_info: data[1]['value'],
@@ -69,7 +70,7 @@ router.get('/:term/:id', (req, res) => {
 
 
     else {
-      mongo.searchTerm(req.params.term, {'sis_id': parseInt(req.params.id)}, (err, data) => {
+      mongo.searchTerm(req.params.term, {'sis_id': req.params.id}, (err, data) => {
         if (!(data[0])){
           res.send("Course not found.");
         }

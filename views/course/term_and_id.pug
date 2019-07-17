@@ -18,7 +18,14 @@ block content
             .col-md-4
                 p.center.section-title=specific_class['title']
             .col-md-7
-                p.center.section-title="Instructor:" + " " + specific_class['instructor']
+                - var instructors = '';
+                each val, i in specific_class['instructors']
+                    if val!=''&&!(instructors.includes(val))
+                        if instructors!=''
+                            - instructors = instructors+"; "+val
+                        else
+                            - instructors = instructors+val
+                p.center.section-title="Instructor:" + " " + instructors
             .col-md-1
                 p.center.section-title=specific_class['sis_id']
         .row
