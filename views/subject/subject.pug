@@ -27,20 +27,19 @@ block content
                             th Description
                     tbody
                         - var page = 0
-                        each course, index in course_subjects
+                        each course, i in course_subjects
                             tr.paged(page=page)
-                                td=course_subjects[0]["sis_id"]
-                                td=course_subjects[0]["subject"]
-                                td=course_subjects[10]["catalog_number"]
-                                td=course_subjects[0]["section"]
-                                td=course_subjects[0]["type"]
-                                td=course_subjects[0]["credits"]
-                                td=course_subjects[0]["title"]
-                                td=course_subjects[0]["status"]
-                                td=course_subjects[0]["enrollement"]
-                                td=course_subjects[0]["desc"]
-                                -i++
-                            if index % 20 == 19
+                                td=course_subjects[i]["sis_id"]
+                                td=course_subjects[i]["subject"]
+                                td=course_subjects[i]["catalog_number"]
+                                td=course_subjects[i]["section"]
+                                td=course_subjects[i]["type"]
+                                td=course_subjects[i]["credits"]
+                                td=course_subjects[i]["title"]
+                                td=course_subjects[i]["status"]
+                                td=course_subjects[i]["enrollement"]
+                                td=course_subjects[i]["desc"]
+                            if i % 20 == 19
                                 -page++
                     //- tbody
                     //-     - var page = 0
