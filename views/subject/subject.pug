@@ -12,85 +12,86 @@ block content
                 p(style="font-size: 40px")
                     | Results not found
             else
-                table(id="course_subjects" class="course_table tablesorter-blue")
-                    thead
-                        tr
-                            th SIS ID
-                            th Subject
-                            th Catalog Number
-                            th Section
-                            th Type
-                            th Credits
-                            th Title
-                            th Status 
-                            th Enrollment
-                            th Description
-                    tbody
-                        - var page = 0
-                        each course, i in course_subjects
-                            tr.paged(page=page)
-                                td=course_subjects[i]["sis_id"]
-                                td=course_subjects[i]["subject"]
-                                td=course_subjects[i]["catalog_number"]
-                                td=course_subjects[i]["section"]
-                                td=course_subjects[i]["type"]
-                                td=course_subjects[i]["credits"]
-                                td=course_subjects[i]["title"]
-                                td=course_subjects[i]["status"]
-                                td=course_subjects[i]["enrollement"]
-                                td=course_subjects[i]["desc"]
-                            if i % 20 == 19
-                                -page++
-                    //- tbody
-                    //-     - var page = 0
-                    //-     - var i = 0
-                    //-     each course, index in course_subjects[i]
-                    //-         tr.paged(page=page)
-                    //-             td=course[i]["sis_id"]
-                    //-             td=course[i]["subject"]
-                    //-             td=course[i]["catalog_number"]
-                    //-             td=course[i]["section"]
-                    //-             td=course[i]["type"]
-                    //-             td=course[i]["credits"]
-                    //-             td=course[i]["title"]
-                    //-             td=course[i]["status"]
-                    //-             td=course[i]["enrollement"]
-                    //-             td=course[i]["desc"]
-                    //-             -i++
-                    //-         if index % 20 == 19
-                    //-             -page++
-                    //- tbody
-                    //-     - var page = 0
-                    //-     each course, index in course_subjects
-                    //-         - for (i = 0; i < course_subjects.length; i++) {
-                    //-             tr.paged(page=page)
-                    //-                 td=course[i]["sis_id"]
-                    //-                 td=course[i]["subject"]
-                    //-                 td=course[i]["catalog_number"]
-                    //-                 td=course[i]["section"]
-                    //-                 td=course[i]["type"]
-                    //-                 td=course[i]["credits"]
-                    //-                 td=course[i]["title"]
-                    //-                 td=course[i]["status"]
-                    //-                 td=course[i]["enrollement"]
-                    //-                 td=course[i]["desc"]
-                    //-             -}
-                    //-         if index % 20 == 19
-                    //-             -page++
-                        
-            div.row
-                    #max_page_div(max_page = page)
-                    button.btn.btn-primary(type='submit', onClick="previousPage()") Previous
-                    button.btn.btn-primary.pageselector
-                    button.btn.btn-primary.pageselector
-                    button.btn.btn-primary.pageselector
-                    button.btn.btn-primary.pageselector
-                    button.btn.btn-primary.pageselector
-                    button.btn.btn-primary.pageselector
-                    button.btn.btn-primary.pageselector
-                    button.btn.btn-primary.pageselector
-                    button.btn.btn-primary.pageselector
-                    button.btn.btn-primary.pageselector
-                    button.btn.btn-primary(type='submit', onClick="nextPage()") Next
+            
+            //-     table(id="course_subjects" class="course_table tablesorter-blue")
+            //-         thead
+            //-             tr
+            //-                 th SIS ID
+            //-                 th Subject
+            //-                 th Catalog Number
+            //-                 th Section
+            //-                 th Type
+            //-                 th Credits
+            //-                 th Title
+            //-                 th Status 
+            //-                 th Enrollment
+            //-                 th Description
+            //-                 th Instructor
+            //-         tbody
+            //-             - var page = 0
+            //-             each course, i in course_subjects
+            //-                 tr.paged(page=page)
+            //-                     td=course_subjects[i]["sis_id"]
+            //-                     td=course_subjects[i]["subject"]
+            //-                     td=course_subjects[i]["catalog_number"]
+            //-                     td=course_subjects[i]["section"]
+            //-                     td=course_subjects[i]["type"]
+            //-                     td=course_subjects[i]["credits"]
+            //-                     td=course_subjects[i]["title"]
+            //-                     td=course_subjects[i]["status"]
+            //-                     td=course_subjects[i]["enrollement"]
+            //-                     td=course_subjects[i]["desc"]
+            //-                     td=course_subjects[i]["instructors"]
+            //-                 if i % 20 == 19
+            //-                     -page++
+            //- 
+            //- 
+            //- div.row
+            //-         #max_page_div(max_page = page)
+            //-         button.btn.btn-primary(type='submit', onClick="previousPage()") Previous
+            //-         button.btn.btn-primary.pageselector
+            //-         button.btn.btn-primary.pageselector
+            //-         button.btn.btn-primary.pageselector
+            //-         button.btn.btn-primary.pageselector
+            //-         button.btn.btn-primary.pageselector
+            //-         button.btn.btn-primary.pageselector
+            //-         button.btn.btn-primary.pageselector
+            //-         button.btn.btn-primary.pageselector
+            //-         button.btn.btn-primary.pageselector
+            //-         button.btn.btn-primary.pageselector
+            //-         button.btn.btn-primary(type='submit', onClick="nextPage()") Next
+    .container
+        each course, i in course_subjects
+            .row
+                .col-md-12
+                    .row.form-inline
+                        button.btn.bg-uva-blue(type='button' onclick="$(this).parent().parent().next().toggle('slow');$(this).find('i').toggle();return false;" style='font-size:18px;padding:10px;')
+                            i.fa.fa-plus-square
+                            i.fa.fa-minus-square(style='display:none;')
+                        div(style='margin-left:10px;')
+                                p.vertical=course_subjects[i]["subject"] + ' ' + course_subjects[i]["catalog_number"] + ' - ' + course_subjects[i]["title"]
+                .col-md-12(style='display:none;')
+                    table(style="width:100%;")
+                        tbody
+                            each course_section, i in course["section"]
+                                tr
+                                    td
+                                        div(style="margin-top:15px;margin-bottom:15px;padding-left:5px;padding-right:5px;")
+                                            // A single section. Comes in two parts:
+                                            // A button which contains the section header info
+                                            button(onclick="$(this).next().toggle('fast')" style="width:100%;padding:2px;background-color:inherit;outline:none;border:none")
+                                                .row.section-title(style="margin-left:-10px;")
+                                                    .col-sm-2
+                                                        b
+                                                            p=course_section["sis_id"] + ' - ' + course_section["section"]
+                                                    .col-sm-6
+                                                        b
+                                                            p= course_section["instructors"]
+                                                    .col-sm-2
+                                                        b
+                                                            p=course_section["enrollment_max"]
+                                                    .col-sm-2
+                                                        b
+                                                            p (0/0) WL
                     
                     
