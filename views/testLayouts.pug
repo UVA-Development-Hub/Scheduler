@@ -3,11 +3,14 @@ extends layout
 block customhead
     link(rel="stylesheet", href="/css/tablesorter.theme.blue.css")
     link(rel="stylesheet", href="/css/fullcalendar.css")
+    link(rel="stylesheet", href="/css/timegrid.css")
     script(src='/js/tablesorter.js')
     script(src="/js/pagination.js")
     script(src='/js/chart.js')
     script(src='/js/moment.js')
-    script(src='/js/fullcalendar.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/core/main.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/daygrid/main.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/timegrid/main.js')
 
 block content
     script.
@@ -108,7 +111,8 @@ block content
         var calendarEl = document.getElementById('calendar');
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
-          plugins: [ 'dayGrid' ]
+          plugins: [ 'timeGrid' ],
+          defaultView: 'timeGridWeek',
         });
 
         calendar.render();

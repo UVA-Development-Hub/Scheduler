@@ -63,6 +63,12 @@ router.get('/css/fullcalendar.css', function(req, res) {
 router.get('/js/moment.js', function(req, res) {
     res.sendFile(appdir + '/node_modules/moment/moment.js');
 });
+router.get('/js/timegrid.js', function(req, res) {
+    res.sendFile(appdir + '/node_modules/@fullcalendar/timegrid/main.js');
+});
+router.get('/css/timegrid.css', function(req, res) {
+    res.sendFile(appdir + '/node_modules/@fullcalendar/timegrid/main.min.css');
+});
 
 //search page
 router.get('/search', function(req, res){
