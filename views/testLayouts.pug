@@ -108,31 +108,41 @@ block content
     script.
         // This is calendar code.
         document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-          plugins: [ 'timeGrid' ],
-          defaultView: 'timeGridWeek',
-          firstHour: 10,
-          events:[
-            {
-                title:'CS2150',
-                start:moment(moment().day(1).format('LL')+" "+"12:00").format(),
-                end:moment(moment().day(1).format('LL')+" "+"12:50").format(),
-            },
-            {
-                title:'CS2150',
-                start:moment(moment().day(3).format('LL')+" "+"12:00").format(),
-                end:moment(moment().day(3).format('LL')+" "+"12:50").format(),
-            },
-            {
-                title:'CS2150',
-                start:moment(moment().day(5).format('LL')+" "+"12:00").format(),
-                end:moment(moment().day(5).format('LL')+" "+"12:50").format(),
-            }
-          ]
-        });
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+              plugins: [ 'timeGrid' ],
+              defaultView: 'timeGridWeek',
+              nowIndicator:true,
+              allDaySlot:false,
+              columnHeaderFormat:{
+                  weekday:'short',
+              },
+              minTime:"08:00:00",
+              header:{
+                  left:'',
+                  center:'',
+                  right:'',
+              },
+              events:[
+                {
+                    title:'CS2150',
+                    start:moment(moment().day(1).format("YYYY-MM-DD")+"T"+"12:00").format(),
+                    end:moment(moment().day(1).format("YYYY-MM-DD")+"T"+"12:50").format(),
+                },
+                {
+                    title:'CS2150',
+                    start:moment(moment().day(3).format("YYYY-MM-DD")+"T"+"12:00").format(),
+                    end:moment(moment().day(3).format("YYYY-MM-DD")+"T"+"12:50").format(),
+                },
+                {
+                    title:'CS2150',
+                    start:moment(moment().day(5).format("YYYY-MM-DD")+"T"+"12:00").format(),
+                    end:moment(moment().day(5).format("YYYY-MM-DD")+"T"+"12:50").format(),
+                }
+              ]
+            });
 
-        calendar.render();
+            calendar.render();
       });
             
             
