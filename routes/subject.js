@@ -43,4 +43,8 @@ router.get('/:subject', (req, res) => {
     });
 });
 
+router.get('/', (req, res) => {
+    res.send("The future home of a page which shows subjects.");
+});
+
 module.exports = router;
