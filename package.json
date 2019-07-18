@@ -28,7 +28,7 @@
     "dragula": "^3.7.2",
     "express": "^4.17.1",
     "express-session": "^1.16.2",
-    "fullcalendar": "^3.10.0",
+    "fullcalendar": "^4.0.0-alpha",
     "mongodb": "^3.2.7",
     "node-fetch": "^2.6.0",
     "passport": "^0.4.0",

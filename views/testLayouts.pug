@@ -2,13 +2,14 @@ extends layout
 
 block customhead
     link(rel="stylesheet", href="/css/tablesorter.theme.blue.css")
+    link(rel="stylesheet", href="/css/fullcalendar.css")
     script(src='/js/tablesorter.js')
     script(src="/js/pagination.js")
     script(src='/js/chart.js')
+    script(src='/js/moment.js')
+    script(src='/js/fullcalendar.js')
 
 block content
-    link(rel="stylesheet", href="/css/tablesorter.theme.blue.css")
-    script(src='/js/tablesorter.js')
     script.
         $(function() {
             $("#myTable").tablesorter();
@@ -36,6 +37,7 @@ block content
         div(style="height:100%;")
             canvas(id='sampleChart' style="height:100%;")
             script.
+                // This is the graph code.
                 var ctx = $('#sampleChart');
                 var grades = !{JSON.stringify(grades)};
                 var averages = [];
@@ -99,3 +101,17 @@ block content
                     chart(grades, ctx);
                 }
         div(style="width:100%;background-color:blue;")
+    div(id="calendar")
+    script.
+        // This is calendar code.
+        document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          plugins: [ 'dayGrid' ]
+        });
+
+        calendar.render();
+      });
+            
+            

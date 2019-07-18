@@ -54,6 +54,15 @@ router.get('/js/chart.js', function(req, res) {
 router.get('/css/chart.css', function(req, res) {
     res.sendFile(appdir + '/node_modules/chart.js/dist/Chart.min.css');
 });
+router.get('/js/fullcalendar.js', function(req, res) {
+    res.sendFile(appdir + '/node_modules/fullcalendar/dist/fullcalendar.js');
+});
+router.get('/css/fullcalendar.css', function(req, res) {
+    res.sendFile(appdir + '/node_modules/fullcalendar/dist/fullcalendar.min.css');
+});
+router.get('/js/moment.js', function(req, res) {
+    res.sendFile(appdir + '/node_modules/moment/moment.js');
+});
 
 //search page
 router.get('/search', function(req, res){
