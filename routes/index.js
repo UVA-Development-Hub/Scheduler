@@ -31,9 +31,13 @@ router.get('/logout', (req, res) => {
 })
 
 router.get('/test', function (req, res) {
-    res.render('testLayouts', {
-        title: 'Test Page',
-        user: req.session.user,
+    mongo.searchGrades('CS','2150', (err, data)=>{
+        console.log(data);
+        res.render('testLayouts', {
+            grades: data,
+            title: 'Test Page',
+            user: req.session.user,
+        });
     });
 });
 
