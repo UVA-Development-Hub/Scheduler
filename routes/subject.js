@@ -45,6 +45,16 @@ router.get('/:subject', (req, res) => {
 
 router.get('/', (req, res) => {
     res.send("The future home of a page which shows subjects.");
+    mongo.getTerms((err,termsList) => {
+        //console.log("Terms:\n",termsList);
+        var recentTerm = termsList[termsList.length-1]["_id"];
+        mongo.searchTerm(recentTerm, {'subject': req.params.subject}, (err, data) => {
+            console.log(data);
+            res.render('subject/subject_landing', {
+                course_subjects: data,
+            });
+        });
+    });
 });
 
 module.exports = router;

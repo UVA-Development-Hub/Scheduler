@@ -10,8 +10,9 @@ block content
     .container
         div.row    
             if course_terms_and_ids.length == 0
-                p(style="font-size: 40px")
-                    | Results not found
+                p(style="font-size: 40px") We're Sorry!
+                div.row
+                    p We couldn't find anything matching what you searched :(
             else
                 table(id="term_table" class="terms_table tablesorter-blue")
                     thead
@@ -23,7 +24,9 @@ block content
                             th Class Title
                             th Class Type
                             th Instructor
+                            th Currently Enrolled
                             th Enrollment Capacity
+                            th Waiting List
                             th Class Status
                             th Meeting Days
                             th Class Starting Time
@@ -35,20 +38,42 @@ block content
                         each course_term_and_id, index in course_terms_and_ids
                             -console.log(course_term_and_id)
                             tr.paged(page=page, style=("display:None"))
-                                td=course_term_and_id['subject']
-                                td=course_term_and_id['catalog_number']
-                                td=course_term_and_id['section']
-                                td=course_term_and_id['sis_id']
-                                td=course_term_and_id['title']
-                                td=course_term_and_id['type']
-                                td=course_term_and_id['instructors']
-                                td=course_term_and_id['enrollment']['of']
-                                td=course_term_and_id['status']
-                                td=course_term_and_id['meetings']['days']
-                                td=course_term_and_id['meetings']['start']
-                                td=course_term_and_id['meetings']['finish']
-                                td=course_term_and_id['meetings']['begin']
-                                td=course_term_and_id['meetings']['complete']
+                                if course_term_and_id['meetings'].length == 0
+                                    td=course_term_and_id['subject']
+                                    td=course_term_and_id['catalog_number']
+                                    td=course_term_and_id['section']
+                                    td=course_term_and_id['sis_id']
+                                    td=course_term_and_id['title']
+                                    td=course_term_and_id['type']
+                                    td=course_term_and_id['instructors']
+                                    td=course_term_and_id['enrollment']['in']
+                                    td=course_term_and_id['enrollment']['of']
+                                    td=course_term_and_id['enrollment']['waiting']
+                                    td=course_term_and_id['status']
+                                    td="Not found"
+                                    td="Not found"
+                                    td="Not found"
+                                    td="Not found"
+                                    td="Not found"
+                                
+                                else
+                                    
+                                    td=course_term_and_id['subject']
+                                    td=course_term_and_id['catalog_number']
+                                    td=course_term_and_id['section']
+                                    td=course_term_and_id['sis_id']
+                                    td=course_term_and_id['title']
+                                    td=course_term_and_id['type']
+                                    td=course_term_and_id['instructors']
+                                    td=course_term_and_id['enrollment']['in']
+                                    td=course_term_and_id['enrollment']['of']
+                                    td=course_term_and_id['enrollment']['waiting']
+                                    td=course_term_and_id['status']
+                                    td=course_term_and_id['meetings'][0]['days']
+                                    td=course_term_and_id['meetings'][0]['begin']
+                                    td=course_term_and_id['meetings'][0]['start']
+                                    td=course_term_and_id['meetings'][0]['finish']
+                                    td=course_term_and_id['meetings'][0]['complete']
                             if index % 20 == 19
                                 -page++
                                 
