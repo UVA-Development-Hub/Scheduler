@@ -73,23 +73,23 @@ block content
                                                                         p=course_section.desc
                                                                     else
                                                                         p A description for this course is not available :(
-                                                        //- else
-                                                        //- 
-                                                        //-     div(style="display:none;")
-                                                        //-         .row
-                                                        //-             .col-md-9
-                                                        //-                 p="Credits:" + course_section["credits"]
-                                                        //-                 p="Status: " + course_section["status"]
-                                                        //-                 p="Meeting Days: " + course_section['meetings'][0]['days']
-                                                        //-                 p="Start Time: " + course_section['meetings'][0]['start']
-                                                        //-                 p="End Time: " + course_section['meetings'][0]['finish']
-                                                        //-                 p="Class Date Begins: " + course_section['meetings'][0]['begin']
-                                                        //-                 p="Class Date Ends: " + course_section['meetings'][0]['complete']
-                                                        //-                 //- p=course_section["enrollment"]
-                                                        //-             .col-md-3
-                                                        //-                 if(course_section.desc.length > 0)
-                                                        //-                     p=course_section.desc
-                                                        //-                 else
-                                                        //-                     p A description for this course is not available :(
+                                                        else
+                                                        
+                                                            div(style="display:none;")
+                                                                .row
+                                                                    .col-md-9
+                                                                        p="Credits:" + course_section["credits"]
+                                                                        p="Status: " + course_section["status"]
+                                                                        p="Meeting Days: " + course_section['meetings'][0]['days']
+                                                                        p="Start Time: " + course_section['meetings'][0]['start']
+                                                                        p="End Time: " + course_section['meetings'][0]['finish']
+                                                                        p="Class Date Begins: " + course_section['meetings'][0]['begin']
+                                                                        p="Class Date Ends: " + course_section['meetings'][0]['complete']
+                                                                        //- p=course_section["enrollment"]
+                                                                    .col-md-3
+                                                                        if(course_section.desc.length > 0)
+                                                                            p=course_section.desc
+                                                                        else
+                                                                            p A description for this course is not available :(
                                 
                     
