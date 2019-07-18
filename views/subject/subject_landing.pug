@@ -1,0 +1,8 @@
+extends  ../layout
+
+block content
+    .container
+        div.row
+            p Hello
+            each subject_name, index in course_subjects
+                p=subject_name
