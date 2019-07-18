@@ -57,22 +57,22 @@ block content
                                                                         
                                                         if course_section['meetings'].length == 0
                                     
-                                                        div(style="display:none;")
-                                                            .row
-                                                                .col-md-9
-                                                                    p="Credits:" + course_section["credits"]
-                                                                    p="Status:" + course_section["status"]
-                                                                    p="Meeting Days: Not Found"
-                                                                    p="Start Time: Not Found"
-                                                                    p="End Time: Not Found"
-                                                                    p="Class Date Begins: Not Found"
-                                                                    p="Class Date Ends: NoT Found"
-                                                                    //- p=course_section["enrollment"]
-                                                                .col-md-3
-                                                                    if(course_section.desc.length > 0)
-                                                                        p=course_section.desc
-                                                                    else
-                                                                        p A description for this course is not available :(
+                                                            div(style="display:none;")
+                                                                .row
+                                                                    .col-md-9
+                                                                        p="Credits:" + course_section["credits"]
+                                                                        p="Status:" + course_section["status"]
+                                                                        p="Meeting Days: Not Found"
+                                                                        p="Start Time: Not Found"
+                                                                        p="End Time: Not Found"
+                                                                        p="Class Date Begins: Not Found"
+                                                                        p="Class Date Ends: NoT Found"
+                                                                        //- p=course_section["enrollment"]
+                                                                    .col-md-3
+                                                                        if(course_section.desc.length > 0)
+                                                                            p=course_section.desc
+                                                                        else
+                                                                            p A description for this course is not available :(
                                                         else
                                                         
                                                             div(style="display:none;")
