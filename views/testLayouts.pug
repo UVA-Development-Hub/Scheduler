@@ -109,10 +109,27 @@ block content
         // This is calendar code.
         document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
-
         var calendar = new FullCalendar.Calendar(calendarEl, {
           plugins: [ 'timeGrid' ],
           defaultView: 'timeGridWeek',
+          firstHour: 10,
+          events:[
+            {
+                title:'CS2150',
+                start:moment(moment().day(1).format('LL')+" "+"12:00").format(),
+                end:moment(moment().day(1).format('LL')+" "+"12:50").format(),
+            },
+            {
+                title:'CS2150',
+                start:moment(moment().day(3).format('LL')+" "+"12:00").format(),
+                end:moment(moment().day(3).format('LL')+" "+"12:50").format(),
+            },
+            {
+                title:'CS2150',
+                start:moment(moment().day(5).format('LL')+" "+"12:00").format(),
+                end:moment(moment().day(5).format('LL')+" "+"12:50").format(),
+            }
+          ]
         });
 
         calendar.render();
