@@ -17,7 +17,7 @@ router.get('/:subject', (req, res) => {
         }
         //console.log("Terms:\n",termsList);
         var recentTerm = termsList[termsList.length-1]["_id"];
-        mongo.searchTerm(recentTerm, {'subject': req.params.subject}, (err, data) => {
+        mongo.searchTerm(recentTerm, {'subject': req.params.subject.toUpperCase()}, (err, data) => {
             //console.log(data);
             console.log(data);
             var new_result = [],
