@@ -109,13 +109,17 @@ block content
                                                             // A button which contains the section header info
                                                             button(onclick="$(this).next().toggle('fast')" style="width:100%;padding:2px;background-color:inherit;outline:none;border:none")
                                                                 .row.section-title(style="margin-left:-10px;")
+                                                                    .col-sm-1
+                                                                        div
+                                                                            input#course.pointer(type="checkbox", name="course")
+                                                                            label.pointer(for='course') 
                                                                     .col-sm-2
                                                                         b
                                                                             p=course.sis_id + ' - ' + course.section
                                                                     .col-sm-2
                                                                         b
                                                                             p=course.type
-                                                                    .col-sm-4
+                                                                    .col-sm-3
                                                                         b
                                                                             p=course.instructor
                                                                     .col-sm-2
