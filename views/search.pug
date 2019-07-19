@@ -81,116 +81,120 @@ block content
 
     .container
         .row
-            .col-md-8
-                div(id="search_result")
-                    each result in results
-                        .row
-                            // Top bar for the name and expanding controls
-                            .col-md-12
-                                .row.form-inline
-                                    button.btn.bg-uva-blue(type='button' onclick="$(this).parent().parent().next().toggle('slow');$(this).find('i').toggle();return false;" style='font-size:18px;padding:10px;')
-                                        i.fa.fa-plus-square
-                                        i.fa.fa-minus-square(style='display:none;')
-                                    div(style='margin-left:10px;')
-                                            p.vertical=result.subject + ' ' + result.number + ' - ' + result.title
-                            // Column container for all sections
-                            .col-md-12(style='display:none;')
-                                table(style="width:100%;")
-                                    tbody
-                                        each course, i in result.section
-                                            tr
-                                                td
-                                                    div(style="margin-top:15px;margin-bottom:15px;padding-left:5px;padding-right:5px;")
-                                                        // A single section. Comes in two parts:
-                                                        // A button which contains the section header info
-                                                        button(onclick="$(this).next().toggle('fast')" style="width:100%;padding:2px;background-color:inherit;outline:none;border:none")
-                                                            .row.section-title(style="margin-left:-10px;")
-                                                                .col-sm-2
-                                                                    b
-                                                                        p=course.sis_id + ' - ' + course.section
-                                                                .col-sm-2
-                                                                    b
-                                                                        p=course.type
-                                                                .col-sm-4
-                                                                    b
-                                                                        p=course.instructor
-                                                                .col-sm-2
-                                                                    b
-                                                                        p=course.enrollment_max
-                                                                .col-sm-2
-                                                                    b
-                                                                        p (0/0) WL
-                                                        // ... and a div which contains everything else
-                                                        div(style="display:none;")
-                                                            .row
-                                                                .col-md-3
-                                                                    p Future home of the calendar
-                                                                    p=course.days
-                                                                    p=course.meeting_start
-                                                                    p=course.meeting_end    
-                                                                .col-md-9
-                                                                    if(course.desc.length > 0)
-                                                                        p=course.desc
-                                                                    else
-                                                                        p A description for this course is not available :(
-                                                            .row
-                                                                .col-md-12
-                                                                    p
-                                                                    | Grade data is fetched by combining the instructor with the subject and number. It does not factor in labs/discussions or their instructors, etc.
-                                                                    p Future home of the grade distribution information!
-            .col-md-4
-                div(id="calendar" style="width:100%;min-width:290px;position:sticky;top: 0px; margin-top: 100px;")
-                script.
-                    // This is calendar code.
-                    document.addEventListener('DOMContentLoaded', function() {
-                        var calendarEl = document.getElementById('calendar');
-                        var calendar = new FullCalendar.Calendar(calendarEl, {
-                          plugins: [ 'timeGrid' ],
-                          defaultView: 'timeGridWeek',
-                          nowIndicator:true,
-                          allDaySlot:false,
-                          columnHeaderFormat:{
-                              weekday:'short',
-                          },
-                          minTime:"08:00:00",
-                          header:{
-                              left:'',
-                              center:'',
-                              right:'',
-                          },
-                          events:[
-                            {
-                                title:'CS2150',
-                                start:moment(moment().day(1).format("YYYY-MM-DD")+"T"+"12:00").format(),
-                                end:moment(moment().day(1).format("YYYY-MM-DD")+"T"+"12:50").format(),
-                            },
-                            {
-                                title:'CS2150',
-                                start:moment(moment().day(3).format("YYYY-MM-DD")+"T"+"12:00").format(),
-                                end:moment(moment().day(3).format("YYYY-MM-DD")+"T"+"12:50").format(),
-                            },
-                            {
-                                title:'CS2150',
-                                start:moment(moment().day(5).format("YYYY-MM-DD")+"T"+"12:00").format(),
-                                end:moment(moment().day(5).format("YYYY-MM-DD")+"T"+"12:50").format(),
-                            }
-                          ]
-                        });
+            if results.length==0
+                .container
+                    .row 
+            else
+                .col-md-8
+                    div(id="search_result")
+                        each result in results
+                            .row
+                                // Top bar for the name and expanding controls
+                                .col-md-12
+                                    .row.form-inline
+                                        button.btn.bg-uva-blue(type='button' onclick="$(this).parent().parent().next().toggle('slow');$(this).find('i').toggle();return false;" style='font-size:18px;padding:10px;')
+                                            i.fa.fa-plus-square
+                                            i.fa.fa-minus-square(style='display:none;')
+                                        div(style='margin-left:10px;')
+                                                p.vertical=result.subject + ' ' + result.number + ' - ' + result.title
+                                // Column container for all sections
+                                .col-md-12(style='display:none;')
+                                    table(style="width:100%;")
+                                        tbody
+                                            each course, i in result.section
+                                                tr
+                                                    td
+                                                        div(style="margin-top:15px;margin-bottom:15px;padding-left:5px;padding-right:5px;")
+                                                            // A single section. Comes in two parts:
+                                                            // A button which contains the section header info
+                                                            button(onclick="$(this).next().toggle('fast')" style="width:100%;padding:2px;background-color:inherit;outline:none;border:none")
+                                                                .row.section-title(style="margin-left:-10px;")
+                                                                    .col-sm-2
+                                                                        b
+                                                                            p=course.sis_id + ' - ' + course.section
+                                                                    .col-sm-2
+                                                                        b
+                                                                            p=course.type
+                                                                    .col-sm-4
+                                                                        b
+                                                                            p=course.instructor
+                                                                    .col-sm-2
+                                                                        b
+                                                                            p=course.enrollment_max
+                                                                    .col-sm-2
+                                                                        b
+                                                                            p (0/0) WL
+                                                            // ... and a div which contains everything else
+                                                            div(style="display:none;")
+                                                                .row
+                                                                    .col-md-3
+                                                                        p Future home of the calendar
+                                                                        p=course.days
+                                                                        p=course.meeting_start
+                                                                        p=course.meeting_end    
+                                                                    .col-md-9
+                                                                        if(course.desc.length > 0)
+                                                                            p=course.desc
+                                                                        else
+                                                                            p A description for this course is not available :(
+                                                                .row
+                                                                    .col-md-12
+                                                                        p
+                                                                        | Grade data is fetched by combining the instructor with the subject and number. It does not factor in labs/discussions or their instructors, etc.
+                                                                        p Future home of the grade distribution information!
+                .col-md-4
+                    div(id="calendar" style="width:100%;min-width:290px;position:sticky;top: 0px; margin-top: 100px;")
+                    script.
+                        // This is calendar code.
+                        document.addEventListener('DOMContentLoaded', function() {
+                            var calendarEl = document.getElementById('calendar');
+                            var calendar = new FullCalendar.Calendar(calendarEl, {
+                              plugins: [ 'timeGrid' ],
+                              defaultView: 'timeGridWeek',
+                              nowIndicator:true,
+                              allDaySlot:false,
+                              columnHeaderFormat:{
+                                  weekday:'short',
+                              },
+                              minTime:"08:00:00",
+                              header:{
+                                  left:'',
+                                  center:'',
+                                  right:'',
+                              },
+                              events:[
+                                {
+                                    title:'CS2150',
+                                    start:moment(moment().day(1).format("YYYY-MM-DD")+"T"+"12:00").format(),
+                                    end:moment(moment().day(1).format("YYYY-MM-DD")+"T"+"12:50").format(),
+                                },
+                                {
+                                    title:'CS2150',
+                                    start:moment(moment().day(3).format("YYYY-MM-DD")+"T"+"12:00").format(),
+                                    end:moment(moment().day(3).format("YYYY-MM-DD")+"T"+"12:50").format(),
+                                },
+                                {
+                                    title:'CS2150',
+                                    start:moment(moment().day(5).format("YYYY-MM-DD")+"T"+"12:00").format(),
+                                    end:moment(moment().day(5).format("YYYY-MM-DD")+"T"+"12:50").format(),
+                                }
+                              ]
+                            });
 
-                        calendar.render();
-                  });
-                  /*
-                  $(window).scroll(function(e){ 
-                      var $el = $('#calendar'); 
-                      var isPositionFixed = ($el.css('position') == 'fixed');
-                      if ($(this).scrollTop() > 500 && !isPositionFixed){ 
-                          $el.css({'position': 'fixed', 'top': '0px'}); 
-                      }
-                      if ($(this).scrollTop() < 500 && isPositionFixed){
-                          $el.css({'position': 'static', 'top': '0px'}); 
-                      } 
-                 });
-                 */
+                            calendar.render();
+                      });
+                      /*
+                      $(window).scroll(function(e){ 
+                          var $el = $('#calendar'); 
+                          var isPositionFixed = ($el.css('position') == 'fixed');
+                          if ($(this).scrollTop() > 500 && !isPositionFixed){ 
+                              $el.css({'position': 'fixed', 'top': '0px'}); 
+                          }
+                          if ($(this).scrollTop() < 500 && isPositionFixed){
+                              $el.css({'position': 'static', 'top': '0px'}); 
+                          } 
+                     });
+                     */
                                         
     // Inline scrips go at the end to decrease page loading time
     script.
