@@ -3,8 +3,16 @@ extends  ../layout
 block customhead
     link(rel="stylesheet", href="/css/tablesorter.theme.blue.css")
     link(rel="stylesheet", href="/css/error_page.css")
+    link(rel="stylesheet", href="/css/fullcalendar.css")
+    link(rel="stylesheet", href="/css/timegrid.css")
     script(src='/js/tablesorter.js')
-    script(src='/js/core/fullcalendar.js')
+    //- /* script(src='/js/core/fullcalendar.js') */
+    script(src='/js/chart.js')
+    script(src='/js/moment.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/core/main.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/daygrid/main.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/timegrid/main.js')
+
 
 block content
     .container(style="font-size: 20px")
@@ -12,6 +20,7 @@ block content
         .row
             .col-md-4
                 p.center=specific_class['subject'] + " " + specific_class['catalog_number'] + "-" + specific_class['section']
+                - var class_title = specific_class['subject'] + " " + specific_class['catalog_number'] + "-" + specific_class['section']
             .col-md-6
                 p.center 
             .col-md-2
@@ -35,6 +44,40 @@ block content
                 p.center
             .col-md-8.center
                 p.center Calendar
+                div(style="width:100%;background-color:blue;")
+            div(id="calendar" style="width:500px;height:500px")
+            script.
+                // This is calendar code.
+                
+                  events = []
+                    for each meeting, index in specific_class
+                        event = {}
+                        title: meeting['title'],
+                        start: meeting['meetings'][0]['start],
+                        end: meeting['meetings'][0]['end']
+                        events.push(event)
+                        console.log(events)
+                        
+                    document.addEventListener('DOMContentLoaded', function() {
+                        var calendarEl = document.getElementById('calendar');
+                        var calendar = new FullCalendar.Calendar(calendarEl, {
+                          plugins: [ 'timeGrid' ],
+                          defaultView: 'timeGridWeek',
+                          nowIndicator:true,
+                          allDaySlot:false,
+                          columnHeaderFormat:{
+                              weekday:'short',
+                          },
+                          minTime:"08:00:00",
+                          header:{
+                              left:'',
+                              center:'',
+                              right:'',
+                          },
+                    });
+
+                    calendar.render();
+              });
             .col-md-2
                 p.center
         .row
