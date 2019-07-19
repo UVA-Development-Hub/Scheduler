@@ -14,7 +14,7 @@ block customhead
     
 block content
     
-    div.container 
+    div.container(id="resultsParent")
         div.row
             .col-md-12
                 .row
@@ -138,10 +138,8 @@ block content
                                                                     p
                                                                     | Grade data is fetched by combining the instructor with the subject and number. It does not factor in labs/discussions or their instructors, etc.
                                                                     p Future home of the grade distribution information!
-            .col-md-4                                                
-                div(id="calendar")
-                    div(style="width:100%;background-color:blue;")
-                div(id="calendar" style="width:500px;height:500px")
+            .col-md-4
+                div(id="calendar" style="width:100%;min-width:290px;position:sticky;top: 0px; margin-top: 100px;")
                 script.
                     // This is calendar code.
                     document.addEventListener('DOMContentLoaded', function() {
@@ -181,6 +179,18 @@ block content
 
                         calendar.render();
                   });
+                  /*
+                  $(window).scroll(function(e){ 
+                      var $el = $('#calendar'); 
+                      var isPositionFixed = ($el.css('position') == 'fixed');
+                      if ($(this).scrollTop() > 500 && !isPositionFixed){ 
+                          $el.css({'position': 'fixed', 'top': '0px'}); 
+                      }
+                      if ($(this).scrollTop() < 500 && isPositionFixed){
+                          $el.css({'position': 'static', 'top': '0px'}); 
+                      } 
+                 });
+                 */
                                         
     // Inline scrips go at the end to decrease page loading time
     script.
