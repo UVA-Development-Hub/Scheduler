@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mongo = require('../bin/mongo.js');
+var async = require('async');
 
 router.get('/new', (req, res) => {
     if(req.session.user) {
@@ -87,16 +88,45 @@ router.post('/new', (req, res) => {
     }
 });
 
-
 router.get('/', (req, res) => {
     if (req.session.user) {
         // If the user has just joined the site, redirect them to where they can
         // fill out their information
         if(req.session.user.displayName == '') res.redirect('/profile/new');
         else {
-            res.render('profile/profile', {
-                title: 'User Profile',
-                user: req.session.user
+            async.parallel([
+                async.reflect( callback => {
+                    if(req.session.user.major && req.session.user.major != '') {
+                        mongo.getProgramInfo(req.session.user.major, (err, data) => {
+                            if(err) callback(err, null);
+                            else callback(null, data);
+                        });
+                    } else callback(null, null);
+                }),
+
+                async.reflect( callback => {
+                    if(req.session.user.double_major && req.session.user.double_major != '') {
+                        mongo.getProgramInfo(req.session.user.double_major, (err, data) => {
+                            if(err) callback(err, null);
+                            else callback(null, data);
+                        });
+                    } else callback(null, null);
+                }),
+
+                async.reflect( callback => {
+                    if(req.session.user.minor && req.session.user.minor != '') {
+                        mongo.getProgramInfo(req.session.user.minor, (err, data) => {
+                            if(err) callback(err, null);
+                            else callback(null, data);
+                        });
+                    } else callback(null, null);
+                })
+            ], (err, data) => {
+                res.render('profile/profile', {
+                    title: 'User Profile',
+                    user: req.session.user,
+                    program_data: data
+                });
             });
         }
     } else res.redirect('/auth/login')
