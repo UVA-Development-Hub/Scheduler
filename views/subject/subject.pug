@@ -54,7 +54,7 @@ block content
                                                                         p="Instructor(s):" + " " + course_section["instructors"]
                                                                 .col-sm-2
                                                                     b
-                                                                        p="Max Enrollment: " + course_section["enrollment"]['of']
+                                                                        p=" Enrollment: " + " " + course_section['enrolled'] + " / " + course_section["enroll_limit"]
                                                                 .col-sm-2
                                                                     b
                                                                         p=course_section["type"]
@@ -64,8 +64,9 @@ block content
                                                             div(style="display:none;")
                                                                 .row
                                                                     .col-md-9
-                                                                        p="Credits:" + course_section["credits"]
-                                                                        p="Status:" + course_section["status"]
+                                                                        p="Credits: " + course_section["credits"]
+                                                                        p="Status: " + course_section["status"]
+                                                                        p="Waiting List: " + course_section["waiting"]
                                                                         p="Meeting Days: Not Found"
                                                                         p="Start Time: Not Found"
                                                                         p="End Time: Not Found"
@@ -82,8 +83,9 @@ block content
                                                             div(style="display:none;")
                                                                 .row
                                                                     .col-md-9
-                                                                        p="Credits:" + course_section["credits"]
+                                                                        p="Credits: " + course_section["credits"]
                                                                         p="Status: " + course_section["status"]
+                                                                        p="Waiting List: " + course_section['"waiting"']
                                                                         p="Meeting Days: " + course_section['meetings'][0]['days']
                                                                         p="Start Time: " + course_section['meetings'][0]['start']
                                                                         p="End Time: " + course_section['meetings'][0]['finish']

@@ -44,10 +44,10 @@ router.get('/:subject', (req, res) => {
 });
 
 router.get('/', (req, res) => {
-    res.send("The future home of a page which shows subjects.");
+    // res.send("The future home of a page which shows subjects.");
     mongo.getTerms((err,termsList) => {
         //console.log("Terms:\n",termsList);
-        var recentTerm = termsList[termsList.length-1]["_id"];
+        var recentTerm = termsList[termsList.length-1]['_id'];
         mongo.searchTerm(recentTerm, {'subject': req.params.subject}, (err, data) => {
             console.log(data);
             res.render('subject/subject_landing', {
@@ -56,5 +56,16 @@ router.get('/', (req, res) => {
         });
     });
 });
+
+// router.get('/', (req, res) => {
+//     mongo.getPrograms(['major', 'minor'], data => {
+//         console.log(data['major']);
+//         console.log(data['minor']);
+//         res.render('subject', {
+//             major_list: data['major'],
+//             minor_list: data['minor'],
+//         });
+//     });
+// });
 
 module.exports = router;

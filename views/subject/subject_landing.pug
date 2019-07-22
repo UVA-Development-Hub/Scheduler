@@ -3,7 +3,8 @@ extends  ../layout
 block content
     .container
         div.row
-            p Hello
+            h1 Explore Subjects
+        div.row
             each subject_name, index in course_subjects
-                p=subject_name
+                p=subject_name['subject']
                 
