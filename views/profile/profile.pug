@@ -3,6 +3,7 @@ block customhead
     link(rel="stylesheet", href="/css/tablesorter.theme.blue.css")
     link(rel="stylesheet", href="/css/fullcalendar.css")
     link(rel="stylesheet", href="/css/timegrid.css")
+    script(src='/js/ajax_demo.js')
     script(src='/js/tablesorter.js')
     script(src="/js/pagination.js")
     script(src='/js/chart.js')
@@ -31,7 +32,7 @@ block content
                 .row
                     p=user.school
                 .row
-                    a.btn.bg-uva-blue.horizontal(href="/profile/edit") Edit My Info
+                    a.btn.bg-uva-blue.wide(href="/profile/edit") Edit My Info
             .col-md-8.outline
                 .row
                     h4.center.section-title Weekly Schedule
@@ -82,8 +83,8 @@ block content
                     h4.center.section-title Shopping Cart
                 .row
                     a.btn.bg-uva-blue.wide(href="/planner") Launch Planner
-                .row
-                    for courseref in user.cart
+                for courseref in user.cart
+                    .row
                         a(href='/course/' + courseref.term + '/' + courseref.sis_id)=courseref.subject + ' ' + courseref.catalog_number
         .row
             .col-md-2.outline
@@ -92,11 +93,11 @@ block content
                     hr
                 .row
                     if(user.major)
-                        a.btn.bg-uva-orange(style="margin-bottom:4px;width:100%;", href="#") Major Requirements
+                        a.btn.bg-uva-orange(style="margin-bottom:4px;width:100%;", href=program_data[0].value.link target="_blank") Major Requirements
                         if(user.double_major)
-                            a.btn.bg-uva-orange(style="margin-bottom:4px;width:100%;", href="#") 2nd Major Requirements
+                            a.btn.bg-uva-orange(style="margin-bottom:4px;width:100%;", href=program_data[1].value.link target="_blank") 2nd Major Requirements
                     if(user.minor)
-                        a.btn.bg-uva-orange(style="margin-bottom:4px;width:100%;", href="#") Minor Requirements
+                        a.btn.bg-uva-orange(style="margin-bottom:4px;width:100%;", href=program_data[2].value.link target="_blank") Minor Requirements
                     a.btn.bg-uva-orange(style="margin-bottom:4px;width:100%;", href="https://sisuva.admin.virginia.edu/ihprd/signon.html" target="_blank") UVA SIS
             .col-md-10.outline
                 h3.center.section-title This space for rent
