@@ -11,27 +11,24 @@ block content
                     h4.center.section-title My Info
                     hr
                 .row
-                    p Major: Computer Science (B.S.)
+                    if(user.double_major && user.double_major != '')
+                        p=user.major + ', ' + user.double_major
+                    else
+                        p=user.major
                 .row
-                    p 2nd Major: Electrical Engineering
+                    p='Minor: ' + user.minor
                 .row
-                    p Minor: Mathematics
-                .row
-                    p School of Engineering and Applied Science (SEAS)
-                .row
-                    p Gratuating in 2021
+                    p=user.school
                 .row
                     a.btn.bg-uva-blue(href="/profile/edit") Edit My Info
             .col-md-8.outline
                 .row
-                    h4.center.section-title Weekly Schedule for Fall 2019
+                    h4.center.section-title Weekly Schedule
             .col-md-2.outline
                 .row
                     h4.center.section-title Shopping Cart
-                .row
-                    p CS 2150
-                .row
-                    p CS 3710
+                for courseref in cart
+                    a(href='/course/' + courseref.term + '/' + courseref.sis_id)=courseref.display
         .row
             .col-md-2.outline
                 .row

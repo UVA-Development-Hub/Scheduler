@@ -94,6 +94,7 @@ router.get('/', (req, res) => {
         // fill out their information
         if(req.session.user.displayName == '') res.redirect('/profile/new');
         else {
+            var cart = mongo.getCart(req.session.user.cart);
             res.render('profile/profile', {
                 title: 'User Profile',
                 user: req.session.user

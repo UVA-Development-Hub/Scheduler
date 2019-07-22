@@ -10,7 +10,7 @@ form(method="POST", action=sub_to, style="text-align:center;")
                 .form-group
                     label School of Enrollment
                     select.form-control(name="school")
-                        if(user.enrollmentData.school == 'SEAS')
+                        if(user.school == 'SEAS')
                             option(value="CLAS") College of Arts &amp; Sciences (CLAS)
                             option(value="SEAS", selected) School of Engineering and Applied Science (SEAS)
                         else
@@ -24,7 +24,7 @@ form(method="POST", action=sub_to, style="text-align:center;")
                     .col-md-6.center
                         .form-group.form-inline
                             label Double Major
-                            if(user.enrollmentData.double_major)
+                            if(user.double_major)
                                 input#double_major(name ="hasDouble" type="checkbox" checked)
                             else
                                 input#double_major(name ="hasDouble" type="checkbox")
@@ -33,7 +33,7 @@ form(method="POST", action=sub_to, style="text-align:center;")
                         select.form-control#major(name="major")
                             option(value="") --
                             each major in majors
-                                if(user.enrollmentData.major == major.name)
+                                if(user.major == major.name)
                                     option(value=major.name, selected)=major.name
                                 else
                                     option(value=major.name)=major.name
@@ -41,7 +41,7 @@ form(method="POST", action=sub_to, style="text-align:center;")
                         select.form-control#double_major_input(style="display:none;", name="double_major")
                             option(value="") --
                             each major in majors
-                                if(user.enrollmentData.double_major == major.name)
+                                if(user.double_major == major.name)
                                     option(value=major.name, selected)=major.name
                                 else
                                     option(value=major.name)=major.name
@@ -52,12 +52,12 @@ form(method="POST", action=sub_to, style="text-align:center;")
                     select.form-control(name="minor")
                         option(value="") --
                         each major in majors
-                            if(user.enrollmentData.minor == major.name)
+                            if(user.minor == major.name)
                                 option(value=major.name, selected)=major.name
                             else
                                 option(value=major.name)=major.name
                         each minor in minors
-                            if(user.enrollmentData.minor == minor.name)
+                            if(user.minor == minor.name)
                                 option(value=minor.name, selected)=minor.name
                             else
                                 option(value=minor.name)=minor.name
