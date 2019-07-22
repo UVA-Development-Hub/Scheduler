@@ -80,8 +80,8 @@ block content
             .col-md-2.outline
                 .row
                     h4.center.section-title Shopping Cart
-                for courseref in cart
-                    a(href='/course/' + courseref.term + '/' + courseref.sis_id)=courseref.display
+                for courseref in user.cart
+                    a(href='/course/' + courseref.term + '/' + courseref.sis_id)=courseref.subject + ' ' + courseref.catalog_number
         .row
             .col-md-2.outline
                 .row

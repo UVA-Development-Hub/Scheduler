@@ -125,7 +125,7 @@ function updateUser(id, specifiers, callback) {
     console.log("Processing update for user " + id);
     var db = client.db(databases.userdb);
     db.collection(databases.usercoll).findOneAndUpdate({ _id : id }, { $set: specifiers }, { returnOriginal: false }).then( status => {
-        if(!status.ok) raiseMongoError(status);
+        if(!status.ok) raiseMongoError(status, callback);
         else {
             console.log('Update complete');
             callback(status.value);
@@ -159,10 +159,7 @@ function getTerms(callback) {
     });
 }
 
-// Give a specifying string which will be used to build the dictionary.
-// This is done instead of passing in the dictionary manually in an
-// attempt to simplify how this function can be used. Using the constructed
-// dict, a certain subset of the programs are retrieved
+// Give an array of program types you want to retrieve
 function getPrograms(typelist, callback) {
     var db = client.db(databases.coursedb);
     db.collection(databases.programcoll).find({'type': { '$in': typelist}}).toArray().then(data => {
@@ -185,6 +182,14 @@ function getProgramInfo(name, callback) {
         callback(program[0]);
     }).catch(fail => {
         raiseFailedPromise(fail, 'getProgramInfo', callback);
+    });
+}
+
+// Gets the most recent term
+function getRecentTerm(callback) {
+    var db = client.db(databases.coursedb);
+    db.collection(databases.termcoll).find().sort({_id: -1}).limit(1).forEach(term => {
+        callback(null, term);
     });
 }
 
