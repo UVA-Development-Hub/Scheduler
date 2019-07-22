@@ -213,7 +213,11 @@ function searchGrades(subject, number, callback) {
 function getSubjects(callback) {
     var db = client.db(databases.coursedb);
     db.collection("subjects").find().toArray().then(results => {
-        callback(null, results);
+        var result_dict = {};
+        for (subject in results){
+            result_dict[results[subject]['subject']] = results[subject];
+        }
+        callback(null, result_dict);
     }).catch(fail => {
         raiseFailedPromise(fail, 'getSubjects', callback);
     });
