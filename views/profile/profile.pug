@@ -27,11 +27,11 @@ block content
                     else
                         p=user.major
                 .row
-                    p='Minor: ' + user.minor
+                    p=user.minor
                 .row
                     p=user.school
                 .row
-                    a.btn.bg-uva-blue(href="/profile/edit") Edit My Info
+                    a.btn.bg-uva-blue.horizontal(href="/profile/edit") Edit My Info
             .col-md-8.outline
                 .row
                     h4.center.section-title Weekly Schedule
@@ -80,19 +80,22 @@ block content
             .col-md-2.outline
                 .row
                     h4.center.section-title Shopping Cart
-                for courseref in user.cart
-                    a(href='/course/' + courseref.term + '/' + courseref.sis_id)=courseref.subject + ' ' + courseref.catalog_number
+                .row
+                    a.btn.bg-uva-blue.wide(href="/planner") Launch Planner
+                .row
+                    for courseref in user.cart
+                        a(href='/course/' + courseref.term + '/' + courseref.sis_id)=courseref.subject + ' ' + courseref.catalog_number
         .row
             .col-md-2.outline
                 .row
                     h4.center.section-title External Links
                     hr
                 .row
-                    if(user.enrollmentData.major)
+                    if(user.major)
                         a.btn.bg-uva-orange(style="margin-bottom:4px;width:100%;", href="#") Major Requirements
-                        if(user.enrollmentData.double_major)
+                        if(user.double_major)
                             a.btn.bg-uva-orange(style="margin-bottom:4px;width:100%;", href="#") 2nd Major Requirements
-                    if(user.enrollmentData.minor)
+                    if(user.minor)
                         a.btn.bg-uva-orange(style="margin-bottom:4px;width:100%;", href="#") Minor Requirements
                     a.btn.bg-uva-orange(style="margin-bottom:4px;width:100%;", href="https://sisuva.admin.virginia.edu/ihprd/signon.html" target="_blank") UVA SIS
             .col-md-10.outline
