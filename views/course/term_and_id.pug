@@ -2,22 +2,32 @@ extends  ../layout
 
 block customhead
     link(rel="stylesheet", href="/css/tablesorter.theme.blue.css")
+    link(rel="stylesheet", href="/css/error_page.css")
     script(src='/js/tablesorter.js')
+    script(src='/js/core/fullcalendar.js')
 
 block content
     .container(style="font-size: 20px")
+            
         .row
             .col-md-4
                 p.center=specific_class['subject'] + " " + specific_class['catalog_number'] + "-" + specific_class['section']
             .col-md-6
                 p.center 
             .col-md-2
-                p.center="Capacity:" + " " + specific_class['enrollment_max']
+                p.center="Capacity:" + " " + specific_class['enrollment']['of']
         .row
             .col-md-4
                 p.center.section-title=specific_class['title']
             .col-md-7
-                p.center.section-title="Instructor:" + " " + specific_class['instructor']
+                - var instructors = '';
+                each val, i in specific_class['instructors']
+                    if val!=''&&!(instructors.includes(val))
+                        if instructors!=''
+                            - instructors = instructors+"; "+val
+                        else
+                            - instructors = instructors+val
+                p.center.section-title="Instructor:" + " " + instructors
             .col-md-1
                 p.center.section-title=specific_class['sis_id']
         .row

@@ -31,9 +31,13 @@ router.get('/logout', (req, res) => {
 })
 
 router.get('/test', function (req, res) {
-    res.render('testLayouts', {
-        title: 'Test Page',
-        user: req.session.user,
+    mongo.searchGrades('CS','2150', (err, data)=>{
+        console.log(data);
+        res.render('testLayouts', {
+            grades: data,
+            title: 'Test Page',
+            user: req.session.user,
+        });
     });
 });
 
@@ -49,6 +53,21 @@ router.get('/js/chart.js', function(req, res) {
 });
 router.get('/css/chart.css', function(req, res) {
     res.sendFile(appdir + '/node_modules/chart.js/dist/Chart.min.css');
+});
+router.get('/js/fullcalendar.js', function(req, res) {
+    res.sendFile(appdir + '/node_modules/fullcalendar/dist/fullcalendar.js');
+});
+router.get('/css/fullcalendar.css', function(req, res) {
+    res.sendFile(appdir + '/node_modules/fullcalendar/dist/fullcalendar.min.css');
+});
+router.get('/js/moment.js', function(req, res) {
+    res.sendFile(appdir + '/node_modules/moment/moment.js');
+});
+router.get('/js/timegrid.js', function(req, res) {
+    res.sendFile(appdir + '/node_modules/@fullcalendar/timegrid/main.js');
+});
+router.get('/css/timegrid.css', function(req, res) {
+    res.sendFile(appdir + '/node_modules/@fullcalendar/timegrid/main.min.css');
 });
 
 //search page
@@ -124,7 +143,6 @@ router.post('/search', function(req, res){
             mongo.searchTerm(req.body.term_id, tosubmit, callback);
         })
     ], (err, data) => {
-        console.log(req.body.term_id);
         var new_result = [],
             itemIndex = 0;
         for (x = 0; x < data[1]['value'].length; x++) {

@@ -5,11 +5,3 @@ h1 {
 tr:nth-child(even) {
     background-color: #f8f8ff;
 }
-
-.search_result{
-    width: 70%;
-}
-
-.calendar{
-    width: 30%;
-}

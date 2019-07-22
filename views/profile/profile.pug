@@ -1,4 +1,15 @@
 extends ../layout
+block customhead
+    link(rel="stylesheet", href="/css/tablesorter.theme.blue.css")
+    link(rel="stylesheet", href="/css/fullcalendar.css")
+    link(rel="stylesheet", href="/css/timegrid.css")
+    script(src='/js/tablesorter.js')
+    script(src="/js/pagination.js")
+    script(src='/js/chart.js')
+    script(src='/js/moment.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/core/main.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/daygrid/main.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/timegrid/main.js')
 
 block content
     .container
@@ -24,6 +35,48 @@ block content
             .col-md-8.outline
                 .row
                     h4.center.section-title Weekly Schedule
+                .row 
+                    div(style="width:100%;background-color:blue;")
+                div(id="calendar" style="width:100%;height:100%")
+                script.
+                    // This is calendar code.
+                    document.addEventListener('DOMContentLoaded', function() {
+                        var calendarEl = document.getElementById('calendar');
+                        var calendar = new FullCalendar.Calendar(calendarEl, {
+                          plugins: [ 'timeGrid' ],
+                          defaultView: 'timeGridWeek',
+                          nowIndicator:true,
+                          allDaySlot:false,
+                          columnHeaderFormat:{
+                              weekday:'short',
+                          },
+                          minTime:"08:00:00",
+                          header:{
+                              left:'',
+                              center:'',
+                              right:'',
+                          },
+                          events:[
+                            {
+                                title:'CS2150',
+                                start:moment(moment().day(1).format("YYYY-MM-DD")+"T"+"12:00").format(),
+                                end:moment(moment().day(1).format("YYYY-MM-DD")+"T"+"12:50").format(),
+                            },
+                            {
+                                title:'CS2150',
+                                start:moment(moment().day(3).format("YYYY-MM-DD")+"T"+"12:00").format(),
+                                end:moment(moment().day(3).format("YYYY-MM-DD")+"T"+"12:50").format(),
+                            },
+                            {
+                                title:'CS2150',
+                                start:moment(moment().day(5).format("YYYY-MM-DD")+"T"+"12:00").format(),
+                                end:moment(moment().day(5).format("YYYY-MM-DD")+"T"+"12:50").format(),
+                            }
+                          ]
+                        });
+
+                        calendar.render();
+                  });
             .col-md-2.outline
                 .row
                     h4.center.section-title Shopping Cart
