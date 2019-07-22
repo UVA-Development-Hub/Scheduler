@@ -210,9 +210,9 @@ function searchGrades(subject, number, callback) {
 /////////////////// Subjects ///////////////////
 ////////////////////////////////////////////////
 
-function searchSubjects(subject, callback) {
+function getSubjects(subject, callback) {
     var db = client.db(databases.coursedb);
-    db.collection("subjects").find({'subject':subject}).toArray().then(results => {
+    db.collection("subjects").find().toArray().then(results => {
         callback(null, results);
     }).catch(fail => {
         raiseFailedPromise(fail, 'searchSubjects', callback);
@@ -233,5 +233,5 @@ module.exports = {
     getProgramInfo,
     updateUser,
     searchGrades,
-    searchSubjects,
+    getSubjects,
 }
