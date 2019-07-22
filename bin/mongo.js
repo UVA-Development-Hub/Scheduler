@@ -210,12 +210,12 @@ function searchGrades(subject, number, callback) {
 /////////////////// Subjects ///////////////////
 ////////////////////////////////////////////////
 
-function getSubjects(subject, callback) {
+function getSubjects(callback) {
     var db = client.db(databases.coursedb);
     db.collection("subjects").find().toArray().then(results => {
         callback(null, results);
     }).catch(fail => {
-        raiseFailedPromise(fail, 'searchSubjects', callback);
+        raiseFailedPromise(fail, 'getSubjects', callback);
     });
 }
 
