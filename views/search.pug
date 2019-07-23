@@ -151,20 +151,31 @@ block content
                 .col-md-4
                     div(id="calendar" style="width:100%;min-width:290px;position:sticky;top:0px;")
                     script.
+                        var meeting= [];
                         function name_split(name){
                             name.split("-");
                         };
                         
                         $(':checkbox').on('change',function(){
-                            name_split(this.name);
+                            var result_name= name_split(this.name);
+                            var theClass= result[parseInt(result_name[0])][parseInt(result_name(1))];
                             
+          
                             if(this.checked){
-                                alert("selected "+this.name);
+                            
+                                for(i=0;i<theClass.days.split("").length;i++){
+                                    meeting.push({
+                                    title: theClass.subject+theClass.catalog_number,
+                                    start: moment(moment().day(theClass.days.split("")[i]).format("YYYY-MM-DD")+"T"+theClass.meeting_start).format(),
+                                    end: moment(moment().day(theClass.days.split("")[i]).format("YYYY-MM-DD")+"T"+theClass.meeting_end).format(),
+                                });
+                                }
                             }
                             else{
                                 alert("deselected "+this.name);
                             }
                         });
+                        
                         // This is calendar code.
                         document.addEventListener('DOMContentLoaded', function() {
                             var calendarEl = document.getElementById('calendar');
@@ -182,27 +193,15 @@ block content
                                   center:'',
                                   right:'',
                               },
-                              events:[
-                                {
-                                    title:'CS2150',
-                                    start:moment(moment().day(1).format("YYYY-MM-DD")+"T"+"12:00").format(),
-                                    end:moment(moment().day(1).format("YYYY-MM-DD")+"T"+"12:50").format(),
-                                },
-                                {
-                                    title:'CS2150',
-                                    start:moment(moment().day(3).format("YYYY-MM-DD")+"T"+"12:00").format(),
-                                    end:moment(moment().day(3).format("YYYY-MM-DD")+"T"+"12:50").format(),
-                                },
-                                {
-                                    title:'CS2150',
-                                    start:moment(moment().day(5).format("YYYY-MM-DD")+"T"+"12:00").format(),
-                                    end:moment(moment().day(5).format("YYYY-MM-DD")+"T"+"12:50").format(),
-                                }
-                              ]
+                              events:meeting
                             });
 
                             calendar.render();
                       });
+                      
+                      
+                      
+                        
                       /*
                       $(window).scroll(function(e){ 
                           var $el = $('#calendar'); 
