@@ -193,6 +193,14 @@ function getRecentTerm(callback) {
     });
 }
 
+// Checks if the provided course reference is legitimate
+function validateReference(courseRef, valid, invalid) {
+    searchTerm(courseRef.term, {'sis_id': courseRef.sis_id, 'subject': courseRef.subject, 'catalog_number': courseRef.catalog_number}, (err, data) => {
+        if(err || data.length == 0) invalid();
+        else valid();
+    });
+}
+
 ////////////////////////////////////////////////
 ////////////// Grade Distribution //////////////
 ////////////////////////////////////////////////
@@ -219,5 +227,7 @@ module.exports = {
     getPrograms,
     getProgramInfo,
     updateUser,
-    searchGrades
+    searchGrades,
+    getRecentTerm,
+    validateReference
 }

@@ -1,6 +1,6 @@
 var course = {
     term: '1198',
-    sis_id: '10327',
+    sis_id: '15492',
     subject: 'CS',
     catalog_number: '2150',
     folder: ''
@@ -11,7 +11,7 @@ function makeAJAX() {
         type: 'POST',
         url: "/ajax",
         data: {
-            type: 'cart_op',
+            action: 'cart_op',
             append: true,
             bin: '1',
             course

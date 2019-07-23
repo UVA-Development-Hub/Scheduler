@@ -198,29 +198,33 @@ router.post('/ajax', (req, res) => {
 
     // AJAX handler
     if(req.session && req.session.user && req.body && req.body.type) {
-        console.log("Authenticated AJAX post underway");
-        switch(req.body.type) {
+        //console.log("Authenticated AJAX post underway");
+        switch(req.body.action) {
             // Append the given course to the user's cart array
             case 'cart_op':
-                var x = parseInt( ( req.body.bin || 0 ) ); // cart is either 0 (default) or the one specified
-                if(x > 2) x = 0;
-
-                if(req.body.append) {
-                    if(binContains(req.session.user[available_bins[x]], req.body.course) == -1) {
-                        req.session.user[available_bins[x]].push(req.body.course);
-                        /*mongo.updateUser(req.session.user._id, {available_bins[x]: req.session.user[available_bins[x]]}, fresh_user => {
-                            req.session.user = fresh_user;
-                        });/**/
+                // Check if the reference given is valid
+                mongo.validateReference(req.body.course, () => {
+                    var x = parseInt(req.body.bin || 0); // cart is either 0 (default) or the one specified
+                    if(x > 2) x = 0;
+                    if(req.body.append) {
+                        if(binContains(req.session.user[available_bins[x]], req.body.course) == -1) {
+                            req.session.user[available_bins[x]].push(req.body.course);
+                            /*mongo.updateUser(req.session.user._id, {available_bins[x]: req.session.user[available_bins[x]]}, fresh_user => {
+                                req.session.user = fresh_user;
+                            });/**/
+                        }
+                    } else {
+                        var dex = binContains(req.session.user[available_bins[x]], req.body.course);
+                        if(dex > -1) {
+                            req.session.user[available_bins[x]].splice(dex, 1);
+                            /*mongo.updateUser(req.session.user._id, {available_bins[x]: req.session.user[available_bins[x]]}, fresh_user => {
+                                req.session.user = fresh_user;
+                            });/**/
+                        }
                     }
-                } else {
-                    var dex = binContains(req.session.user[available_bins[x]], req.body.course);
-                    if(dex > -1) {
-                        req.session.user[available_bins[x]].splice(dex, 1);
-                        /*mongo.updateUser(req.session.user._id, {available_bins[x]: req.session.user[available_bins[x]]}, fresh_user => {
-                            req.session.user = fresh_user;
-                        });/**/
-                    }
-                }
+                }, () => {
+                    console.log("Invalid reference");
+                });
                 break;
             default:
                 console.log("Unknown or unsupported type operation!");
