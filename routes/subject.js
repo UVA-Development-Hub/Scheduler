@@ -45,6 +45,7 @@ router.get('/:subject', (req, res) => {
 
 router.get('/', (req, res) => {
     mongo.getSubjects((err, data) => {
+        console.log(data);
         res.render('subject/subject_landing', {
             course_subjects: data
         });

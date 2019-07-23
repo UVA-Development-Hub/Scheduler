@@ -126,19 +126,20 @@ block content
                                                                             p=course.instructor
                                                                     .col-sm-2
                                                                         b
-                                                                            p=course.enrollment_max
-                                                                    .col-sm-2
-                                                                        b
-                                                                            p (0/0) WL
+                                                                            p=course.enrolled + ' / ' + course.enroll_limit
+                                                                    if(course.waiting != 0)
+                                                                        .col-sm-2
+                                                                            b
+                                                                                p=course.waiting
                                                             // ... and a div which contains everything else
                                                             div(style="display:none;")
                                                                 .row
-                                                                    .col-md-3
+                                                                    .col-md-8
                                                                         p Future home of the calendar
                                                                         p=course.days
                                                                         p=course.meeting_start
                                                                         p=course.meeting_end    
-                                                                    .col-md-9
+                                                                    .col-md-4
                                                                         if(course.desc.length > 0)
                                                                             p=course.desc
                                                                         else
