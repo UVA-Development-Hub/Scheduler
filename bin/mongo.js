@@ -193,14 +193,6 @@ function getRecentTerm(callback) {
     });
 }
 
-// Checks if the provided course reference is legitimate
-function validateReference(courseRef, valid, invalid) {
-    searchTerm(courseRef.term, {'sis_id': courseRef.sis_id, 'subject': courseRef.subject, 'catalog_number': courseRef.catalog_number}, (err, data) => {
-        if(err || data.length == 0) invalid();
-        else valid();
-    });
-}
-
 ////////////////////////////////////////////////
 ////////////// Grade Distribution //////////////
 ////////////////////////////////////////////////
@@ -211,6 +203,23 @@ function searchGrades(subject, number, callback) {
         callback(null, results);
     }).catch(fail => {
         raiseFailedPromise(fail, 'searchGrades', callback);
+    });
+}
+
+////////////////////////////////////////////////
+/////////////////// Subjects ///////////////////
+////////////////////////////////////////////////
+
+function getSubjects(callback) {
+    var db = client.db(databases.coursedb);
+    db.collection("subjects").find().toArray().then(results => {
+        var result_dict = {};
+        for (subject in results){
+            result_dict[results[subject]['subject']] = results[subject];
+        }
+        callback(null, result_dict);
+    }).catch(fail => {
+        raiseFailedPromise(fail, 'getSubjects', callback);
     });
 }
 
@@ -228,6 +237,5 @@ module.exports = {
     getProgramInfo,
     updateUser,
     searchGrades,
-    getRecentTerm,
-    validateReference
+    getSubjects,
 }
