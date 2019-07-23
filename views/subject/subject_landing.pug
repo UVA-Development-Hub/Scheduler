@@ -1,15 +1,11 @@
 extends  ../layout
 
 block customhead
-    link(rel="stylesheet", href="/css/tablesorter.theme.blue.css")
-    link(rel="stylesheet", href="/css/error_page.css")
-    script(src='/js/tablesorter.js')
-    script(src="/js/pagination.js")
 
 block content
     .container
         div.row
-            h1 Explore Subjects
+            h1(style="align-self: center;") Explore Subjects
         // div.row
             table(id="term_table" class="terms_table tablesorter-blue")
                 thead
@@ -20,6 +16,7 @@ block content
                         each subject_name, index in course_subjects
                             td=subject_name['subject']
                             td=subject_name['name']
+
         each subject_name, index in course_subjects
             div.row
-                a.btn.bg-uva-orange(href='/subject/subject', style="width:250px;")=subject_name["subject"] + " - " + subject_name['name']
+                a.btn.bg-uva-blue(href='/subject/' + subject_name["subject"], style="width:250px;")=subject_name["subject"] + " - " + subject_name['name']

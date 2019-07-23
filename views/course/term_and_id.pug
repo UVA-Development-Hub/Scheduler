@@ -43,18 +43,20 @@ block content
                 p.center Calendar
                 div(style="width:100%;background-color:blue;")
             div(id="calendar" style="width:100%;height:100%")
-            script.
-                // This is calendar code.
                 
-                  events = []
-                    each course_meeting, index in specific_class
-                        event = {}
-                        title: course_meeting['title'],
-                        start: course_meeting['meetings'][0]['start'],
-                        end: course_meeting['meetings'][0]['end']
-                        events.push(event)
-                        console.log(events)
-                        
+                div(id="calendar_variables" style="display:None")
+                    events = [];
+                        each course_meeting, index in specific_class
+                            //- event = {}
+                            //- title: course_meeting['title'],
+                            //- start: course_meeting['meetings'][0]['start'],
+                            //- end: course_meeting['meetings'][0]['end']
+                            //- events.push(event)
+                    console.log(events)
+                
+                
+            script.                  
+                    // This is calendar code.
                     document.addEventListener('DOMContentLoaded', function() {
                         var calendarEl = document.getElementById('calendar');
                         var calendar = new FullCalendar.Calendar(calendarEl, {
