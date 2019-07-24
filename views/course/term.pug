@@ -3,105 +3,85 @@ extends ../layout
 block customhead
     link(rel="stylesheet", href="/css/tablesorter.theme.blue.css")
     link(rel="stylesheet", href="/css/error_page.css")
-    script(src='/js/tablesorter.js')
+    link(rel="stylesheet", href="/css/course_style_sheet.css")
+    script(src='/js/calLib.js')
     script(src="/js/pagination.js")
-
-
 
 block content
     .container
-        div.row    
-            if course_terms_and_ids.length == 0
-                .container
-                    .container
-                        .row
-                            p.center(style="font-size: 40px", text-align="center") We're Sorry!
-                        .row
-                            p We couldn't find anything matching what you searched :(
-                        .row
-                            p Try searching again!
-                        .row
-                            form(action='/subject/')
-                                input(type='text', placeholder='Search..', name='search')
-                                button(type='submit')
-                                    i.fa.fa-search
-            else
-                table(id="term_table" class="terms_table tablesorter-blue")
-                    thead
-                        tr
-                            th Subject
-                            th Catalog Number
-                            th Class Section
-                            th SIS ID
-                            th Class Title
-                            th Class Type
-                            th Instructor
-                            th Currently Enrolled
-                            th Enrollment Capacity
-                            th Waiting List
-                            th Class Status
-                            th Meeting Days
-                            th Class Starting Time
-                            th Class Ending Time
-                            th Class Date Begins
-                            th Class Date Ends
-                    tbody
-                        - var page = 0
-                        each course_term_and_id, index in course_terms_and_ids
-                            -console.log(course_term_and_id)
-                            tr.paged(page=page, style=("display:None"))
-                                if course_term_and_id['meetings'].length == 0
-                                    td=course_term_and_id['subject']
-                                    td=course_term_and_id['catalog_number']
-                                    td=course_term_and_id['section']
-                                    td=course_term_and_id['sis_id']
-                                    td=course_term_and_id['title']
-                                    td=course_term_and_id['type']
-                                    td=course_term_and_id['instructors']
-                                    td=course_term_and_id['enrolled']
-                                    td=course_term_and_id['enroll_limit']
-                                    td=course_term_and_id['waiting']
-                                    td=course_term_and_id['status']
-                                    td="Not found"
-                                    td="Not found"
-                                    td="Not found"
-                                    td="Not found"
-                                    td="Not found"
-                                
-                                else
-                                    
-                                    td=course_term_and_id['subject']
-                                    td=course_term_and_id['catalog_number']
-                                    td=course_term_and_id['section']
-                                    td=course_term_and_id['sis_id']
-                                    td=course_term_and_id['title']
-                                    td=course_term_and_id['type']
-                                    td=course_term_and_id['instructors']
-                                    td=course_term_and_id['enrolled']
-                                    td=course_term_and_id['enroll_limit']
-                                    td=course_term_and_id['waiting']
-                                    td=course_term_and_id['status']
-                                    td=course_term_and_id['meetings'][0]['days']
-                                    td=course_term_and_id['meetings'][0]['start']
-                                    td=course_term_and_id['meetings'][0]['finish']
-                                    td=course_term_and_id['meetings'][0]['begin']
-                                    td=course_term_and_id['meetings'][0]['complete']
-                            if index % 20 == 19
-                                -page++
-                                
-
-                .row
-                    #max_page_div(max_page = page)
-                    button.btn.btn-primary(type='submit', onClick="previousPage()") Previous
-                    button.btn.btn-primary.pageselector
-                    button.btn.btn-primary.pageselector
-                    button.btn.btn-primary.pageselector
-                    button.btn.btn-primary.pageselector
-                    button.btn.btn-primary.pageselector
-                    button.btn.btn-primary.pageselector
-                    button.btn.btn-primary.pageselector
-                    button.btn.btn-primary.pageselector
-                    button.btn.btn-primary.pageselector
-                    button.btn.btn-primary.pageselector
-                    button.btn.btn-primary(type='submit', onClick="nextPage()") Next
-            
+        .row(style="margin-top:30px;")
+            button.btn.bg-uva-blue(style="width:100px;" onClick="previousPage()") Previous
+            button.btn.bg-uva-blue.pageselector
+            button.btn.bg-uva-blue.pageselector
+            button.btn.bg-uva-blue.pageselector
+            button.btn.bg-uva-blue.pageselector
+            button.btn.bg-uva-blue.pageselector
+            button.btn.bg-uva-blue.pageselector
+            button.btn.bg-uva-blue.pageselector
+            button.btn.bg-uva-blue.pageselector
+            button.btn.bg-uva-blue.pageselector
+            button.btn.bg-uva-blue.pageselector
+            button.btn.bg-uva-blue(style="width:100px;" onClick="nextPage()") Next
+        .row(style="margin-top:30px;")
+            - var page = 0, cp = -1, i = 0, max = course_terms_and_ids.length
+            while i < max
+                - var course = course_terms_and_ids[i], current = course.catalog_number; cp++;
+                .col-md-12.paged(page=page style="display:none;")
+                    .row.form-inline
+                        button.btn.bg-uva-blue(type='button' onclick="loadCalendar(" + i + ");$(this).parent().parent().next().find(':first').toggle('slow');$(this).find('i').toggle();return false;" style='font-size:18px;padding:10px;')
+                            i.fa.fa-plus-square
+                            i.fa.fa-minus-square(style='display:none;')
+                        div(style='margin-left:10px;')
+                            p.vertical=course.subject + ' ' + current + ' - ' + course.title
+                .paged.course(page=page style="display:none;")
+                    .col-md-12(style="margin-top:15px;margin-bottom:15px;padding-left:5px;padding-right:5px;display:none;")
+                        if(course.desc.length > 0)
+                            .row
+                                .col-md-12(style="border-bottom:4px solid black;margin-bottom:25px;margin-left:10px;margin-right:10px;")
+                                    p=course.desc
+                        else
+                            .row
+                                .col-md-12(style="border-bottom:4px solid black;margin-bottom:25px;margin-left:10px;margin-right:10px;")
+                        table(style="width:100%")
+                            tbody(style="width:100%")
+                                while course.catalog_number == current
+                                    - course = course_terms_and_ids[i]; i++;
+                                    tr(style="width:100%;")
+                                        td(style="width:100%")
+                                            .row.section-title(style="margin-left:-10px;margin-top:10px;")
+                                                    .row
+                                                        div(style="width:25px")
+                                                            div
+                                                                input#course.pointer(type="checkbox", name="name")
+                                                                label.pointer(for='course')
+                                                        .col-sm-2
+                                                            b
+                                                                p.sis_id#test=course.sis_id + ' - ' + course.section
+                                                        .col-sm-1
+                                                            b
+                                                                p=course.type
+                                                        .col-sm-7
+                                                            b
+                                                                each instructor in course.instructors
+                                                                    p=instructor
+                                                        .col
+                                                            b
+                                                                p=course.enrolled + ' / ' + course.enroll_limit
+                                                        if(course.waiting != 0)
+                                                            .col
+                                                                b
+                                                                    p=course.waiting
+                                            div
+                                                .row
+                                                    .col-md-12.calspot
+                                                        p Future home of the calendar
+                                                        
+                                                .row
+                                                    .col-md-12
+                                                        p
+                                                        | Grade data is fetched by combining the instructor with the subject and number. It does not factor in labs/discussions or their instructors, etc.
+                                                        p Future home of the grade distribution information!
+                if(cp % 20 == 19)
+                    - page++;
+                - i++; 
+            #max_page_div(max_page=page)

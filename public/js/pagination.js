@@ -11,11 +11,10 @@ $(document).ready( function() {
   displayPage(0);
 });
 
-function displayPage(pageNumber){
+function displayPage(pageNumber) {
   currentPage=pageNumber;
   $('.paged').each(function(){
       if(parseInt($(this).attr('page')) ==  pageNumber) { // attr('page') gets data from the class 'page'
-          //console.log("page 0");
           $(this).show();
       } else {
         $(this).hide();
@@ -48,7 +47,6 @@ else if (currentPage > parseInt(numberOfPages-10)){
   for(var i=0; i<5;i++ ){
     $(arr[i]).attr("onclick", "displayPage("+ parseInt(i+numberOfPages-9)+")");
     $(arr[i]).html(parseInt(i + 1+numberOfPages-9));
-    console.log("test statment");
   }
 
   for(var i=5; i<10;i++ ){
@@ -61,7 +59,6 @@ else {
     for(var i=0; i<5;i++ ){
       $(arr[i]).attr("onclick", "displayPage("+ parseInt(pageNumber-5+i)+")");
       $(arr[i]).html(parseInt((pageNumber-5+i) + 1 ));
-      console.log("test statment");
     }
 
     for(var i=5; i<10;i++ ){
@@ -81,9 +78,9 @@ else {
 
   $(arr).each(function(){
     if(parseInt($(this).html())-1 == currentPage){
-      $(this).addClass('btn-success');
+      $(this).addClass('bg-uva-orange');
     } else {
-      $(this).removeClass('btn-success');
+      $(this).removeClass('bg-uva-orange');
     }
   });
 
