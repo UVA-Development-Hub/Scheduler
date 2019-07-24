@@ -252,9 +252,9 @@ router.use('/api', (req, res) => {
                     case "search":
                     var term = req.query.term;
                     delete req.query.action; delete req.query.term;
-                    mongo.searchTerm(term, req.query, (err, data) => {
+                    mongo.searchTerm(term, req.query, (err, data, pages) => {
                         res.status(200);
-                        res.send(data);
+                        res.send({'pages': pages, 'data': data});
                     });
                     break;
 

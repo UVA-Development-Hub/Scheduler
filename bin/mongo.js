@@ -2,6 +2,7 @@
 
 // Define and retrieve necessary database access things
 var config = require('./config.js'),
+    async = require('async'),
     databases = {
         userdb: 'scheduler-site',
         usercoll: 'users',
@@ -150,12 +151,25 @@ function searchTerm(term_id, specifiers, callback) {
         page = parseInt(specifiers.page);
         delete specifiers.page;
     }
-    var db = client.db(databases.coursedb);
-    db.collection('term_' + term_id).find(specifiers).skip(page * per).limit(per).toArray().then(results => {
-        callback(null, results);
-    }).catch(fail => {
-        raiseFailedPromise(fail, 'searchTerm', callback);
+    var coll = client.db(databases.coursedb).collection('term_' + term_id);
+
+    async.parallel([
+        async.reflect(callback => {
+            coll.estimatedDocumentCount().then( count => {
+                callback(null, Math.ceil(count / per));
+            });
+        }),
+        async.reflect(callback => {
+            coll.find(specifiers).skip(page * per).limit(per).toArray().then(results => {
+                callback(null, results);
+            }).catch(fail => {
+                raiseFailedPromise(fail, 'searchTerm', callback);
+            });
+        })
+    ], (err, data) => {
+        callback(null, data[1].value, data[0].value);
     });
+
 }
 
 function getTerms(callback) {

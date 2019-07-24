@@ -6,6 +6,8 @@ block customhead
     link(rel="stylesheet", href="/css/course_style_sheet.css")
     script(src='/js/calLib.js')
     script(src="/js/pagination.js")
+    script.
+        var maxPage = ![max_page];
 
 block content
     .container
@@ -49,7 +51,7 @@ block content
                                                     .row.section-title(style="margin-left:0px;margin-top:10px;")
                                                         .col-sm-2
                                                             b
-                                                                p.sis_id#test=course.sis_id + ' - ' + course.section
+                                                                p.sis_id=course.sis_id + ' - ' + course.section
                                                         .col-sm-1
                                                             b
                                                                 p=course.type
@@ -88,7 +90,3 @@ block content
                                                                 p
                                                                 | Grade data is fetched by combining the instructor with the subject and number. It does not factor in labs/discussions or their instructors, etc.
                                                                 p Future home of the grade distribution information!
-                    if(cp % 20 == 19)
-                        - page++;
-                    - i++; 
-                #max_page_div(max_page=page)
