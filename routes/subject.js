@@ -62,10 +62,19 @@ router.get('/', (req, res) => {
         //     return trimmedArray;
         //
         // }
+        var subjects = {};
+        data.forEach(function(val){
+            if (subjects[val['school']]) {
+                subjects[val['school']].push(val);
+            }
+            else{
+                subjects[val['school']] = [];
+                subjects[val['school']].push(val);
+            }
+        });
 
-        console.log(data);
         res.render('subject/subject_landing', {
-            course_subjects: data,
+            course_subjects: subjects,
             // uva_schools: values,
         });
     });

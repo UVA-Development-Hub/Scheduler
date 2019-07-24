@@ -24,15 +24,16 @@ block content
         div.row
             h4 College of Arts and Sciences
             .col-md-6
-                each subject_name, index in course_subjects
+                each subject_name, index in course_subjects['CLAS']
                     div.row
-                    if subject_name['school'] == 'CLAS'
-                        a(href='/subject/' + subject_name["subject"], style="width:250px;")=subject_name['subject'] + " - " + subject_name['name']
+                    a(href='/subject/' + subject_name["subject"], style="width:250px;")=subject_name['subject'] + " - " + subject_name['name']
             .col-md-6
                 //
         div.row
             h4 School of Engineering and Applied Sciences
             .col-md-6
-                //
+                each subject_name, index in course_subjects['SEAS']
+                    div.row
+                    a(href='/subject/' + subject_name["subject"], style="width:250px;")=subject_name['subject'] + " - " + subject_name['name']
             .col-md-6
                 //
