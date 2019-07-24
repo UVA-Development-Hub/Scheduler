@@ -169,7 +169,6 @@ function searchTerm(term_id, specifiers, callback) {
     ], (err, data) => {
         callback(null, data[1].value, data[0].value);
     });
-
 }
 
 function getTerms(callback) {
