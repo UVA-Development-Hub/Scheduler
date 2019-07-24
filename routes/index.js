@@ -187,55 +187,86 @@ router.use('/privacy', (req, res, next) => {
     });
 });
 
-router.post('/ajax', (req, res) => {
+router.use('/api', (req, res) => {
     // Helper functions / variables
-    const available_bins = ['bin', 'cart', 'enrolled'];
-
-    function binContains(bin, course) {
-        for(var i = 0; i < bin.length; i++) if(bin[i].sis_id == course.sis_id && bin[i].term == course.term) return i;
-        return -1;
-    }
-
     // AJAX handler
-    if(req.session && req.session.user && req.body && req.body.type) {
-        //console.log("Authenticated AJAX post underway");
-        switch(req.body.action) {
-            // Append the given course to the user's cart array
-            case 'cart_op':
-                // Check if the reference given is valid
-                mongo.validateReference(req.body.course, () => {
-                    var x = parseInt(req.body.bin || 0); // cart is either 0 (default) or the one specified
-                    if(x > 2) x = 0;
-                    if(req.body.append) {
-                        if(binContains(req.session.user[available_bins[x]], req.body.course) == -1) {
-                            req.session.user[available_bins[x]].push(req.body.course);
-                            /*mongo.updateUser(req.session.user._id, {available_bins[x]: req.session.user[available_bins[x]]}, fresh_user => {
-                                req.session.user = fresh_user;
-                            });/**/
-                        }
-                    } else {
-                        var dex = binContains(req.session.user[available_bins[x]], req.body.course);
-                        if(dex > -1) {
-                            req.session.user[available_bins[x]].splice(dex, 1);
-                            /*mongo.updateUser(req.session.user._id, {available_bins[x]: req.session.user[available_bins[x]]}, fresh_user => {
-                                req.session.user = fresh_user;
-                            });/**/
-                        }
+    try {
+        if(req.method == 'POST') {
+            if(req.session.user) {
+                // AUTHENTICATED POST
+                switch(req.body.action) {
+                    case 'cart_op':
+                    const available_bins = ['bin', 'cart', 'enrolled'];
+
+                    function binContains(bin, course) {
+                        for(var i = 0; i < bin.length; i++) if(bin[i].sis_id == course.sis_id && bin[i].term == course.term) return i;
+                        return -1;
                     }
-                }, () => {
-                    console.log("Invalid reference");
-                });
-                break;
-            default:
-                console.log("Unknown or unsupported type operation!");
-                break;
+                    // Check if the reference given is valid
+                    mongo.validateReference(req.body.course, () => {
+                        var x = parseInt(req.body.bin || 0); // cart is either 0 (default) or the one specified
+                        if(x > 2) x = 0;
+                        if(req.body.append) {
+                            if(binContains(req.session.user[available_bins[x]], req.body.course) == -1) {
+                                req.session.user[available_bins[x]].push(req.body.course);
+                                var update = []; update[available_bins[x]] = req.session.user[available_bins[x]];
+                                mongo.updateUser(req.session.user._id, update, fresh_user => {
+                                    req.session.user = fresh_user;
+                                });
+                            }
+                        } else {
+                            var dex = binContains(req.session.user[available_bins[x]], req.body.course);
+                            if(dex > -1) {
+                                req.session.user[available_bins[x]].splice(dex, 1);
+                                var update = []; update[available_bins[x]] = req.session.user[available_bins[x]];
+                                mongo.updateUser(req.session.user._id, update, fresh_user => {
+                                    req.session.user = fresh_user;
+                                });
+                            }
+                        }
+                    }, () => {
+                        console.log("Invalid reference");
+                    });
+                    break;
+
+                    default:
+                    console.log("Unknown or unsupported type operation!");
+                    break;
+                }
+                res.status(200);
+                res.send("200 - OK");
+            } else {
+                // UNAUTHENTICATED POST
+                res.status(403);
+                res.send("403 - Unauthenticated POSTS are unsupported");
+            }
+        } else {
+            if(req.session.user) {
+                // AUTHENTICATED GET
+                switch(req.query.action) {
+
+                }
+            } else {
+                // UNAUTHENTICATED GET
+                switch(req.query.action) {
+                    case "search":
+                    var term = req.query.term;
+                    delete req.query.action; delete req.query.term;
+                    mongo.searchTerm(term, req.query, (err, data) => {
+                        res.status(200);
+                        res.send(data);
+                    });
+                    break;
+
+                    default:
+                    console.log("Unknown or unsupported type operation!");
+                    break;
+                }
+            }
         }
-        res.status(200);
-        res.send("200 - OK");
-    } else {
-        console.log("Unauthenticated or malformed AJAX post detected");
-        res.status(403);
-        res.send("403 - Unauthenticated AJAX requests are unsupported");
+    } catch (ex) {
+        res.status(500);
+        res.send("AJAX request could not be processed");
     }
 });
 

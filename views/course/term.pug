@@ -24,64 +24,71 @@ block content
             button.btn.bg-uva-blue(style="width:100px;" onClick="nextPage()") Next
         .row(style="margin-top:30px;")
             - var page = 0, cp = -1, i = 0, max = course_terms_and_ids.length
-            while i < max
-                - var course = course_terms_and_ids[i], current = course.catalog_number; cp++;
-                .col-md-12.paged(page=page style="display:none;")
-                    .row.form-inline
-                        button.btn.bg-uva-blue(type='button' onclick="loadCalendar(" + i + ");$(this).parent().parent().next().find(':first').toggle('slow');$(this).find('i').toggle();return false;" style='font-size:18px;padding:10px;')
-                            i.fa.fa-plus-square
-                            i.fa.fa-minus-square(style='display:none;')
-                        div(style='margin-left:10px;')
-                            p.vertical=course.subject + ' ' + current + ' - ' + course.title
-                .paged.course(page=page style="display:none;")
-                    .col-md-12(style="margin-top:15px;margin-bottom:15px;padding-left:5px;padding-right:5px;display:none;")
-                        if(course.desc.length > 0)
-                            .row
-                                .col-md-12(style="border-bottom:4px solid black;margin-bottom:25px;margin-left:10px;margin-right:10px;")
-                                    p=course.desc
-                        else
-                            .row
-                                .col-md-12(style="border-bottom:4px solid black;margin-bottom:25px;margin-left:10px;margin-right:10px;")
-                        table(style="width:100%")
-                            tbody(style="width:100%")
-                                while course.catalog_number == current
-                                    - course = course_terms_and_ids[i]; i++;
-                                    tr(style="width:100%;")
-                                        td(style="width:100%")
-                                            .row.section-title(style="margin-left:-10px;margin-top:10px;")
-                                                    .row
-                                                        div(style="width:25px")
-                                                            div
-                                                                input#course.pointer(type="checkbox", name="name")
-                                                                label.pointer(for='course')
+            .col-md-12
+                while i < max
+                    - var course = course_terms_and_ids[i], current = course.catalog_number; cp++;
+                    .row
+                        .col-md-12.paged(page=page style="display:none;margin-top:50px;")
+                            h3.bg-uva-orange(style="padding:15px;border-radius:5px;")
+                                b=course.subject + ' ' + current + ' - ' + course.title
+                        .paged(page=page style="display:none;width:100%;")
+                            .col-md-12(style="margin-top:15px;margin-bottom:15px;")
+                                if(course.desc.length > 0)
+                                    .row
+                                        .col-md-12
+                                            p.section-title-thick=course.desc
+                                else
+                                    .row
+                                        .col-md-12.section-title-thick
+                                table(style="width:100%")
+                                    tbody(style="width:100%")
+                                        while course.catalog_number == current
+                                            - course = course_terms_and_ids[i]; i++;
+                                            tr(style="width:100%;")
+                                                td(style="width:100%")
+                                                    .row.section-title(style="margin-left:0px;margin-top:10px;")
                                                         .col-sm-2
                                                             b
                                                                 p.sis_id#test=course.sis_id + ' - ' + course.section
                                                         .col-sm-1
                                                             b
                                                                 p=course.type
-                                                        .col-sm-7
+                                                        .col-sm-5
                                                             b
                                                                 each instructor in course.instructors
                                                                     p=instructor
+                                                        .col-sm-2
+                                                            b
+                                                                case course.status
+                                                                    when 'Wait List'
+                                                                        span(style="color:#e57200;") Waitlisted
+                                                                    when 'Open'
+                                                                        span(style="color:green") Open 
+                                                                    default
+                                                                        span=course.status
                                                         .col
                                                             b
-                                                                p=course.enrolled + ' / ' + course.enroll_limit
-                                                        if(course.waiting != 0)
-                                                            .col
-                                                                b
-                                                                    p=course.waiting
-                                            div
-                                                .row
-                                                    .col-md-12.calspot
-                                                        p Future home of the calendar
-                                                        
-                                                .row
-                                                    .col-md-12
-                                                        p
-                                                        | Grade data is fetched by combining the instructor with the subject and number. It does not factor in labs/discussions or their instructors, etc.
-                                                        p Future home of the grade distribution information!
-                if(cp % 20 == 19)
-                    - page++;
-                - i++; 
-            #max_page_div(max_page=page)
+                                                                if(course.status == 'Wait List')
+                                                                    p
+                                                                        span=course.enrolled + ' / ' + course.enroll_limit + ' | '
+                                                                        span(style="color:red")=course.waiting
+                                                                else
+                                                                    p
+                                                                        span(style="color:green")=course.enrolled + ' / ' + course.enroll_limit
+                                                                        if(course.waiting != 0)
+                                                                            span=' | '
+                                                                            span(style="color:red")=course.waiting
+                                                    div
+                                                        .row
+                                                            .col-md-12.calspot
+                                                                p Future home of the calendar
+                                                                
+                                                        .row
+                                                            .col-md-12
+                                                                p
+                                                                | Grade data is fetched by combining the instructor with the subject and number. It does not factor in labs/discussions or their instructors, etc.
+                                                                p Future home of the grade distribution information!
+                    if(cp % 20 == 19)
+                        - page++;
+                    - i++; 
+                #max_page_div(max_page=page)

@@ -141,8 +141,17 @@ function updateUser(id, specifiers, callback) {
 
 // @specifiers a dictionary containing any search constraints
 function searchTerm(term_id, specifiers, callback) {
+    var per = 25, page = 0;
+    if("per" in specifiers) {
+        per = parseInt(specifiers.per);
+        delete specifiers.per;
+    }
+    if("page" in specifiers) {
+        page = parseInt(specifiers.page);
+        delete specifiers.page;
+    }
     var db = client.db(databases.coursedb);
-    db.collection('term_' + term_id).find(specifiers).toArray().then(results => {
+    db.collection('term_' + term_id).find(specifiers).skip(page * per).limit(per).toArray().then(results => {
         callback(null, results);
     }).catch(fail => {
         raiseFailedPromise(fail, 'searchTerm', callback);

@@ -12,3 +12,19 @@ function loadCalendar(i) {
         ids.push(idregX.exec($(this).text()));
     });
 }
+
+// Use AJAX to get and display Mongo results
+function getSearchPage(page, per) {
+    // Filter out non supported fields
+    var supported = ["term", "subject", "catalog_number", "title", "instructor", "days"],
+        d = getUrlParams(location.search);
+    Object.keys(d).forEach( key => {
+        if(!supported.includes(key)) delete d[key];
+    });
+    d["action"] = "search";
+    d["per"] = per;
+    d["page"] = page;
+    $.get("/api", d, (data, status) => {
+        console.log(data);
+    });
+}

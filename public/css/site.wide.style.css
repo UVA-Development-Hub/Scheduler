@@ -180,6 +180,15 @@ footer {
     transform: translateX(+2%);
 }
 
+.section-title-thick {
+    width: 96%;
+    border-bottom: 4px inset black;
+    margin-bottom: 25px;
+    margin-left: 10px;
+    margin-right: 10px;
+    transform: translateX(+2%);
+}
+
 button.pageselector {
     width: 75px;
     padding: 10px;
