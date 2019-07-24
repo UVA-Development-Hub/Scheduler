@@ -36,7 +36,7 @@ block content
             .col-md-1
                 p.center.section-title=specific_class['sis_id']
         .row
-            .col-md-2
+            .col-md-2.center
                 p.center
                     
             .col-md-8.center
@@ -47,15 +47,13 @@ block content
                 div(id="calendar_variables" style="display:None")
                     events = [];
                         each course_meeting, index in specific_class
-                            //- event = {}
-                            //- title: course_meeting['title'],
-                            //- start: course_meeting['meetings'][0]['start'],
-                            //- end: course_meeting['meetings'][0]['end']
-                            //- events.push(event)
-                    console.log(events)
-                
-                
-            script.                  
+                            event = {}
+                            title = course_meeting['title'],
+                            start = course_meeting['meetings'][0]['start'],
+                            end = course_meeting['meetings'][0]['end']
+                        events.push(event)
+                    //- console.log(events)
+            script.                
                     // This is calendar code.
                     document.addEventListener('DOMContentLoaded', function() {
                         var calendarEl = document.getElementById('calendar');
@@ -78,7 +76,7 @@ block content
                     calendar.render();
               });
               
-            .col-md-2
+            .col-md-2.center
                 p.center
         .row
             .col-md-12

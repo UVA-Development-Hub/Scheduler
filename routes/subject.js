@@ -45,9 +45,28 @@ router.get('/:subject', (req, res) => {
 
 router.get('/', (req, res) => {
     mongo.getSubjects((err, data) => {
+        // function removeDuplicates(data, school) {
+        //     var trimmedArray = [];
+        //     var values = [];
+        //     var value;
+        //
+        //     for(var i = 0; i < data.length; i++) {
+        //         value = data[i][school];
+        //
+        //         if(values.indexOf(value) === -1) {
+        //             trimmedArray.push(data[i]);
+        //             values.push(value);
+        //         }
+        //     }
+        //
+        //     return trimmedArray;
+        //
+        // }
+
         console.log(data);
         res.render('subject/subject_landing', {
-            course_subjects: data
+            course_subjects: data,
+            // uva_schools: values,
         });
     });
 });
