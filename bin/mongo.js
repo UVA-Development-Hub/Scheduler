@@ -241,9 +241,9 @@ function getSubjects(callback) {
     });
 }
 
-function searchSubjects(subject, callback) {
+function searchSubjects(school, callback) {
     var db = client.db(databases.coursedb);
-    db.collection("subjects").find({'subject':subject}).toArray().then(results => {
+    db.collection("subjects").find({'school':school}).toArray().then(results => {
         callback(null, results);
     }).catch(fail => {
         raiseFailedPromise(fail, 'searchSubjects', callback);

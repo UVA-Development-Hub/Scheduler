@@ -17,6 +17,23 @@ block content
                             td=subject_name['subject']
                             td=subject_name['name']
 
-        each subject_name, index in course_subjects
-            div.row
-                a.btn.bg-uva-blue(href='/subject/' + subject_name["subject"], style="width:250px;")=subject_name["subject"] + " - " + subject_name['name']
+        //- each subject_name, index in course_subjects
+            //- div.row
+                //- a.btn.bg-uva-blue(href='/subject/' + subject_name["subject"], style="width:250px;")=subject_name["subject"] + " - " + subject_name['name']
+    .container
+        div.row
+            h4 College of Arts and Sciences
+            .col-md-6
+                each subject_name, index in course_subjects['CLAS']
+                    div.row
+                    a(href='/subject/' + subject_name["subject"], style="width:250px;")=subject_name['subject'] + " - " + subject_name['name']
+            .col-md-6
+                //
+        div.row
+            h4 School of Engineering and Applied Sciences
+            .col-md-6
+                each subject_name, index in course_subjects['SEAS']
+                    div.row
+                    a(href='/subject/' + subject_name["subject"], style="width:250px;")=subject_name['subject'] + " - " + subject_name['name']
+            .col-md-6
+                //
