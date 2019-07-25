@@ -193,3 +193,18 @@ button.pageselector {
     width: 75px;
     padding: 10px;
 }
+
+.course-header {
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.course-section-container {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.course-section-header {
+    margin-left: 0px;
+    margin-top: 10px;
+}

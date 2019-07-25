@@ -1,109 +1,168 @@
 var currentPage = 0;
-var numberOfPages = 0;
 var arr;
+
 $(document).ready( function() {
-  numberOfPages = parseInt($("#max_page_div").attr("max_page"));
-  //for(var i = 0; i < numberOfPages; i++) {
-      //$("#button_box").append("<button onclick=displayPage(" + i + ")>" + (i + 1) + "</button>");
-  //};
-  //console.log($("#button_box"));
-  arr= $(".pageselector");
-  displayPage(0);
+    arr= $(".pageselector");
+    for(var i = maxPage; i < 10; i++) $(arr[i + 1]).hide();
+    d = getUrlParams(location.search);
+    currentPage = parseInt(d.page || 0);
+    setButtons(currentPage);
 });
 
-function displayPage(pageNumber) {
-  currentPage=pageNumber;
-  $('.paged').each(function(){
-      if(parseInt($(this).attr('page')) ==  pageNumber) { // attr('page') gets data from the class 'page'
-          $(this).show();
-      } else {
-        $(this).hide();
-      }
+function setButtons(pageNumber) {
+    currentPage = pageNumber;
 
+    if (currentPage < 5) {
+        for(var i=0; i<5;i++ ) {
+            $(arr[i]).attr("onclick", "loadPage("+ parseInt(i)+")");
+            $(arr[i]).html(parseInt(i + 1));
+        }
 
-      if(parseInt($(this).attr('page')) <  pageNumber){
-        $(this).hide();
-      }
-
-    })
-
-for(var i=numberOfPages;i<10;i++){
-    $(arr[i+1]).hide();
-}
-
-if (currentPage < 5){
-  for(var i=0; i<5;i++ ){
-    $(arr[i]).attr("onclick", "displayPage("+ parseInt(i)+")");
-    $(arr[i]).html(parseInt(i + 1));
-  }
-
-  for(var i=5; i<10;i++ ){
-    $(arr[i]).attr("onclick", "displayPage("+ parseInt(i)+")");
-    $(arr[i]).html(parseInt(i + 1));
-  }
-}
-
-else if (currentPage > parseInt(numberOfPages-10)){
-  for(var i=0; i<5;i++ ){
-    $(arr[i]).attr("onclick", "displayPage("+ parseInt(i+numberOfPages-9)+")");
-    $(arr[i]).html(parseInt(i + 1+numberOfPages-9));
-  }
-
-  for(var i=5; i<10;i++ ){
-    $(arr[i]).attr("onclick", "displayPage("+ parseInt(i+numberOfPages-9)+")");
-    $(arr[i]).html(parseInt(i + 1+numberOfPages-9));
-  }
-}
-
-else {
-    for(var i=0; i<5;i++ ){
-      $(arr[i]).attr("onclick", "displayPage("+ parseInt(pageNumber-5+i)+")");
-      $(arr[i]).html(parseInt((pageNumber-5+i) + 1 ));
-    }
-
-    for(var i=5; i<10;i++ ){
-      $(arr[i]).attr("onclick", "displayPage("+ parseInt(pageNumber+i-5)+")");
-      $(arr[i]).html(parseInt((pageNumber+i-5)+ 1));
-    }
-  }
-//
-// if (currentPage == numberOfPages){
-//       for(var i = 0; i < numberOfPages; i++){
-//           $(arr[i]).attr("onclick", "displayPage("+ parseInt(pageNumber-numberOfPages-i)+")");
-//           $(arr[i]).html(parseInt(pageNumber-i-numberOfPages) - 1);
-//           console.log("test statment");
-//       }
-//   }
-
-
-  $(arr).each(function(){
-    if(parseInt($(this).html())-1 == currentPage){
-      $(this).addClass('bg-uva-orange');
+        for(var i=5; i<10;i++ ) {
+            $(arr[i]).attr("onclick", "loadPage("+ parseInt(i)+")");
+            $(arr[i]).html(parseInt(i + 1));
+        }
+    } else if (currentPage > parseInt(maxPage-10)) {
+        for(var i=0; i<5;i++ ) {
+            $(arr[i]).attr("onclick", "loadPage("+ parseInt(i+maxPage-9)+")");
+            $(arr[i]).html(parseInt(i + 1+maxPage-9));
+        }
+        for(var i=5; i<10;i++ ) {
+            $(arr[i]).attr("onclick", "loadPage("+ parseInt(i+maxPage-9)+")");
+            $(arr[i]).html(parseInt(i + 1+maxPage-9));
+        }
     } else {
-      $(this).removeClass('bg-uva-orange');
+        for(var i=0; i<5;i++ ){
+            $(arr[i]).attr("onclick", "loadPage("+ parseInt(pageNumber-5+i)+")");
+            $(arr[i]).html(parseInt((pageNumber-5+i) + 1 ));
+        }
+        for(var i=5; i<10;i++ ){
+            $(arr[i]).attr("onclick", "loadPage("+ parseInt(pageNumber+i-5)+")");
+            $(arr[i]).html(parseInt((pageNumber+i-5)+ 1));
+        }
     }
-  });
+
+    $(arr).each(function() {
+        if(parseInt($(this).html())-1 == currentPage) $(this).addClass('bg-uva-orange');
+        else $(this).removeClass('bg-uva-orange');
+    });
 
 };
 
+function loadPage(i) {
+    d = getUrlParams(location.search);
+    setButtons(i);
+    getSearchPage(parseInt(d.page || currentPage), 25, (data, max) => {
+        maxPage = max;
+        // Write new search results to the #results element
+        var newHTML = ``, i = 0;
+        while(i < data.length) {
+            var course = data[i], currentCatalog = course.catalog_number;
+            const subjectHeader = `
+                <div class="row">
+                    <div class="col-md-12" style="margin-top:50px;">
+                        <h3 class="bg-uva-orange course-header">
+                            <b>${course.subject} ${currentCatalog} - ${course.title}</b>
+                        </h3>
+                        <div class="col-md-12 course-section-container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p class="section-title-thick">${course.desc}</p>
+                                </div>
+                            </div>
+                            <table class="wide">`;
+            newHTML += subjectHeader;
+            while(course.catalog_number == currentCatalog && i < data.length) {
+                course = data[i], i++;
+                var spanstyle = "",
+                    enrollmentcontents = ``,
+                    instructors = ``,
+                    ins = [];
+                // Determine styling for various spans
+                switch(course.status) {
+                    case 'Wait List':
+                    spanstyle = "color:#e57200;";
+                    enrollmentcontents = `<span>${course.enrolled} / ${course.enroll_limit} | </span><span style="color:red;">${course.waiting}`;
+                    break;
+
+                    case 'Open':
+                    spanstyle = "color:green;";
+                    enrollmentcontents = `<span style="color:green">${course.enrolled} / ${course.enroll_limit}`;
+                    if(course.waiting != 0) enrollmentcontents += ` | <span style="color:red;">${course.waiting}</span>`;
+                    break;
+
+                    default:
+                    enrollmentcontents = `<span style="color:green">${course.enrolled} / ${course.enroll_limit}`;
+                    if(course.waiting != 0) enrollmentcontents += ` | <span style="color:red;">${course.waiting}</span>`;
+                    break;
+                }
+
+                // Create instructors list
+                course.instructors.forEach( item => {
+                    if(!ins.includes(item)) {
+                        ins.push(item);
+                        instructors += `<p>${item}</p>`;
+                    }
+                });
+
+                // Format the template string
+                const sectionData = `
+                    <tr class="wide">
+                        <td class="wide">
+                            <div class="row section-title course-section-header">
+                                <div class="col-sm-2">
+                                    <b><p class="sis_id">${course.sis_id} - ${course.section}</p></b>
+                                </div>
+                                <div class="col-sm-1">
+                                    <b><p>${course.type}</p></b>
+                                </div>
+                                <div class="col-sm-5">${instructors}</div>
+                                <div class="col-sm-2">
+                                    <b><span style="${spanstyle}">${course.status}</span></b>
+                                </div>
+                                <div class="col">
+                                    <b><p>${enrollmentcontents}</p></b>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 calspot">
+                                    <p>Future home of the calendar</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>Grade data is fetched by combining the instructor with the subject and number. It does not factor in labs/discussions or their instructors, etc.</p>
+                                    <p>Future home of the grade distribution information</p>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>`;
+                // Append to the results
+                newHTML += sectionData;
+                // Append closing tags
+                newHTML += `    </table>
+                </div>
+                </div>
+                </div>`;
+            }
+        }
+        // Load the new html into the frame
+        $("#results").html(newHTML);
+    }, {"term": d.term_id});
+}
 
 function nextPage(){
-    if(currentPage==parseInt(numberOfPages)){
-        displayPage(currentPage);
+    if(currentPage==parseInt(maxPage)) loadPage(currentPage);
+    else {
+        currentPage++;
+        loadPage(currentPage);
     }
-
-    else{
-      currentPage++;
-      displayPage(currentPage);
-}
 };
 
 function previousPage(){
-    if(currentPage==0){
-        displayPage(currentPage);
-    } else{
+    if(currentPage==0) loadPage(currentPage);
+    else {
         currentPage--;
-        displayPage(currentPage);
+        loadPage(currentPage);
     }
-
 };

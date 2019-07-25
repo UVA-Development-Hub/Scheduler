@@ -4,10 +4,10 @@ block customhead
     link(rel="stylesheet", href="/css/tablesorter.theme.blue.css")
     link(rel="stylesheet", href="/css/error_page.css")
     link(rel="stylesheet", href="/css/course_style_sheet.css")
-    script(src='/js/calLib.js')
+    script(src='/js/ajax.js')
     script(src="/js/pagination.js")
     script.
-        var maxPage = ![max_page];
+        var maxPage = !{max_page};
 
 block content
     .container
@@ -25,16 +25,16 @@ block content
             button.btn.bg-uva-blue.pageselector
             button.btn.bg-uva-blue(style="width:100px;" onClick="nextPage()") Next
         .row(style="margin-top:30px;")
-            - var page = 0, cp = -1, i = 0, max = course_terms_and_ids.length
-            .col-md-12
+            - var page = 0, cp = 0, i = 0, max = course_terms_and_ids.length
+            .col-md-12#results
                 while i < max
-                    - var course = course_terms_and_ids[i], current = course.catalog_number; cp++;
+                    - var course = course_terms_and_ids[i], current = course.catalog_number;
                     .row
-                        .col-md-12.paged(page=page style="display:none;margin-top:50px;")
-                            h3.bg-uva-orange(style="padding:15px;border-radius:5px;")
+                        .col-md-12(page=page style="margin-top:50px;")
+                            h3.bg-uva-orange.course-header
                                 b=course.subject + ' ' + current + ' - ' + course.title
-                        .paged(page=page style="display:none;width:100%;")
-                            .col-md-12(style="margin-top:15px;margin-bottom:15px;")
+                        .wide.paged(page=page)
+                            .col-md-12.course-section-container
                                 if(course.desc.length > 0)
                                     .row
                                         .col-md-12
@@ -42,13 +42,13 @@ block content
                                 else
                                     .row
                                         .col-md-12.section-title-thick
-                                table(style="width:100%")
-                                    tbody(style="width:100%")
-                                        while course.catalog_number == current
+                                table.wide
+                                    tbody.wide
+                                        while course.catalog_number == current && i < max
                                             - course = course_terms_and_ids[i]; i++;
-                                            tr(style="width:100%;")
-                                                td(style="width:100%")
-                                                    .row.section-title(style="margin-left:0px;margin-top:10px;")
+                                            tr.wide
+                                                td.wide
+                                                    .row.section-title.course-section-header
                                                         .col-sm-2
                                                             b
                                                                 p.sis_id=course.sis_id + ' - ' + course.section

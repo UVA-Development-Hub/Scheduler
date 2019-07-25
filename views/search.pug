@@ -81,10 +81,7 @@ block content
 
     .container
         .row
-            if results.length==0
-                .container
-                    .row 
-            else
+            if results.length > 0
                 - var count = 0;
                 .col-md-8
                     div(id="search_result")
@@ -140,9 +137,9 @@ block content
                                                                         p=course.meeting_start
                                                                         p=course.meeting_end    
                                                                     .col-md-4
-                                                                        if(course.desc.length > 0)
+                                                                        //if(course.desc.length > 0)
                                                                             p=course.desc
-                                                                        else
+                                                                        //else
                                                                             p A description for this course is not available :(
                                                                 .row
                                                                     .col-md-12
