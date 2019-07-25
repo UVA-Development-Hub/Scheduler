@@ -13,3 +13,8 @@ tr:nth-child(even) {
 .calendar{
     width: 30%;
 }
+
+.btn.btn-success{
+    width: 150px;
+    height: 60px;
+}
