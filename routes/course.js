@@ -131,7 +131,14 @@ router.get('/:term', (req, res) => {
 
 
 router.get('/', (req, res) => {
-    res.send("The future home of a page which explains the course view, searching for courses, etc.");
+    mongo.getTerms( (err, data) => {
+        console.log(data);
+        data.reverse()
+            res.render('course/course', {
+                termsList: data,
+            });
+    });
+    // res.send("The future home of a page which explains the course view, searching for courses, etc.");
 });
 
 module.exports = router;
