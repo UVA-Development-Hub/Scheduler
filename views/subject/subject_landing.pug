@@ -133,7 +133,7 @@ block content
                         i.fa.fa-plus-square
                         i.fa.fa-minus-square(style='display:none;')
                     div(style='margin-left:10px;')
-                            p.vertical="INTR"
+                            p.vertical="Interdisciplinary Studies"
             .col-md-12(style="display:none")
                 div.list-group.d-flex.flex-row.flex-wrap
                     each subject_name, index in course_subjects['INTR']
@@ -167,6 +167,36 @@ block content
             .col-md-12(style="display:none")
                 div.list-group.d-flex.flex-row.flex-wrap
                     each subject_name, index in course_subjects['NURS']
+                        .col-md-6
+                            a(href='/subject/' + subject_name["subject"])
+                                div.list-group-item.list-group-item-action
+                                    =subject_name['subject'] + " - " + subject_name['name']
+        .row
+            .col-md-12
+                .row.form-inline
+                    button.btn.bg-uva-blue(type='button' onclick="$(this).parent().parent().next().toggle('slow');$(this).find('i').toggle();return false;" style='font-size:18px;padding:10px;')
+                        i.fa.fa-plus-square
+                        i.fa.fa-minus-square(style='display:none;')
+                    div(style='margin-left:10px;')
+                            p.vertical="Data Science"
+            .col-md-12(style="display:none")
+                div.list-group.d-flex.flex-row.flex-wrap
+                    each subject_name, index in course_subjects['DSI']
+                        .col-md-6
+                            a(href='/subject/' + subject_name["subject"])
+                                div.list-group-item.list-group-item-action
+                                    =subject_name['subject'] + " - " + subject_name['name']
+        .row
+            .col-md-12
+                .row.form-inline
+                    button.btn.bg-uva-blue(type='button' onclick="$(this).parent().parent().next().toggle('slow');$(this).find('i').toggle();return false;" style='font-size:18px;padding:10px;')
+                        i.fa.fa-plus-square
+                        i.fa.fa-minus-square(style='display:none;')
+                    div(style='margin-left:10px;')
+                            p.vertical="Other Departments"
+            .col-md-12(style="display:none")
+                div.list-group.d-flex.flex-row.flex-wrap
+                    each subject_name, index in course_subjects['']
                         .col-md-6
                             a(href='/subject/' + subject_name["subject"])
                                 div.list-group-item.list-group-item-action
