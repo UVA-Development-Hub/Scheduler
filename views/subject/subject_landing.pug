@@ -32,8 +32,10 @@ block content
             .col-md-12(style="display:none")
                 div.list-group.d-flex.flex-row.flex-wrap
                     each subject_name, index in course_subjects['CLAS']
-                        div.list-group-item.w-50.list-group-item-action
-                            a(href='/subject/' + subject_name["subject"], style="width:250px;")=subject_name['subject'] + " - " + subject_name['name']
+                        .col-md-6
+                            a(href='/subject/' + subject_name["subject"])
+                                div.list-group-item.list-group-item-action
+                                    =subject_name['subject'] + " - " + subject_name['name']
         .row
             .col-md-12
                 .row.form-inline
@@ -45,8 +47,10 @@ block content
             .col-md-12(style="display:none")
                 div.list-group.d-flex.flex-row.flex-wrap
                     each subject_name, index in course_subjects['SEAS']
-                        div.list-group-item.w-50.list-group-item-action
-                            a(href='/subject/' + subject_name["subject"], style="width:250px;")=subject_name['subject'] + " - " + subject_name['name']
+                        .col-md-6
+                            a(href='/subject/' + subject_name["subject"])
+                                div.list-group-item.list-group-item-action
+                                    =subject_name['subject'] + " - " + subject_name['name']
         .row
             .col-md-12
                 .row.form-inline
@@ -58,8 +62,10 @@ block content
             .col-md-12(style="display:none")
                 div.list-group.d-flex.flex-row.flex-wrap
                     each subject_name, index in course_subjects['Curry']
-                        div.list-group-item.w-50.list-group-item-action
-                            a(href='/subject/' + subject_name["subject"], style="width:250px;")=subject_name['subject'] + " - " + subject_name['name']
+                        .col-md-6
+                            a(href='/subject/' + subject_name["subject"])
+                                div.list-group-item.list-group-item-action
+                                    =subject_name['subject'] + " - " + subject_name['name']
         .row
             .col-md-12
                 .row.form-inline
@@ -71,8 +77,10 @@ block content
             .col-md-12(style="display:none")
                 div.list-group.d-flex.flex-row.flex-wrap
                     each subject_name, index in course_subjects['McIntire']
-                        div.list-group-item.w-50.list-group-item-action
-                            a(href='/subject/' + subject_name["subject"], style="width:250px;")=subject_name['subject'] + " - " + subject_name['name']
+                        .col-md-6
+                            a(href='/subject/' + subject_name["subject"])
+                                div.list-group-item.list-group-item-action
+                                    =subject_name['subject'] + " - " + subject_name['name']        
         .row
             .col-md-12
                 .row.form-inline
@@ -84,9 +92,11 @@ block content
             .col-md-12(style="display:none")
                 div.list-group.d-flex.flex-row.flex-wrap
                     each subject_name, index in course_subjects['SARC']
-                        div.list-group-item.w-50.list-group-item-action
-                            a(href='/subject/' + subject_name["subject"], style="width:250px;")=subject_name['subject'] + " - " + subject_name['name']
-        .row
+                        .col-md-6
+                            a(href='/subject/' + subject_name["subject"])
+                                div.list-group-item.list-group-item-action
+                                    =subject_name['subject'] + " - " + subject_name['name']   
+        .row     
             .col-md-12
                 .row.form-inline
                     button.btn.bg-uva-blue(type='button' onclick="$(this).parent().parent().next().toggle('slow');$(this).find('i').toggle();return false;" style='font-size:18px;padding:10px;')
@@ -97,8 +107,10 @@ block content
             .col-md-12(style="display:none")
                 div.list-group.d-flex.flex-row.flex-wrap
                     each subject_name, index in course_subjects['SCPS']
-                        div.list-group-item.w-50.list-group-item-action
-                            a(href='/subject/' + subject_name["subject"], style="width:250px;")=subject_name['subject'] + " - " + subject_name['name']
+                        .col-md-6
+                            a(href='/subject/' + subject_name["subject"])
+                                div.list-group-item.list-group-item-action
+                                    =subject_name['subject'] + " - " + subject_name['name']                        
         .row
             .col-md-12
                 .row.form-inline
@@ -110,8 +122,10 @@ block content
             .col-md-12(style="display:none")
                 div.list-group.d-flex.flex-row.flex-wrap
                     each subject_name, index in course_subjects['ROTC']
-                        div.list-group-item.w-50.list-group-item-action
-                            a(href='/subject/' + subject_name["subject"], style="width:250px;")=subject_name['subject'] + " - " + subject_name['name']
+                        .col-md-6
+                            a(href='/subject/' + subject_name["subject"])
+                                div.list-group-item.list-group-item-action
+                                    =subject_name['subject'] + " - " + subject_name['name']
         .row
             .col-md-12
                 .row.form-inline
@@ -123,8 +137,10 @@ block content
             .col-md-12(style="display:none")
                 div.list-group.d-flex.flex-row.flex-wrap
                     each subject_name, index in course_subjects['INTR']
-                        div.list-group-item.w-50.list-group-item-action
-                            a(href='/subject/' + subject_name["subject"], style="width:250px;")=subject_name['subject'] + " - " + subject_name['name']
+                        .col-md-6
+                            a(href='/subject/' + subject_name["subject"])
+                                div.list-group-item.list-group-item-action
+                                    =subject_name['subject'] + " - " + subject_name['name']
         .row
             .col-md-12
                 .row.form-inline
@@ -132,13 +148,38 @@ block content
                         i.fa.fa-plus-square
                         i.fa.fa-minus-square(style='display:none;')
                     div(style='margin-left:10px;')
-                            p.vertical="FBS"
+                            p.vertical="Batten School of Leadership & Public Policy"
             .col-md-12(style="display:none")
                 div.list-group.d-flex.flex-row.flex-wrap
                     each subject_name, index in course_subjects['FBS']
-                        div.list-group-item.w-50.list-group-item-action
-                            a(href='/subject/' + subject_name["subject"], style="width:250px;")=subject_name['subject'] + " - " + subject_name['name']
+                        .col-md-6
+                            a(href='/subject/' + subject_name["subject"])
+                                div.list-group-item.list-group-item-action
+                                    =subject_name['subject'] + " - " + subject_name['name']
+        .row
+            .col-md-12
+                .row.form-inline
+                    button.btn.bg-uva-blue(type='button' onclick="$(this).parent().parent().next().toggle('slow');$(this).find('i').toggle();return false;" style='font-size:18px;padding:10px;')
+                        i.fa.fa-plus-square
+                        i.fa.fa-minus-square(style='display:none;')
+                    div(style='margin-left:10px;')
+                            p.vertical="School of Nursing"
+            .col-md-12(style="display:none")
+                div.list-group.d-flex.flex-row.flex-wrap
+                    each subject_name, index in course_subjects['NURS']
+                        .col-md-6
+                            a(href='/subject/' + subject_name["subject"])
+                                div.list-group-item.list-group-item-action
+                                    =subject_name['subject'] + " - " + subject_name['name']
         
+                            //- h4 College of Arts and Sciences
+                            //- .row
+                            //-     each subject_name, index in course_subjects['CLAS']
+                            //-         .col-md-6
+                            //-             a(href='/subject/' + subject_name["subject"])
+                            //-                 div.list-group-item.list-group-item-action
+                            //-                     =subject_name['subject'] + " - " + subject_name['name']
+                            // DS, Nursing, Other
         //- h5 College of Arts and Sciences
         //- div.list-group.d-flex.flex-row.flex-wrap
         //-     each subject_name, index in course_subjects['CLAS']
