@@ -21,16 +21,134 @@ block content
             //- div.row
                 //- a.btn.bg-uva-blue(href='/subject/' + subject_name["subject"], style="width:250px;")=subject_name["subject"] + " - " + subject_name['name']
     .container
-        h4 College of Arts and Sciences
-        div.list-group.d-flex.flex-row.flex-wrap
-            each subject_name, index in course_subjects['CLAS']
-                div.list-group-item.w-50.list-group-item-action
-                    a(href='/subject/' + subject_name["subject"], style="width:250px;")=subject_name['subject'] + " - " + subject_name['name']
-        div.row
-            h4 School of Engineering and Applied Sciences
-            .col-md-6
-                each subject_name, index in course_subjects['SEAS']
-                    div.row
-                    a(href='/subject/' + subject_name["subject"], style="width:250px;")=subject_name['subject'] + " - " + subject_name['name']
-            .col-md-6
-                //
+        .row
+            .col-md-12
+                .row.form-inline
+                    button.btn.bg-uva-blue(type='button' onclick="$(this).parent().parent().next().toggle('slow');$(this).find('i').toggle();return false;" style='font-size:18px;padding:10px;')
+                        i.fa.fa-plus-square
+                        i.fa.fa-minus-square(style='display:none;')
+                    div(style='margin-left:10px;')
+                            p.vertical="College of Arts and Sciences"
+            .col-md-12(style="display:none")
+                div.list-group.d-flex.flex-row.flex-wrap
+                    each subject_name, index in course_subjects['CLAS']
+                        div.list-group-item.w-50.list-group-item-action
+                            a(href='/subject/' + subject_name["subject"], style="width:250px;")=subject_name['subject'] + " - " + subject_name['name']
+        .row
+            .col-md-12
+                .row.form-inline
+                    button.btn.bg-uva-blue(type='button' onclick="$(this).parent().parent().next().toggle('slow');$(this).find('i').toggle();return false;" style='font-size:18px;padding:10px;')
+                        i.fa.fa-plus-square
+                        i.fa.fa-minus-square(style='display:none;')
+                    div(style='margin-left:10px;')
+                            p.vertical="School of Engineering and Applied Sciences"
+            .col-md-12(style="display:none")
+                div.list-group.d-flex.flex-row.flex-wrap
+                    each subject_name, index in course_subjects['SEAS']
+                        div.list-group-item.w-50.list-group-item-action
+                            a(href='/subject/' + subject_name["subject"], style="width:250px;")=subject_name['subject'] + " - " + subject_name['name']
+        .row
+            .col-md-12
+                .row.form-inline
+                    button.btn.bg-uva-blue(type='button' onclick="$(this).parent().parent().next().toggle('slow');$(this).find('i').toggle();return false;" style='font-size:18px;padding:10px;')
+                        i.fa.fa-plus-square
+                        i.fa.fa-minus-square(style='display:none;')
+                    div(style='margin-left:10px;')
+                            p.vertical="Curry School of Education"
+            .col-md-12(style="display:none")
+                div.list-group.d-flex.flex-row.flex-wrap
+                    each subject_name, index in course_subjects['Curry']
+                        div.list-group-item.w-50.list-group-item-action
+                            a(href='/subject/' + subject_name["subject"], style="width:250px;")=subject_name['subject'] + " - " + subject_name['name']
+        .row
+            .col-md-12
+                .row.form-inline
+                    button.btn.bg-uva-blue(type='button' onclick="$(this).parent().parent().next().toggle('slow');$(this).find('i').toggle();return false;" style='font-size:18px;padding:10px;')
+                        i.fa.fa-plus-square
+                        i.fa.fa-minus-square(style='display:none;')
+                    div(style='margin-left:10px;')
+                            p.vertical="McIntire School of Commerce"
+            .col-md-12(style="display:none")
+                div.list-group.d-flex.flex-row.flex-wrap
+                    each subject_name, index in course_subjects['McIntire']
+                        div.list-group-item.w-50.list-group-item-action
+                            a(href='/subject/' + subject_name["subject"], style="width:250px;")=subject_name['subject'] + " - " + subject_name['name']
+        .row
+            .col-md-12
+                .row.form-inline
+                    button.btn.bg-uva-blue(type='button' onclick="$(this).parent().parent().next().toggle('slow');$(this).find('i').toggle();return false;" style='font-size:18px;padding:10px;')
+                        i.fa.fa-plus-square
+                        i.fa.fa-minus-square(style='display:none;')
+                    div(style='margin-left:10px;')
+                            p.vertical="Architecture School"
+            .col-md-12(style="display:none")
+                div.list-group.d-flex.flex-row.flex-wrap
+                    each subject_name, index in course_subjects['SARC']
+                        div.list-group-item.w-50.list-group-item-action
+                            a(href='/subject/' + subject_name["subject"], style="width:250px;")=subject_name['subject'] + " - " + subject_name['name']
+        .row
+            .col-md-12
+                .row.form-inline
+                    button.btn.bg-uva-blue(type='button' onclick="$(this).parent().parent().next().toggle('slow');$(this).find('i').toggle();return false;" style='font-size:18px;padding:10px;')
+                        i.fa.fa-plus-square
+                        i.fa.fa-minus-square(style='display:none;')
+                    div(style='margin-left:10px;')
+                            p.vertical="School of Continuing and Professional Studies"
+            .col-md-12(style="display:none")
+                div.list-group.d-flex.flex-row.flex-wrap
+                    each subject_name, index in course_subjects['SCPS']
+                        div.list-group-item.w-50.list-group-item-action
+                            a(href='/subject/' + subject_name["subject"], style="width:250px;")=subject_name['subject'] + " - " + subject_name['name']
+        .row
+            .col-md-12
+                .row.form-inline
+                    button.btn.bg-uva-blue(type='button' onclick="$(this).parent().parent().next().toggle('slow');$(this).find('i').toggle();return false;" style='font-size:18px;padding:10px;')
+                        i.fa.fa-plus-square
+                        i.fa.fa-minus-square(style='display:none;')
+                    div(style='margin-left:10px;')
+                            p.vertical="ROTC"
+            .col-md-12(style="display:none")
+                div.list-group.d-flex.flex-row.flex-wrap
+                    each subject_name, index in course_subjects['ROTC']
+                        div.list-group-item.w-50.list-group-item-action
+                            a(href='/subject/' + subject_name["subject"], style="width:250px;")=subject_name['subject'] + " - " + subject_name['name']
+        .row
+            .col-md-12
+                .row.form-inline
+                    button.btn.bg-uva-blue(type='button' onclick="$(this).parent().parent().next().toggle('slow');$(this).find('i').toggle();return false;" style='font-size:18px;padding:10px;')
+                        i.fa.fa-plus-square
+                        i.fa.fa-minus-square(style='display:none;')
+                    div(style='margin-left:10px;')
+                            p.vertical="INTR"
+            .col-md-12(style="display:none")
+                div.list-group.d-flex.flex-row.flex-wrap
+                    each subject_name, index in course_subjects['INTR']
+                        div.list-group-item.w-50.list-group-item-action
+                            a(href='/subject/' + subject_name["subject"], style="width:250px;")=subject_name['subject'] + " - " + subject_name['name']
+        .row
+            .col-md-12
+                .row.form-inline
+                    button.btn.bg-uva-blue(type='button' onclick="$(this).parent().parent().next().toggle('slow');$(this).find('i').toggle();return false;" style='font-size:18px;padding:10px;')
+                        i.fa.fa-plus-square
+                        i.fa.fa-minus-square(style='display:none;')
+                    div(style='margin-left:10px;')
+                            p.vertical="FBS"
+            .col-md-12(style="display:none")
+                div.list-group.d-flex.flex-row.flex-wrap
+                    each subject_name, index in course_subjects['FBS']
+                        div.list-group-item.w-50.list-group-item-action
+                            a(href='/subject/' + subject_name["subject"], style="width:250px;")=subject_name['subject'] + " - " + subject_name['name']
+        //- h5 College of Arts and Sciences
+        //- div.list-group.d-flex.flex-row.flex-wrap
+        //-     each subject_name, index in course_subjects['CLAS']
+        //-         div.list-group-item.w-50.list-group-item-action
+        //-             a(href='/subject/' + subject_name["subject"], style="width:250px;")=subject_name['subject'] + " - " + subject_name['name']
+        //- div.row
+        //-     p
+        //- div.row
+        //-     h5 School of Engineering and Applied Sciences
+        //-     div.list-group.d-flex.flex-row.flex-wrap
+        //-         each subject_name, index in course_subjects['SEAS']
+        //-             div.list-group-item.w-50.list-group-item-action
+        //-                 a(href='/subject/' + subject_name["subject"], style="width:250px;")=subject_name['subject'] + " - " + subject_name['name']
+        
