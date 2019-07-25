@@ -8,6 +8,7 @@ block customhead
     script(src="/js/pagination.js")
     script(src='/js/chart.js')
     script(src='/js/moment.js')
+    script(src='/js/search.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/core/main.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/daygrid/main.min.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/timegrid/main.js')
@@ -22,7 +23,7 @@ block content
         div.row 
             .col-md-3
             .col-md-6
-                form(method='POST' action='/search')   
+                form(method='GET' action='/search')   
                     .row             
                         .form-group.form-inline
                             label(for='semester', style= "margin-right:10px;") Search Courses From 
@@ -56,25 +57,29 @@ block content
                                 button.btn.btn-dark(onclick="toggleDays('day-search');return false;") Select days &nbsp;
                                     i.fas.fa-angle-right(style="display:none;")
                                     i.fas.fa-angle-down
+                                input#days(type="hidden", name="days", value=input.days)
                                 .appearing-box(style="display:none;left:100%;")
                                     div
-                                        input#monday.pointer(type="checkbox", name="monday")
-                                        label.pointer(for='monday') Monday
+                                        input#Mo.dayinput(type="checkbox")
+                                        label(for='Mo') Monday
                                     div
-                                        input#tuesday.pointer(type="checkbox", name="tuesday")
-                                        label.pointer(for='tuesday') Tuesday
+                                        input#Tu.dayinput(type="checkbox")
+                                        label(for='Tu') Tuesday
                                     div
-                                        input#wednesday.pointer(type="checkbox", name="wednesday")
-                                        label.pointer(for='wednesday') Wednesday
+                                        input#We.dayinput(type="checkbox")
+                                        label(for='We') Wednesday
                                     div
-                                        input#thursday.pointer(type="checkbox", name="thursday")
-                                        label.pointer(for='thursday') Thursday
+                                        input#Th.dayinput(type="checkbox")
+                                        label(for='Th') Thursday
                                     div
-                                        input#friday.pointer(type="checkbox", name="friday")
-                                        label.pointer(for='friday') Friday
+                                        input#Fr.dayinput(type="checkbox")
+                                        label(for='Fr') Friday
                                     div
-                                        input#saturday.pointer(type="checkbox", name="saturday")
-                                        label.pointer(for='saturday') Saturday
+                                        input#Sa.dayinput(type="checkbox")
+                                        label(for='Sa') Saturday
+                                    div
+                                        input#Su.dayinput(type="checkbox")
+                                        label(for='Su') Sunday
                     .row                
                         button.btn.btn-success(type="submit", style="margin-right:10px; margin-bottom:50px;") Search
             .col-md-3
@@ -96,8 +101,8 @@ block content
                                         div(style='margin-left:10px;')
                                                 p.vertical=result.subject + ' ' + result.number + ' - ' + result.title
                                 // Column container for all sections
-                                .col-md-12(style='display:none;')
-                                    table(style="width:100%;")
+                                .col-md-12
+                                    table.wide
                                         tbody
                                             each course, i in result.section
                                                 tr
@@ -129,7 +134,7 @@ block content
                                                                             b
                                                                                 p=course.waiting
                                                             // ... and a div which contains everything else
-                                                            div(style="display:none;")
+                                                            div
                                                                 .row
                                                                     .col-md-8
                                                                         p Future home of the calendar

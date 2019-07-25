@@ -84,12 +84,7 @@ router.get('/search', function(req, res){
                 'catalog_number': '',
                 'classTitle' :'',
                 'instructor' : '',
-                'monday' : false,
-                'tuesday' : false,
-                'wednesday' : false,
-                'thursday' : false,
-                'friday' : false,
-                'saturday' : false,
+                'days': '',
             },
             user: req.session.user
         });
@@ -97,41 +92,15 @@ router.get('/search', function(req, res){
 });
 
 router.post('/search', function(req, res){
-    var thedays = [
-        req.body.monday,
-        req.body.tuesday,
-        req.body.wednesday,
-        req.body.thursday,
-        req.body.friday,
-        req.body.saturday,
-    ], daynames = [
-        'M',
-        'T',
-        'W',
-        'R',
-        'F',
-        'S'
-    ], dayinput = '',
-        tosubmit = {};
-
-    thedays.forEach((checkbox, index) => {
-        if(checkbox) dayinput = dayinput + daynames[index];
-
-    });
+    var tosubmit = {};
 
     if (req.body.catalog_number !='') tosubmit.catalog_number =req.body.catalog_number;
     if(req.body.subject != '') tosubmit.subject = req.body.subject.toUpperCase();
-    if(dayinput != '') tosubmit.days = dayinput;
-//console.log(tosubmit.days);
+    if(req.query.dayinput && req.query.dayinput != '') tosubmit.days = dayinput;
+
     function tocompare(courseList,course){
-        var ret = -1;
-        for(var i = 0; i < courseList.length; i++) {
-            if(course.subject === courseList[i].subject && course.catalog_number === courseList[i].number) {
-                ret = i;
-                break;
-            }
-        }
-        return ret;
+        for(var i = 0; i < courseList.length; i++) if(course.subject === courseList[i].subject && course.catalog_number === courseList[i].number) return i;
+        return -1;
     }
 
     // Retrieve the search results and terms list in parallel
