@@ -22,11 +22,13 @@ block content
                 //- a.btn.bg-uva-blue(href='/subject/' + subject_name["subject"], style="width:250px;")=subject_name["subject"] + " - " + subject_name['name']
     .container
         h4 College of Arts and Sciences
-        div.list-group.d-flex.flex-row.flex-wrap
+        .row
             each subject_name, index in course_subjects['CLAS']
-                div.list-group-item.w-50.list-group-item-action
-                    a(href='/subject/' + subject_name["subject"], style="width:250px;")=subject_name['subject'] + " - " + subject_name['name']
-        div.row
+                .col-md-6
+                    a(href='/subject/' + subject_name["subject"])
+                        div.list-group-item.list-group-item-action
+                            =subject_name['subject'] + " - " + subject_name['name']
+        .row
             h4 School of Engineering and Applied Sciences
             .col-md-6
                 each subject_name, index in course_subjects['SEAS']
