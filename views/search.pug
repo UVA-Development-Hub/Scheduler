@@ -164,7 +164,7 @@ block content
           
                             if(this.checked){
                             
-                                for(i=0;i<theClass.days.split("").length;i++){
+                                for(var i=0;i<theClass.days.split("").length;i++){
                                     meeting.push({
                                     title: theClass.subject+theClass.catalog_number,
                                     start: moment(moment().day(theClass.days.split("")[i]).format("YYYY-MM-DD")+"T"+theClass.meeting_start).format(),
