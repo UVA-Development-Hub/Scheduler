@@ -4,6 +4,7 @@ var mongo = require('../bin/mongo.js');
 
 
 router.get('/:subject', (req, res) => {
+
     mongo.getTerms((err,termsList) => {
         function tocompare(courseList,course){
             var ret = -1;
@@ -44,24 +45,8 @@ router.get('/:subject', (req, res) => {
 });
 
 router.get('/', (req, res) => {
+
     mongo.getSubjects((err, data) => {
-        // function removeDuplicates(data, school) {
-        //     var trimmedArray = [];
-        //     var values = [];
-        //     var value;
-        //
-        //     for(var i = 0; i < data.length; i++) {
-        //         value = data[i][school];
-        //
-        //         if(values.indexOf(value) === -1) {
-        //             trimmedArray.push(data[i]);
-        //             values.push(value);
-        //         }
-        //     }
-        //
-        //     return trimmedArray;
-        //
-        // }
         var subjects = {};
         data.forEach(function(val){
             if (subjects[val['school']]) {
