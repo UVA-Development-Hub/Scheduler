@@ -15,69 +15,80 @@ block customhead
 block content
     
     div.container(id="resultsParent")
-        div.row
+        //*div.row
             .col-md-12
                 .row
-                h1(style="margin-bottom:20px;" ).center='Course Search'
-        div.row 
-            .col-md-3
-            .col-md-6
-                form(method='POST' action='/search')   
-                    .row             
-                        .form-group.form-inline
-                            label(for='semester', style= "margin-right:10px;") Search Courses From 
-                            select#semester.form-control(type='text', placeholder='' name='term_id')
-                                - var marked = false
-                                each term,i in terms
-                                    if selected_term == term._id
-                                        option(value=term._id, selected)=term.name
-                                        - marked = true
-                                    else if i==terms.length-1 && !marked
-                                        option(value=term._id, selected)=term.name
-                                    else
-                                        option(value=term._id)=term.name
-                    .row
-                        div.form-group.form-inline
-                            label(for='subject') Subject:
-                            input#subject.form-control(type='text', placeholder='eg.ANTH' name='subject' value=input.subject)
-                        div.form-group.form-inline
-                            label(for='catalog_number') Class Number:
-                            input#catalog_number.form-control(type='text', placeholder='eg.1010' name='catalog_number' value=input.catalog_number)
-                    .row
-                        div.form-group.form-inline
-                            label(for='classTitle') Class Title:
-                            input#classTitle.form-control(type='text', placeholder='' name='classTitle' value=input.title)                                
-                        div.form-group.form-inline
-                            label(for='instructor') Instructor:
-                            input#instructor.form-control(type='text', placeholder='eg.Bloomfield' name='instructor' value=input.instructor)
-                    .row    
-                        .form-group(style="position:relative")
-                            #day-search
-                                button.btn.btn-dark(onclick="toggleDays('day-search');return false;") Select days &nbsp;
-                                    i.fas.fa-angle-right(style="display:none;")
-                                    i.fas.fa-angle-down
-                                .appearing-box(style="display:none;left:100%;")
-                                    div
-                                        input#monday.pointer(type="checkbox", name="monday")
-                                        label.pointer(for='monday') Monday
-                                    div
-                                        input#tuesday.pointer(type="checkbox", name="tuesday")
-                                        label.pointer(for='tuesday') Tuesday
-                                    div
-                                        input#wednesday.pointer(type="checkbox", name="wednesday")
-                                        label.pointer(for='wednesday') Wednesday
-                                    div
-                                        input#thursday.pointer(type="checkbox", name="thursday")
-                                        label.pointer(for='thursday') Thursday
-                                    div
-                                        input#friday.pointer(type="checkbox", name="friday")
-                                        label.pointer(for='friday') Friday
-                                    div
-                                        input#saturday.pointer(type="checkbox", name="saturday")
-                                        label.pointer(for='saturday') Saturday
-                    .row                
-                        button.btn.btn-success(type="submit", style="margin-right:10px; margin-bottom:50px;") Search
-            .col-md-3
+                h1(style="margin-bottom:20px;" ).center='Course Search'*//
+        form(method='POST' action='/search')   
+            .row      
+                .col-md-4
+                .col-md-5
+                    .form-group.form-inline
+                        label(for='semester', style= "margin-right:10px; margin-top:15px;").center Search Courses From 
+                        select#semester.form-control(type='text', placeholder='' name='term_id', style= "margin-top:15px;")
+                            - var marked = false
+                            each term,i in terms
+                                if selected_term == term._id
+                                    option(value=term._id, selected)=term.name
+                                    - marked = true
+                                else if i==terms.length-1 && !marked
+                                    option(value=term._id, selected)=term.name
+                                else
+                                    option(value=term._id)=term.name
+                .col-md-3
+            .row
+                .col-md-3
+                .col-md-4
+                    div.form-group.form-inline
+                        label(for='subject') Subject:
+                        input#subject.form-control(type='text', placeholder='eg.ANTH' name='subject' value=input.subject)
+                .col-md-4
+                    div.form-group.form-inline
+                        label(for='catalog_number') Number:
+                        input#catalog_number.form-control(type='text', placeholder='eg.1010' name='catalog_number' value=input.catalog_number)
+                .col-md-2
+            //.row
+                div.form-group.form-inline
+                    label(for='classTitle') Class Title:
+                    input#classTitle.form-control(type='text', placeholder='' name='classTitle' value=input.title)                                
+                
+            .row    
+                .col-md-3
+                .col-md-4
+                    div.form-group.form-inline
+                        label(for='instructor') Instructor:
+                        input#instructor.form-control(type='text', placeholder='eg.Bloomfield' name='instructor' value=input.instructor)
+                .col-md-4    
+                    .form-group(style="position:relative")
+                        #day-search
+                            button.btn.btn-dark(onclick="toggleDays('day-search');return false;") Select days &nbsp;
+                                i.fas.fa-angle-right(style="display:none;")
+                                i.fas.fa-angle-down
+                            .appearing-box(style="display:none;left:50%;")
+                                div
+                                    input#monday.pointer(type="checkbox", name="monday")
+                                    label.pointer(for='monday') Monday
+                                div
+                                    input#tuesday.pointer(type="checkbox", name="tuesday")
+                                    label.pointer(for='tuesday') Tuesday
+                                div
+                                    input#wednesday.pointer(type="checkbox", name="wednesday")
+                                    label.pointer(for='wednesday') Wednesday
+                                div
+                                    input#thursday.pointer(type="checkbox", name="thursday")
+                                    label.pointer(for='thursday') Thursday
+                                div
+                                    input#friday.pointer(type="checkbox", name="friday")
+                                    label.pointer(for='friday') Friday
+                                div
+                                    input#saturday.pointer(type="checkbox", name="saturday")
+                                    label.pointer(for='saturday') Saturday
+                .col-md-1
+            .row   
+                .col-md-5
+                .col-md-2
+                    button.btn.btn-success(type="submit", style="margin-right:20px; margin-bottom:50px;") Find Class
+                .col-md-5
 
     .container
         .row
