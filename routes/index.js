@@ -222,7 +222,7 @@ router.use('/api', (req, res) => {
                     var term = req.query.term;
                     var user_events = [];
                     req.session.user.cart.forEach(function(cart_course){
-                        mongo.searchTerm(term, cart_course.sis_id, (err, data) => {
+                        mongo.searchTerm(term, {"sis_id":cart_course.sis_id}, (err, data) => {
                             data[0]['meetings'].forEach(function(meeting_event) {
                                 for (i = 0; i < weekdays.length; i++){
                                     if (meeting_event.includes(weekdays[i])){
