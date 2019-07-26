@@ -88,11 +88,10 @@ router.get('/search', function(req, res){
             });
         })
     ], (err, data) => {
-        var new_result = lib.sectionate(data[1].value[0]);
         res.render('search', {
             title : 'Search Page',
             terms: data[0]['value'],
-            results: new_result,
+            sections: lib.sectionate(data[1].value[0]),
             max_page: parseInt(data[1].value[1]),
             input: req.query,
             selected_term: req.query.term_id,

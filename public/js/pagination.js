@@ -70,7 +70,8 @@ function loadPage(i) {
                                     <p class="section-title-thick">${course.desc}</p>
                                 </div>
                             </div>
-                            <table class="wide">`;
+                        </div>
+                        <table class="wide">`;
             newHTML += subjectHeader;
             while(course.catalog_number == currentCatalog && i < data.length) {
                 course = data[i], i++;
@@ -113,7 +114,7 @@ function loadPage(i) {
                                 <div class="col-sm-2">
                                     <b><p class="sis_id">${course.sis_id} - ${course.section}</p></b>
                                 </div>
-                                <div class="col-sm-1">
+                                <div class="col">
                                     <b><p>${course.type}</p></b>
                                 </div>
                                 <div class="col-sm-5">${instructors}</div>
@@ -140,11 +141,8 @@ function loadPage(i) {
                 // Append to the results
                 newHTML += sectionData;
                 // Append closing tags
-                newHTML += `    </table>
-                </div>
-                </div>
-                </div>`;
             }
+            newHTML += `</table></div></div>`;
         }
         // Load the new html into the frame
         $("#results").html(newHTML);

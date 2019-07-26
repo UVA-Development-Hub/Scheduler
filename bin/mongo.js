@@ -145,10 +145,12 @@ function searchTerm(term_id, specifiers, callback) {
     var per = 25, page = 0;
     if("per" in specifiers) {
         per = parseInt(specifiers.per);
+        if(!per || per < 0) per = 0;
         delete specifiers.per;
     }
     if("page" in specifiers) {
         page = parseInt(specifiers.page);
+        if(!page || page < 0) page = 0;
         delete specifiers.page;
     }
 

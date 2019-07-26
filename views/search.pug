@@ -113,133 +113,126 @@ block content
 
     .container
         .row
-            if results.length > 0
-                - var count = 0;
-                .col-md-8#results
-                    each result, j in results
-                        .row
-                            // Top bar for the name and expanding controls
-                            .col-md-12
-                                .row.form-inline
-                                    button.btn.bg-uva-blue(type='button' onclick="$(this).parent().parent().next().toggle('slow');$(this).find('i').toggle();return false;" style='font-size:18px;padding:10px;')
-                                        i.fa.fa-plus-square
-                                        i.fa.fa-minus-square(style='display:none;')
-                                    div(style='margin-left:10px;')
-                                            p.vertical=result.subject + ' ' + result.number + ' - ' + result.title
-                            // Column container for all sections
-                            .col-md-12
-                                table.wide
-                                    tbody
-                                        each course, i in result.section
-                                            tr
-                                                td
-                                                    div(style="margin-top:15px;margin-bottom:15px;padding-left:5px;padding-right:5px;")
-                                                        // A single section. Comes in two parts:
-                                                        // A button which contains the section header info
-                                                        button(onclick="$(this).next().toggle('fast')" style="width:100%;padding:2px;background-color:inherit;outline:none;border:none")
-                                                            .row.section-title(style="margin-left:-10px;")
-                                                                .col-sm-1
-                                                                    div
-                                                                        - var name = j+'-'+i;
-                                                                        input#course.pointer(type="checkbox", name=name)
-                                                                        label.pointer(for='course')
-                                                                .col-sm-2
-                                                                    b
-                                                                        p=course.sis_id + ' - ' + course.section
-                                                                .col-sm-2
-                                                                    b
-                                                                        p=course.type
-                                                                .col-sm-3
-                                                                    b
-                                                                        p=course.instructor
-                                                                .col-sm-2
-                                                                    b
-                                                                        p=course.enrolled + ' / ' + course.enroll_limit
-                                                                if(course.waiting != 0)
-                                                                    .col-sm-2
-                                                                        b
-                                                                            p=course.waiting
-                                                        // ... and a div which contains everything else
-                                                        div
-                                                            .row
-                                                                .col-md-8
-                                                                    p Future home of the calendar
-                                                                    p=course.days
-                                                                    p=course.meeting_start
-                                                                    p=course.meeting_end    
-                                                                .col-md-4
-                                                                    //if(course.desc.length > 0)
-                                                                        p=course.desc
-                                                                    //else
-                                                                        p A description for this course is not available :(
-                                                            .row
-                                                                .col-md-12
-                                                                    p
-                                                                    | Grade data is fetched by combining the instructor with the subject and number. It does not factor in labs/discussions or their instructors, etc.
-                                                                    p Future home of the grade distribution information!
-                .col-md-4
-                    div(id="calendar" style="width:100%;min-width:290px;position:sticky;top:0px;")
-                    script.
-                        var meeting= [];
-                        function name_split(name){
-                            name.split("-");
-                        };
+            .col-md-8#results
+                each section in sections
+                    .row
+                        .col-md-12(style="margin-top:50px;")
+                            h3.bg-uva-orange.course-header
+                                b=section.subject + ' ' + section.catalog_number + ' - ' + section.title
+                        .col-md-12.course-section-container
+                            .row
+                                .col-md-12
+                                    p.section-title-thick=section.sections[0].desc
+                            table.wide
+                                tbody.wide
+                                    each course in section.sections
+                                        tr.wide
+                                            td.wide
+                                                .row.section-title.course-section-header
+                                                    .col-sm-2
+                                                        b
+                                                            p.sis_id=course.sis_id + ' - ' + course.section
+                                                    .col-sm-1
+                                                        b
+                                                            p=course.type
+                                                    .col-sm-5
+                                                        b
+                                                            each instructor in course.instructors
+                                                                p=instructor
+                                                    .col-sm-2
+                                                        b
+                                                            case course.status
+                                                                when 'Wait List'
+                                                                    span(style="color:#e57200;") Waitlisted
+                                                                when 'Open'
+                                                                    span(style="color:green") Open 
+                                                                default
+                                                                    span=course.status
+                                                    .col
+                                                        b
+                                                            if(course.status == 'Wait List')
+                                                                p
+                                                                    span=course.enrolled + ' / ' + course.enroll_limit + ' | '
+                                                                    span(style="color:red")=course.waiting
+                                                            else
+                                                                p
+                                                                    span(style="color:green")=course.enrolled + ' / ' + course.enroll_limit
+                                                                    if(course.waiting != 0)
+                                                                        span=' | '
+                                                                        span(style="color:red")=course.waiting
+                                                div
+                                                    .row
+                                                        .col-md-12.calspot
+                                                            p Future home of the calendar
+                                                            
+                                                    .row
+                                                        .col-md-12
+                                                            p
+                                                            | Grade data is fetched by combining the instructor with the subject and number. It does not factor in labs/discussions or their instructors, etc.
+                                                            p Future home of the grade distribution information!
+            .col-md-4
+                div(id="calendar" style="width:100%;min-width:290px;position:sticky;top:0px;")
+                script.
+                    var meeting= [];
+                    function name_split(name){
+                        name.split("-");
+                    };
+                    
+                    $(':checkbox').on('change',function(){
+                        var result_name= name_split(this.name);
+                        var theClass= result[parseInt(result_name[0])][parseInt(result_name(1))];
                         
-                        $(':checkbox').on('change',function(){
-                            var result_name= name_split(this.name);
-                            var theClass= result[parseInt(result_name[0])][parseInt(result_name(1))];
-                            
-          
-                            if(this.checked){
-                            
-                                for(var i=0;i<theClass.days.split("").length;i++){
-                                    meeting.push({
-                                    title: theClass.subject+theClass.catalog_number,
-                                    start: moment(moment().day(theClass.days.split("")[i]).format("YYYY-MM-DD")+"T"+theClass.meeting_start).format(),
-                                    end: moment(moment().day(theClass.days.split("")[i]).format("YYYY-MM-DD")+"T"+theClass.meeting_end).format(),
-                                });
-                                }
-                            }
-                            else{
-                                alert("deselected "+this.name);
-                            }
-                        });
+      
+                        if(this.checked){
                         
-                        // This is calendar code.
-                        document.addEventListener('DOMContentLoaded', function() {
-                            var calendarEl = document.getElementById('calendar');
-                            var calendar = new FullCalendar.Calendar(calendarEl, {
-                              plugins: [ 'timeGrid' ],
-                              defaultView: 'timeGridWeek',
-                              nowIndicator:true,
-                              allDaySlot:false,
-                              columnHeaderFormat:{
-                                  weekday:'short',
-                              },
-                              minTime:"08:00:00",
-                              header:{
-                                  left:'',
-                                  center:'',
-                                  right:'',
-                              },
-                              events:meeting
+                            for(var i=0;i<theClass.days.split("").length;i++){
+                                meeting.push({
+                                title: theClass.subject+theClass.catalog_number,
+                                start: moment(moment().day(theClass.days.split("")[i]).format("YYYY-MM-DD")+"T"+theClass.meeting_start).format(),
+                                end: moment(moment().day(theClass.days.split("")[i]).format("YYYY-MM-DD")+"T"+theClass.meeting_end).format(),
                             });
+                            }
+                        }
+                        else{
+                            alert("deselected "+this.name);
+                        }
+                    });
+                    
+                    // This is calendar code.
+                    document.addEventListener('DOMContentLoaded', function() {
+                        var calendarEl = document.getElementById('calendar');
+                        var calendar = new FullCalendar.Calendar(calendarEl, {
+                          plugins: [ 'timeGrid' ],
+                          defaultView: 'timeGridWeek',
+                          nowIndicator:true,
+                          allDaySlot:false,
+                          columnHeaderFormat:{
+                              weekday:'short',
+                          },
+                          minTime:"08:00:00",
+                          header:{
+                              left:'',
+                              center:'',
+                              right:'',
+                          },
+                          events:meeting
+                        });
 
-                            calendar.render();
-                      });
-                      
-                      
-                      
-                        
-                      /*
-                      $(window).scroll(function(e){ 
-                          var $el = $('#calendar'); 
-                          var isPositionFixed = ($el.css('position') == 'fixed');
-                          if ($(this).scrollTop() > 500 && !isPositionFixed){ 
-                              $el.css({'position': 'fixed', 'top': '0px'}); 
-                          }
-                          if ($(this).scrollTop() < 500 && isPositionFixed){
-                              $el.css({'position': 'static', 'top': '0px'}); 
-                          } 
-                     });
-                     */
+                        calendar.render();
+                  });
+                  
+                  
+                  
+                    
+                  /*
+                  $(window).scroll(function(e){ 
+                      var $el = $('#calendar'); 
+                      var isPositionFixed = ($el.css('position') == 'fixed');
+                      if ($(this).scrollTop() > 500 && !isPositionFixed){ 
+                          $el.css({'position': 'fixed', 'top': '0px'}); 
+                      }
+                      if ($(this).scrollTop() < 500 && isPositionFixed){
+                          $el.css({'position': 'static', 'top': '0px'}); 
+                      } 
+                 });
+                 */

@@ -25,22 +25,19 @@ block content
             button.btn.bg-uva-blue.pageselector
             button.btn.bg-uva-blue(style="width:100px;" onClick="nextPage()") Next
         .row(style="margin-top:30px;")
-            - var i = 0, max = course_terms_and_ids.length
             .col-md-12#results
-                while i < max
-                    - var course = course_terms_and_ids[i], current = course.catalog_number;
+                each section in sections
                     .row
                         .col-md-12(style="margin-top:50px;")
                             h3.bg-uva-orange.course-header
-                                b=course.subject + ' ' + current + ' - ' + course.title
+                                b=section.subject + ' ' + section.catalog_number + ' - ' + section.title
                         .col-md-12.course-section-container
                             .row
                                 .col-md-12
-                                    p.section-title-thick=course.desc
+                                    p.section-title-thick=section.sections[0].desc
                             table.wide
                                 tbody.wide
-                                    while course.catalog_number == current && i < max
-                                        - course = course_terms_and_ids[i]; i++;
+                                    each course in section.sections
                                         tr.wide
                                             td.wide
                                                 .row.section-title.course-section-header

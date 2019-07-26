@@ -25,9 +25,9 @@ function sectionate(courseArray) {
         else {
             ret.push({
                 subject: courseArray[i].subject,
-                number: courseArray[i].catalog_number,
+                catalog_number: courseArray[i].catalog_number,
                 title: courseArray[i].title,
-                section: [
+                sections: [
                     courseArray[i],
                 ],
             });
