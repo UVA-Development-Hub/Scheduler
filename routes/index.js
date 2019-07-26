@@ -15,6 +15,7 @@ var express = require('express'),
     mongo = require("../bin/mongo.js"),
     async = require('async');
     moment = require('moment');
+    lib = require('../bin/lib.js');
 
 router.get('/login', function (req, res) {
     if(req.session.user) res.redirect('/');
@@ -73,69 +74,28 @@ router.get('/css/timegrid.css', function(req, res) {
 
 //search page
 router.get('/search', function(req, res){
-    // Get the terms list so you can pick a semester
-    mongo.getTerms((err,termsList) => {
-        res.render('search', {
-            title : 'Search Page',
-            user: req.session.user,
-            terms: termsList,
-            results:[],
-            input: {
-                'subject': '',
-                'catalog_number': '',
-                'classTitle' :'',
-                'instructor' : '',
-                'days': '',
-            },
-            user: req.session.user
-        });
-    });
-});
 
-router.post('/search', function(req, res){
-    var tosubmit = {};
+    var query = lib.buildSearchQuery(req.query);
 
-    if (req.body.catalog_number !='') tosubmit.catalog_number =req.body.catalog_number;
-    if(req.body.subject != '') tosubmit.subject = req.body.subject.toUpperCase();
-    if(req.query.dayinput && req.query.dayinput != '') tosubmit.days = dayinput;
-
-    function tocompare(courseList,course){
-        for(var i = 0; i < courseList.length; i++) if(course.subject === courseList[i].subject && course.catalog_number === courseList[i].number) return i;
-        return -1;
-    }
-
-    // Retrieve the search results and terms list in parallel
     async.parallel([
         async.reflect( callback => {
             mongo.getTerms(callback);
         }),
         async.reflect( callback => {
-            mongo.searchTerm(req.body.term_id, tosubmit, callback);
+            // Either uses the requested term or the most recent one
+            mongo.getRecentTerm( term => {
+                mongo.searchTerm(req.query.term_id || term._id, query, callback);
+            });
         })
     ], (err, data) => {
-        var new_result = [],
-            itemIndex = 0;
-        for (x = 0; x < data[1]['value'].length; x++) {
-            itemIndex = tocompare(new_result, data[1]['value'][x]);
-            if(itemIndex > -1) new_result[itemIndex].section.push(data[1]['value'][x]);
-            else {
-                new_result.push({
-                    subject:data[1]['value'][x].subject,
-                    number: data[1]['value'][x].catalog_number,
-                    title: data[1]['value'][x].title,
-                    section: [
-                        data[1]['value'][x]
-                    ],
-                });
-            }
-        }
-
+        var new_result = lib.sectionate(data[1].value[0]);
         res.render('search', {
             title : 'Search Page',
             terms: data[0]['value'],
             results: new_result,
-            input: req.body,
-            selected_term: req.body.term_id,
+            max_page: parseInt(data[1].value[1]),
+            input: req.query,
+            selected_term: req.query.term_id,
             user: req.session.user
         });
     });

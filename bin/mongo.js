@@ -151,16 +151,18 @@ function searchTerm(term_id, specifiers, callback) {
         page = parseInt(specifiers.page);
         delete specifiers.page;
     }
-    var coll = client.db(databases.coursedb).collection('term_' + term_id);
 
+    // Do the search, then paginate / count in parallel
+    var coll = client.db(databases.coursedb).collection('term_' + term_id),
+        cursor = coll.find(specifiers);
     async.parallel([
         async.reflect(callback => {
-            coll.estimatedDocumentCount().then( count => {
+            cursor.count().then( count => {
                 callback(null, Math.ceil(count / per));
             });
         }),
         async.reflect(callback => {
-            coll.find(specifiers).skip(page * per).limit(per).toArray().then(results => {
+            cursor.skip(page * per).limit(per).toArray().then(results => {
                 callback(null, results);
             }).catch(fail => {
                 raiseFailedPromise(fail, 'searchTerm', callback);
@@ -260,6 +262,7 @@ module.exports = {
     getOrCreateUser,
     searchTerm,
     getTerms,
+    getRecentTerm,
     getPrograms,
     getProgramInfo,
     updateUser,

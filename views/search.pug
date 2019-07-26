@@ -9,80 +9,107 @@ block customhead
     script(src='/js/chart.js')
     script(src='/js/moment.js')
     script(src='/js/search.js')
+    script(src='/js/ajax.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/core/main.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/daygrid/main.min.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/timegrid/main.js')
+    script.
+        var maxPage = !{max_page || 0};
     
 block content
     
-    div.container(id="resultsParent")
-        div.row
+    .container(id="resultsParent")
+        .row
             .col-md-12
-                .row
                 h1(style="margin-bottom:20px;" ).center='Course Search'
-        div.row 
-            .col-md-3
+        .row 
+            .col
             .col-md-6
                 form(method='GET' action='/search')   
-                    .row             
-                        .form-group.form-inline
-                            label(for='semester', style= "margin-right:10px;") Search Courses From 
-                            select#semester.form-control(type='text', placeholder='' name='term_id')
-                                - var marked = false
-                                each term,i in terms
-                                    if selected_term == term._id
-                                        option(value=term._id, selected)=term.name
-                                        - marked = true
-                                    else if i==terms.length-1 && !marked
-                                        option(value=term._id, selected)=term.name
-                                    else
-                                        option(value=term._id)=term.name
                     .row
-                        div.form-group.form-inline
-                            label(for='subject') Subject:
-                            input#subject.form-control(type='text', placeholder='eg.ANTH' name='subject' value=input.subject)
-                        div.form-group.form-inline
-                            label(for='catalog_number') Class Number:
-                            input#catalog_number.form-control(type='text', placeholder='eg.1010' name='catalog_number' value=input.catalog_number)
+                        .col
+                        .col-md-5
+                            .form-group
+                                label(for='semester', style= "margin-right:10px;") Search Courses From
+                                select#semester.form-control(type='text', placeholder='' name='term_id')
+                                    - var marked = false
+                                    each term,i in terms
+                                        if selected_term == term._id
+                                            option(value=term._id, selected)=term.name
+                                            - marked = true
+                                        else if i==terms.length-1 && !marked
+                                            option(value=term._id, selected)=term.name
+                                        else
+                                            option(value=term._id)=term.name
+                        .col
                     .row
-                        div.form-group.form-inline
-                            label(for='classTitle') Class Title:
-                            input#classTitle.form-control(type='text', placeholder='' name='classTitle' value=input.title)                                
-                        div.form-group.form-inline
-                            label(for='instructor') Instructor:
-                            input#instructor.form-control(type='text', placeholder='eg.Bloomfield' name='instructor' value=input.instructor)
-                    .row    
-                        .form-group(style="position:relative")
-                            #day-search
-                                button.btn.btn-dark(onclick="toggleDays('day-search');return false;") Select days &nbsp;
-                                    i.fas.fa-angle-right(style="display:none;")
-                                    i.fas.fa-angle-down
-                                input#days(type="hidden", name="days", value=input.days)
-                                .appearing-box(style="display:none;left:100%;")
-                                    div
-                                        input#Mo.dayinput(type="checkbox")
-                                        label(for='Mo') Monday
-                                    div
-                                        input#Tu.dayinput(type="checkbox")
-                                        label(for='Tu') Tuesday
-                                    div
-                                        input#We.dayinput(type="checkbox")
-                                        label(for='We') Wednesday
-                                    div
-                                        input#Th.dayinput(type="checkbox")
-                                        label(for='Th') Thursday
-                                    div
-                                        input#Fr.dayinput(type="checkbox")
-                                        label(for='Fr') Friday
-                                    div
-                                        input#Sa.dayinput(type="checkbox")
-                                        label(for='Sa') Saturday
-                                    div
-                                        input#Su.dayinput(type="checkbox")
-                                        label(for='Su') Sunday
-                    .row                
-                        button.btn.btn-success(type="submit", style="margin-right:10px; margin-bottom:50px;") Search
-            .col-md-3
+                        .col
+                        .col-md-4
+                            .form-group.form-inline
+                                label(for='subject') Subject:
+                                input#subject.form-control(type='text', placeholder='eg. ECE' name='subject' value=input.subject)
+                        .col
+                        .col-md-4
+                            .form-group.form-inline
+                                label(for='catalog_number') Class Number:
+                                input#catalog_number.form-control(type='text', placeholder='eg. 2330' name='catalog_number' value=input.catalog_number)
+                        .col
+                    .row
+                        .col
+                        .col-md-4
+                            .form-group.form-inline
+                                label(for='classTitle') Class Title:
+                                input#classTitle.form-control(type='text', placeholder='eg. Digital Logic Design' name='classTitle' value=input.title)
+                        .col
+                        .col-md-4
+                            .form-group.form-inline
+                                label(for='instructor') Instructor:
+                                input#instructor.form-control(type='text', placeholder='eg. Dugan' name='instructor' value=input.instructor)
+                        .col
+                    .row
+                        .col
+                        .col-md-4
+                            .form-group
+                                input#days(type="hidden")
+                                label#Mo.uva-checkbox.dayinput Monday
+                                    input(type="checkbox")
+                                    span.uva-checkmark
+                                label#Tu.uva-checkbox.dayinput Tuesday
+                                    input(type="checkbox")
+                                    span.uva-checkmark
+                                label#We.uva-checkbox.dayinput Wednesday
+                                    input(type="checkbox")
+                                    span.uva-checkmark
+                                label#Th.uva-checkbox.dayinput Thursday
+                                    input(type="checkbox")
+                                    span.uva-checkmark
+                                label#Fr.uva-checkbox.dayinput Friday
+                                    input(type="checkbox")
+                                    span.uva-checkmark
+                                label#Sa.uva-checkbox.dayinput Saturday
+                                    input(type="checkbox")
+                                    span.uva-checkmark
+                                label#Su.uva-checkbox.dayinput Sunday
+                                    input(type="checkbox")
+                                    span.uva-checkmark
+                                                                                
+                        .col-md-4
+                            button.btn.btn-success.wide(type="submit", style="margin-right:10px; margin-bottom:50px;") Find Classes
+                        .col
+            .col
+        .row(style="margin-top:30px;")
+            button.btn.bg-uva-blue(style="width:100px;" onClick="previousPage()") Previous
+            button.btn.bg-uva-blue.pageselector
+            button.btn.bg-uva-blue.pageselector
+            button.btn.bg-uva-blue.pageselector
+            button.btn.bg-uva-blue.pageselector
+            button.btn.bg-uva-blue.pageselector
+            button.btn.bg-uva-blue.pageselector
+            button.btn.bg-uva-blue.pageselector
+            button.btn.bg-uva-blue.pageselector
+            button.btn.bg-uva-blue.pageselector
+            button.btn.bg-uva-blue.pageselector
+            button.btn.bg-uva-blue(style="width:100px;" onClick="nextPage()") Next
 
     .container
         .row
@@ -217,11 +244,3 @@ block content
                           } 
                      });
                      */
-                                        
-    // Inline scrips go at the end to decrease page loading time
-    script.
-        function toggleDays(id) {
-            $('#' + id + ' .appearing-box').toggle('slow');
-            $('#' + id + ' i.fa-angle-right').toggle('fast');
-            $('#' + id + ' i.fa-angle-down').toggle('fast');
-        }

@@ -25,68 +25,63 @@ block content
             button.btn.bg-uva-blue.pageselector
             button.btn.bg-uva-blue(style="width:100px;" onClick="nextPage()") Next
         .row(style="margin-top:30px;")
-            - var page = 0, cp = 0, i = 0, max = course_terms_and_ids.length
+            - var i = 0, max = course_terms_and_ids.length
             .col-md-12#results
                 while i < max
                     - var course = course_terms_and_ids[i], current = course.catalog_number;
                     .row
-                        .col-md-12(page=page style="margin-top:50px;")
+                        .col-md-12(style="margin-top:50px;")
                             h3.bg-uva-orange.course-header
                                 b=course.subject + ' ' + current + ' - ' + course.title
-                        .wide.paged(page=page)
-                            .col-md-12.course-section-container
-                                if(course.desc.length > 0)
-                                    .row
-                                        .col-md-12
-                                            p.section-title-thick=course.desc
-                                else
-                                    .row
-                                        .col-md-12.section-title-thick
-                                table.wide
-                                    tbody.wide
-                                        while course.catalog_number == current && i < max
-                                            - course = course_terms_and_ids[i]; i++;
-                                            tr.wide
-                                                td.wide
-                                                    .row.section-title.course-section-header
-                                                        .col-sm-2
-                                                            b
-                                                                p.sis_id=course.sis_id + ' - ' + course.section
-                                                        .col-sm-1
-                                                            b
-                                                                p=course.type
-                                                        .col-sm-5
-                                                            b
-                                                                each instructor in course.instructors
-                                                                    p=instructor
-                                                        .col-sm-2
-                                                            b
-                                                                case course.status
-                                                                    when 'Wait List'
-                                                                        span(style="color:#e57200;") Waitlisted
-                                                                    when 'Open'
-                                                                        span(style="color:green") Open 
-                                                                    default
-                                                                        span=course.status
-                                                        .col
-                                                            b
-                                                                if(course.status == 'Wait List')
-                                                                    p
-                                                                        span=course.enrolled + ' / ' + course.enroll_limit + ' | '
-                                                                        span(style="color:red")=course.waiting
-                                                                else
-                                                                    p
-                                                                        span(style="color:green")=course.enrolled + ' / ' + course.enroll_limit
-                                                                        if(course.waiting != 0)
-                                                                            span=' | '
-                                                                            span(style="color:red")=course.waiting
-                                                    div
-                                                        .row
-                                                            .col-md-12.calspot
-                                                                p Future home of the calendar
-                                                                
-                                                        .row
-                                                            .col-md-12
+                        .col-md-12.course-section-container
+                            .row
+                                .col-md-12
+                                    p.section-title-thick=course.desc
+                            table.wide
+                                tbody.wide
+                                    while course.catalog_number == current && i < max
+                                        - course = course_terms_and_ids[i]; i++;
+                                        tr.wide
+                                            td.wide
+                                                .row.section-title.course-section-header
+                                                    .col-sm-2
+                                                        b
+                                                            p.sis_id=course.sis_id + ' - ' + course.section
+                                                    .col-sm-1
+                                                        b
+                                                            p=course.type
+                                                    .col-sm-5
+                                                        b
+                                                            each instructor in course.instructors
+                                                                p=instructor
+                                                    .col-sm-2
+                                                        b
+                                                            case course.status
+                                                                when 'Wait List'
+                                                                    span(style="color:#e57200;") Waitlisted
+                                                                when 'Open'
+                                                                    span(style="color:green") Open 
+                                                                default
+                                                                    span=course.status
+                                                    .col
+                                                        b
+                                                            if(course.status == 'Wait List')
                                                                 p
-                                                                | Grade data is fetched by combining the instructor with the subject and number. It does not factor in labs/discussions or their instructors, etc.
-                                                                p Future home of the grade distribution information!
+                                                                    span=course.enrolled + ' / ' + course.enroll_limit + ' | '
+                                                                    span(style="color:red")=course.waiting
+                                                            else
+                                                                p
+                                                                    span(style="color:green")=course.enrolled + ' / ' + course.enroll_limit
+                                                                    if(course.waiting != 0)
+                                                                        span=' | '
+                                                                        span(style="color:red")=course.waiting
+                                                div
+                                                    .row
+                                                        .col-md-12.calspot
+                                                            p Future home of the calendar
+                                                            
+                                                    .row
+                                                        .col-md-12
+                                                            p
+                                                            | Grade data is fetched by combining the instructor with the subject and number. It does not factor in labs/discussions or their instructors, etc.
+                                                            p Future home of the grade distribution information!
