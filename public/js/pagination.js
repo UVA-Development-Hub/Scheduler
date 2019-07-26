@@ -53,7 +53,7 @@ function loadPage(i) {
     d = getUrlParams(location.search);
     setButtons(i);
     getSearchPage(parseInt(d.page || currentPage), 25, (data, max) => {
-        maxPage = max;
+        maxPage = max - 1;
         // Write new search results to the #results element
         var newHTML = ``, i = 0;
         while(i < data.length) {

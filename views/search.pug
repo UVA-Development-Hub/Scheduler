@@ -14,7 +14,7 @@ block customhead
     script(src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/daygrid/main.min.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/timegrid/main.js')
     script.
-        var maxPage = !{max_page || 0};
+        var maxPage = !{max_page || 1} - 1;
     
 block content
     

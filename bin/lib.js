@@ -13,7 +13,7 @@ function buildSearchQuery(params) {
 }
 
 function compareSections(courseList, course){
-    for(var i = 0; i < courseList.length; i++) if(course.subject === courseList[i].subject && course.catalog_number === courseList[i].number) return i;
+    for(var i = 0; i < courseList.length; i++) if(course.subject === courseList[i].subject && course.catalog_number === courseList[i].catalog_number) return i;
     return -1;
 }
 
@@ -21,7 +21,8 @@ function sectionate(courseArray) {
     var ret = [], dex = 0;
     for (i = 0; i < courseArray.length; i++) {
         dex = compareSections(ret, courseArray[i]);
-        if(dex > -1) ret[dex].section.push(courseArray[i]);
+        //console.log(dex);
+        if(dex > -1) ret[dex].sections.push(courseArray[i]);
         else {
             ret.push({
                 subject: courseArray[i].subject,
