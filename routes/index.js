@@ -14,6 +14,7 @@ var express = require('express'),
     appdir = require('path').dirname(require.main.filename),
     mongo = require("../bin/mongo.js"),
     async = require('async');
+    moment = require('moment');
 
 router.get('/login', function (req, res) {
     if(req.session.user) res.redirect('/');
@@ -212,8 +213,37 @@ router.use('/api', (req, res) => {
         } else {
             if(req.session.user) {
                 // AUTHENTICATED GET
+
                 switch(req.query.action) {
 
+                    // Calendar
+                    case "calendar":
+                    var weekdays = ['Su','Mo','Tu','We','Th','Fr','Sa'];
+                    var term = req.query.term;
+                    var user_events = [];
+                    req.session.user.cart.forEach(function(cart_course){
+                        mongo.searchTerm(term, cart_course.sis_id, (err, data) => {
+                            data[0]['meetings'].forEach(function(meeting_event) {
+                                for (i = 0; i < weekdays.length; i++){
+                                    if (meeting_event.includes(weekdays[i])){
+                                        // Please don't ask about the below unless it breaks.
+                                        var new_event = {
+                                            title:data[0].subject+data[0].catalog_number+"-"+data[0].section,
+                                            start:moment(moment().day(i).format("YYYY-MM-DD")+"T"+data[0].meetings[i].start).format(),
+                                            end:moment(moment().day(i).format("YYYY-MM-DD")+"T"+data[0].meetings[i].finish).format(),
+                                        };
+                                        user_events.push(new_event);
+                                    }
+                                }
+                            });
+                        });
+                    });
+                    res.send(user_events);
+                    break;
+
+                    default:
+                    console.log("Unknown or unsupported type operation!");
+                    break;
                 }
             } else {
                 // UNAUTHENTICATED GET
@@ -225,6 +255,10 @@ router.use('/api', (req, res) => {
                         res.status(200);
                         res.send({'pages': pages, 'data': data});
                     });
+                    break;
+
+                    case "calendar":
+                    res.send("Sign in necessary.");
                     break;
 
                     default:

@@ -1,0 +1,12 @@
+extends ../layout
+
+block content
+    .container
+        div.row
+            .col-md-12
+                div.list-group.d-flex.flex-row.flex-wrap
+                    each specific_term, index in termsList
+                        .col-md-6
+                            a(href='/course/' + specific_term["_id"])
+                                div.list-group-item.list-group-item-action.center
+                                    =specific_term["name"]
