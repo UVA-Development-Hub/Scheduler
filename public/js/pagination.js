@@ -148,20 +148,18 @@ function loadPage(i) {
         }
         // Load the new html into the frame
         $("#results").html(newHTML);
-    }, {"term": d.term_id});
+    });
 }
 
 function nextPage(){
-    if(currentPage==parseInt(maxPage)) loadPage(currentPage);
-    else {
+    if(currentPage != parseInt(maxPage)) {
         currentPage++;
         loadPage(currentPage);
     }
 };
 
 function previousPage(){
-    if(currentPage==0) loadPage(currentPage);
-    else {
+    if(currentPage != 0) {
         currentPage--;
         loadPage(currentPage);
     }

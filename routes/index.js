@@ -209,8 +209,8 @@ router.use('/api', (req, res) => {
                 // UNAUTHENTICATED GET
                 switch(req.query.action) {
                     case "search":
-                    var term = req.query.term;
-                    delete req.query.action; delete req.query.term;
+                    var term = req.query.term_id;
+                    delete req.query.action; delete req.query.term_id;
                     mongo.searchTerm(term, req.query, (err, data, pages) => {
                         res.status(200);
                         res.send({'pages': pages, 'data': data});

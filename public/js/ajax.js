@@ -15,22 +15,21 @@ function loadCalendar(i) {
 
 // Use AJAX to get and display Mongo results
 function getSearchPage(page, per, callback, dict) {
-    var d = dict;
-    if(!dict) {
-        // Filter out non supported fields
-        var supported = ["term", "subject", "catalog_number", "title", "instructor", "days"],
-        d = getUrlParams(location.search);
-        Object.keys(d).forEach( key => {
-            if(!supported.includes(key)) delete d[key];
-        });
-    }
-    if(!d["term"]) {
+    var d = Object.assign({}, dict, getUrlParams(location.search));
+    // Filter out non supported fields
+    var supported = ["term_id", "subject", "catalog_number", "title", "instructor", "days"];
+    Object.keys(d).forEach( key => {
+        if(!supported.includes(key) || d[key] == '') delete d[key];
+    });
+    if(!d["term_id"]) {
         var courseRE = new RegExp(/^.*\/course\/(\d+)/g);
-        d["term"] = courseRE.exec(window.location)[1];
+        d["term_id"] = courseRE.exec(window.location)[1];
     }
     d["action"] = "search";
     d["per"] = per;
     d["page"] = page;
+    console.log("Searching with");
+    console.log(d);
     $.get("/api", d, (data, status) => {
         callback(data.data, data.pages);
     });
