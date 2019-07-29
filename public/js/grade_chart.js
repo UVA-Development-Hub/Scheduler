@@ -1,22 +1,22 @@
 var averages = [];
     sectionList = [];
     terms = [];
-var ctx = $('#sampleChart');
 function fetchGrades(course){
+    var bigChart = $('#overallChart');
     var saveData = $.ajax({
         type: 'GET',
-        url: "/api",
+        url: "/api/grades",
         data: {
-            action: 'grades',
             course: course,
         },
         success: res => { console.log("Success"); },
     }).always(function(data, status) {
-        chart(data, ctx);
+        chart(data, bigChart);
     });
 }
 // This is the graph code.
-function chart(grades, ctx){
+function chart(grades, bigChart){
+    var dropdownList = [];
     for (var term in grades['grades']) {
         termGradeDict = grades['grades'][term];
         terms.push(term);
@@ -25,12 +25,14 @@ function chart(grades, ctx){
         for (var sect in termGradeDict){
             termSections.push(sect);
             sum += parseFloat(termGradeDict[sect][0]);
+            sect = sect.replace(/["']/g, "").split("|");
+            dropdownList.push(term +" Section " + sect[2]+" "+sect[1] + " " + sect[0]);
         }
         var termGPA = Math.round((sum*1.0/Object.keys(termGradeDict).length)*100)/100;
         averages.push(termGPA);
         sectionList.push((term,termSections));
     }
-    var bigChart = $('#overallChart');
+    console.log(dropdownList);
 
     var data = {
         labels: terms,
