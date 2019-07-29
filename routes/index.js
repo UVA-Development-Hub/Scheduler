@@ -269,11 +269,12 @@ router.use('/api', (req, res) => {
                             });
                         });
                     });
+                    res.status(200);
                     res.send(user_events);
                     break;
 
                     default:
-                    console.log("Unknown or unsupported type operation!");
+                    console.log("Default case.");
                     break;
                 }
             } else {
@@ -289,6 +290,7 @@ router.use('/api', (req, res) => {
                     break;
 
                     case "calendar":
+                    res.status(403);
                     res.send("Sign in necessary.");
                     break;
 
@@ -297,6 +299,20 @@ router.use('/api', (req, res) => {
                     break;
                 }
             }
+
+            //GENERAL GET
+            switch(req.query.action){
+                case "grades":
+                var term = req.query.term;
+                var specific_class = req.query.course;
+                mongo.searchGrades(specific_class['subject'], specific_class['catalog_number'], (err, data) => {
+                    console.log("Success");
+                    res.status(200);
+                    res.send(data);
+                });
+            }
+
+
         }
     } catch (ex) {
         res.status(500);

@@ -144,5 +144,23 @@ block content
 
             calendar.render();
       });
+      var course = {
+          term: '1198',
+          sis_id: '15492',
+          subject: 'CS',
+          catalog_number: '2150',
+          folder: ''
+      }
+
+      var saveData = $.ajax({
+          type: 'GET',
+          url: "/api",
+          data: {
+              action: 'grades',
+              course: course,
+          },
+          dataType: "text",
+          success: res => { console.log("AJAX responded " + res) }
+      });
             
             
