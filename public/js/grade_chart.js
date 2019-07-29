@@ -30,8 +30,7 @@ function chart(grades, ctx){
         averages.push(termGPA);
         sectionList.push((term,termSections));
     }
-    console.log(sectionList);
-    var ctx = $('#sampleChart');
+    var bigChart = $('#overallChart');
 
     var data = {
         labels: terms,
@@ -63,7 +62,7 @@ function chart(grades, ctx){
     };
 
 
-    var myLineChart = new Chart(ctx, {
+    var myLineChart = new Chart(bigChart, {
         type: 'line',
         data: data,
         options: options,
