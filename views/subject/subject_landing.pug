@@ -33,7 +33,7 @@ block content
                 div.list-group.d-flex.flex-row.flex-wrap
                     each subject_name, index in course_subjects['CLAS']
                         .col-md-6
-                            a(href='/subject/' + subject_name["subject"])
+                            a(href='/subject/' + term + '/' + subject_name["subject"])
                                 div.list-group-item.list-group-item-action
                                     =subject_name['subject'] + " - " + subject_name['name']
         .row
@@ -48,7 +48,7 @@ block content
                 div.list-group.d-flex.flex-row.flex-wrap
                     each subject_name, index in course_subjects['SEAS']
                         .col-md-6
-                            a(href='/subject/' + subject_name["subject"])
+                            a(href='/subject/' + term + '/' + subject_name["subject"])
                                 div.list-group-item.list-group-item-action
                                     =subject_name['subject'] + " - " + subject_name['name']
         .row
@@ -63,7 +63,7 @@ block content
                 div.list-group.d-flex.flex-row.flex-wrap
                     each subject_name, index in course_subjects['Curry']
                         .col-md-6
-                            a(href='/subject/' + subject_name["subject"])
+                            a(href='/subject/' + term + '/' + subject_name["subject"])
                                 div.list-group-item.list-group-item-action
                                     =subject_name['subject'] + " - " + subject_name['name']
         .row
@@ -78,7 +78,7 @@ block content
                 div.list-group.d-flex.flex-row.flex-wrap
                     each subject_name, index in course_subjects['McIntire']
                         .col-md-6
-                            a(href='/subject/' + subject_name["subject"])
+                            a(href='/subject/' + term + '/' + subject_name["subject"])
                                 div.list-group-item.list-group-item-action
                                     =subject_name['subject'] + " - " + subject_name['name']        
         .row
@@ -93,7 +93,7 @@ block content
                 div.list-group.d-flex.flex-row.flex-wrap
                     each subject_name, index in course_subjects['SARC']
                         .col-md-6
-                            a(href='/subject/' + subject_name["subject"])
+                            a(href='/subject/' + term + '/' + subject_name["subject"])
                                 div.list-group-item.list-group-item-action
                                     =subject_name['subject'] + " - " + subject_name['name']   
         .row     
@@ -108,7 +108,7 @@ block content
                 div.list-group.d-flex.flex-row.flex-wrap
                     each subject_name, index in course_subjects['SCPS']
                         .col-md-6
-                            a(href='/subject/' + subject_name["subject"])
+                            a(href='/subject/' + term + '/' + subject_name["subject"])
                                 div.list-group-item.list-group-item-action
                                     =subject_name['subject'] + " - " + subject_name['name']                        
         .row
@@ -123,7 +123,7 @@ block content
                 div.list-group.d-flex.flex-row.flex-wrap
                     each subject_name, index in course_subjects['ROTC']
                         .col-md-6
-                            a(href='/subject/' + subject_name["subject"])
+                            a(href='/subject/' + term + '/' + subject_name["subject"])
                                 div.list-group-item.list-group-item-action
                                     =subject_name['subject'] + " - " + subject_name['name']
         .row
@@ -138,7 +138,7 @@ block content
                 div.list-group.d-flex.flex-row.flex-wrap
                     each subject_name, index in course_subjects['INTR']
                         .col-md-6
-                            a(href='/subject/' + subject_name["subject"])
+                            a(href='/subject/' + term + '/' + subject_name["subject"])
                                 div.list-group-item.list-group-item-action
                                     =subject_name['subject'] + " - " + subject_name['name']
         .row
@@ -153,7 +153,7 @@ block content
                 div.list-group.d-flex.flex-row.flex-wrap
                     each subject_name, index in course_subjects['FBS']
                         .col-md-6
-                            a(href='/subject/' + subject_name["subject"])
+                            a(href='/subject/' + term + '/' + subject_name["subject"])
                                 div.list-group-item.list-group-item-action
                                     =subject_name['subject'] + " - " + subject_name['name']
         .row
@@ -168,7 +168,7 @@ block content
                 div.list-group.d-flex.flex-row.flex-wrap
                     each subject_name, index in course_subjects['NURS']
                         .col-md-6
-                            a(href='/subject/' + subject_name["subject"])
+                            a(href='/subject/' + term + '/' + subject_name["subject"])
                                 div.list-group-item.list-group-item-action
                                     =subject_name['subject'] + " - " + subject_name['name']
         .row
@@ -183,7 +183,7 @@ block content
                 div.list-group.d-flex.flex-row.flex-wrap
                     each subject_name, index in course_subjects['DSI']
                         .col-md-6
-                            a(href='/subject/' + subject_name["subject"])
+                            a(href='/subject/' + term + '/' + subject_name["subject"])
                                 div.list-group-item.list-group-item-action
                                     =subject_name['subject'] + " - " + subject_name['name']
         .row
@@ -198,7 +198,7 @@ block content
                 div.list-group.d-flex.flex-row.flex-wrap
                     each subject_name, index in course_subjects['']
                         .col-md-6
-                            a(href='/subject/' + subject_name["subject"])
+                            a(href='/subject/' + term + '/' + subject_name["subject"])
                                 div.list-group-item.list-group-item-action
                                     =subject_name['subject'] + " - " + subject_name['name']
         

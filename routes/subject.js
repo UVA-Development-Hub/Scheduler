@@ -1,9 +1,14 @@
 var express = require('express');
 var router = express.Router();
 var mongo = require('../bin/mongo.js');
+var async = require('async');
+var moment = require('moment');
+appdir = require('path').dirname(require.main.filename),
 
 
-router.get('/:subject', (req, res) => {
+
+
+router.get('/:term/:subject', (req, res) => {
 
     mongo.getTerms((err,termsList) => {
         function tocompare(courseList,course){
@@ -18,9 +23,10 @@ router.get('/:subject', (req, res) => {
         }
         //console.log("Terms:\n",termsList);
         var recentTerm = termsList[termsList.length-1]["_id"];
+        console.log(recentTerm);
         mongo.searchTerm(recentTerm, {'subject': req.params.subject.toUpperCase()}, (err, data) => {
             //console.log(data);
-            console.log(data);
+            //console.log(data);
             var new_result = [],
                 itemIndex = 0;
             for (x = 0; x < data.length; x++) {
@@ -37,30 +43,110 @@ router.get('/:subject', (req, res) => {
                     });
                 }
             }
-            res.render('subject/subject', {
-                course_subjects: new_result,
-            });
+                //
+                // async.parallel([
+                //     async.reflect( callback => {
+                //         mongo.getTerms(callback);
+                //     }),
+                //     async.reflect( callback => {
+                //         mongo.searchTerm(req.body.term_id, tosubmit, callback);
+                //     })
+                // ], (err, data) => {
+                //     var new_result = [],
+                //         itemIndex = 0;
+                //     for (x = 0; x < data[1]['value'].length; x++) {
+                //         itemIndex = tocompare(new_result, data[1]['value'][x]);
+                //         if(itemIndex > -1) new_result[itemIndex].section.push(data[1]['value'][x]);
+                //         else {
+                //             new_result.push({
+                //                 subject:data[1]['value'][x].subject,
+                //                 number: data[1]['value'][x].catalog_number,
+                //                 title: data[1]['value'][x].title,
+                //                 section: [
+                //                     data[1]['value'][x]
+                //                 ],
+                //             });
+                //         };
+                //     };
+
+                    res.render('subject/subject', {
+                        course_subjects: new_result,
+                        term: recentTerm,
+                        terms_list: termsList,
+                        results: [],
+                        // title : 'Search Page',
+                        // terms: data[0]['value'],
+                        // results: new_result,
+                        // input: req.body,
+                        // selected_term: req.body.term_id,
+                        // user: req.session.user,
+                });
+            // });
+        });
+    });
+});
+
+router.post('/:term/:subject', function(req, res){
+
+    async.parallel([
+        async.reflect( callback => {
+            mongo.getTerms(callback);
+        }),
+        async.reflect( callback => {
+            mongo.searchTerm(req.body.term_id, tosubmit, callback);
+        })
+    ], (err, data) => {
+        var new_result = [],
+            itemIndex = 0;
+        for (x = 0; x < data[1]['value'].length; x++) {
+            itemIndex = tocompare(new_result, data[1]['value'][x]);
+            if(itemIndex > -1) new_result[itemIndex].section.push(data[1]['value'][x]);
+            else {
+                new_result.push({
+                    subject:data[1]['value'][x].subject,
+                    number: data[1]['value'][x].catalog_number,
+                    title: data[1]['value'][x].title,
+                    section: [
+                        data[1]['value'][x]
+                    ],
+                });
+            };
+        };
+
+        res.render('subject/subject', {
+            title : 'Search Page',
+            terms: data[0]['value'],
+            results: new_result,
+            input: req.body,
+            selected_term: req.body.term_id,
+            user: req.session.user
         });
     });
 });
 
 router.get('/', (req, res) => {
 
-    mongo.getSubjects((err, data) => {
-        var subjects = {};
-        data.forEach(function(val){
-            if (subjects[val['school']]) {
-                subjects[val['school']].push(val);
-            }
-            else{
-                subjects[val['school']] = [];
-                subjects[val['school']].push(val);
-            }
-        });
+    mongo.getTerms((err, termsList) => {
+        var recentTerm = termsList[termsList.length-1]["_id"];
+        console.log(recentTerm);
 
-        res.render('subject/subject_landing', {
-            course_subjects: subjects,
-            // uva_schools: values,
+        mongo.getSubjects((err, data) => {
+            var subjects = {};
+            data.forEach(function(val){
+                if (subjects[val['school']]) {
+                    subjects[val['school']].push(val);
+                }
+                else{
+                    subjects[val['school']] = [];
+                    subjects[val['school']].push(val);
+                }
+            });
+
+            res.render('subject/subject_landing', {
+                course_subjects: subjects,
+                term: recentTerm,
+                // uva_schools: values,
+            });
         });
     });
 });
