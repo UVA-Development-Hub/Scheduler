@@ -7,6 +7,7 @@ block customhead
     script(src='/js/tablesorter.js')
     script(src='/js/chart.js')
     script(src='/js/moment.js')
+    script(src='/js/grade_chart.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/core/main.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/daygrid/main.min.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/timegrid/main.js')
@@ -83,8 +84,9 @@ block content
                 p.center="Course Description:" + " " + course['desc']
         .row
             .col-md-12
+                canvas(id='sampleChart' style='height:100%;')
+                    
                 
-                p.center="Grades"
                 
 
             
