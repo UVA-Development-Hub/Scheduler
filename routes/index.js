@@ -306,10 +306,10 @@ router.use('/api', (req, res) => {
                 var term = req.query.term;
                 var specific_class = req.query.course;
                 mongo.searchGrades(specific_class['subject'], specific_class['catalog_number'], (err, data) => {
-                    console.log("Success");
                     res.status(200);
-                    res.send(data);
+                    res.send(data[0]);
                 });
+                break;
             }
 
 
