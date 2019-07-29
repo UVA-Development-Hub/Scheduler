@@ -7,7 +7,29 @@ block customhead
     script(src="/js/pagination.js")
 
 block content
-    .container  
+    .container 
+        div.row
+            .col-md-5
+                .form-group.form-inline
+                    label(for='semester', style= "margin-right:10px; margin-top:15px;").center Search Courses From 
+                    select#semester.form-control(type='text', placeholder='' name='term_id', style= "margin-top:15px;")
+                        - var marked = false
+                        each term, i in terms_list
+                            if selected_term == term[_id]
+                                option(value=term._id, selected)=term.name
+                                - marked = true
+                            else if i==terms.length-1 && !marked
+                                option(value=term._id, selected)=term.name
+                            else
+                                option(value=term._id)=term.name
+        div.row
+            button.btn.btn-success(type="submit", style="margin-right:20px; margin-bottom:50px;") Find Class
+    .container
+        div.row
+            if results.length==0
+                .container
+                    .row 
+    .container
         div.row
             if course_subjects.length == 0
                 .container
@@ -26,6 +48,7 @@ block content
             else
                 
                 .container
+                    h5="Courses from " + term
                     each course, i in course_subjects
                         .row
                             .col-md-12
