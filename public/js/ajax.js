@@ -27,9 +27,12 @@ function getSearchPage(page, per, callback, dict) {
     }
     d["per"] = per;
     d["page"] = page;
-    console.log("Searching with");
-    console.log(d);
     $.get("/api/search", d, (data, status) => {
         callback(data.data, data.pages);
     });
+}
+
+// Loads subjects from the given school
+function loadSubjects(from, callback) {
+    $.get("/api/subjects", { school: from }).always(callback);
 }
