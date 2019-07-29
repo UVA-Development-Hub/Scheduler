@@ -7,6 +7,7 @@ block customhead
     script(src='/js/tablesorter.js')
     script(src='/js/chart.js')
     script(src='/js/moment.js')
+    script(src='/js/grade_chart.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/core/main.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/daygrid/main.min.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/timegrid/main.js')
@@ -82,9 +83,19 @@ block content
             .col-md-12
                 p.center="Course Description:" + " " + course['desc']
         .row
-            .col-md-12
+            .col-md-6
+                canvas(id='overallChart' style='height:300px;')
+                script.
+                    var course = !{JSON.stringify(course)};
+                    window.onload = function(){
+                        fetchGrades(course);
+                    }
+            .col-md-6
+                select.form-control
+                canvas(id='profSelect')
+
+                    
                 
-                p.center="Grades"
                 
 
             
