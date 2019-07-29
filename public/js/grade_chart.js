@@ -69,7 +69,3 @@ function chart(grades, ctx){
         options: options,
     });
 }
-
-window.onload = function(){
-    fetchGrades(course);
-}

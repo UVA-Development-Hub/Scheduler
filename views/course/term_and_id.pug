@@ -84,7 +84,12 @@ block content
                 p.center="Course Description:" + " " + course['desc']
         .row
             .col-md-12
-                canvas(id='sampleChart' style='height:100%;')
+                canvas(id='sampleChart' style='height:300px;')
+                script.
+                    var course = !{JSON.stringify(course)};
+                    window.onload = function(){
+                        fetchGrades(course);
+                    }
                     
                 
                 
