@@ -79,8 +79,7 @@ router.get('/:term/:id', (req, res) => {
             if(!grades[0]){
               //No grades -- explicit false.
               res.render('course/term_and_id', {
-                specific_class: data[0],
-                grades: false,
+                course: data[0],
                 title: data[0]['subject']+" "+data[0]['catalog_number'],
                 user: req.session.user,
 
@@ -89,8 +88,7 @@ router.get('/:term/:id', (req, res) => {
             else{
               //Grades.
               res.render('course/term_and_id', {
-                specific_class: data[0],
-                grades: grades[0]['grades'],
+                course: data[0],
                 title: data[0]['subject']+data[0]['catalog_number'],
                 user: req.session.user,
               });
