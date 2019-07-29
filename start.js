@@ -1,10 +1,3 @@
-// Require the various route handling middlewares.
-var index = require('./routes/index'),
-    profile = require('./routes/profile'),
-    auth = require('./routes/auth'),
-    course = require('./routes/course'),
-    subject = require('./routes/subject');
-
 
 // Create the app instance and configure all its innerworkings.
 var express = require('express'),
@@ -16,14 +9,15 @@ var express = require('express'),
     RedisStore = require('connect-redis')(session), // Configure the store
     passport = require('passport'), // Passport used to handle authentication
     bodyParser = require("body-parser");
+
 app.use(bodyParser.json()), // Use json format for the body parser
-app.use(bodyParser.urlencoded({// and also use extended encoded urls
+app.use(bodyParser.urlencoded({ // ... and also use extended encoded urls
     extended: true
 }));
 
 app.set('view engine', 'pug'); // Set default engine to pugjs
 app.use(express.static('public')); // Tell node where to find our static files
-const sessionConfig = { // Configure session store
+app.use(session({ // Configure session store
     secret: 'sssHHH',
     resave: false,
     saveUninitialized: false,
@@ -32,17 +26,18 @@ const sessionConfig = { // Configure session store
         port: 6379,
         client: client,
         ttl: 3600
-    })
-};
-app.use(session(sessionConfig)); // Apply the session configuration
+    }),
+}));
 app.use(passport.initialize()); // Create the passport instance the app will use
 
 // Link different page urls the various route handling middlewares
-app.use('/auth', auth);
-app.use('/profile', profile);
-app.use('/course', course);
-app.use('/subject', subject);
-app.use('/', index);
+
+app.use('/subject', require('./routes/subject'));
+app.use('/profile', require('./routes/profile'));
+app.use('/course', require('./routes/course'));
+app.use('/auth', require('./routes/auth'));
+app.use('/api', require('./routes/api'));
+app.use('/', require('./routes/index'));
 
 
 

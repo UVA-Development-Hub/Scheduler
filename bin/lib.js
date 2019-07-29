@@ -4,11 +4,18 @@ function buildSearchQuery(params) {
 
     if(params.subject && params.subject != '') query.subject = params.subject.toUpperCase();
     if(params.catalog_number && params.catalog_number !='') query.catalog_number = params.catalog_number;
-    // IGNORE TITLE
-    //if(params.title && params.title != '') query.title = params.title;
-    if(params.dayinput && params.dayinput != '') query.days = dayinput;
-    // IGNORE INSTRUCTOR
-    //if(params.instructor && params.instructor != '') query.instructor == params.instructor;
+    if(params.days && params.days != '') query.days = params.days;
+
+    // Use $where to search for instructors, course title
+    if((params.title && params.title != '') || ((params.instructor && params.instructor != ''))) {
+        query.$where = function() {
+            this.instructors.forEach( item => {
+                if(item.lower().indexOf(params.instructor.lower())) return true;
+            });
+            return false;
+        };
+    }
+    console.log(query);
     return query;
 }
 

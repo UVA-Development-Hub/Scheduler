@@ -25,12 +25,11 @@ function getSearchPage(page, per, callback, dict) {
         var courseRE = new RegExp(/^.*\/course\/(\d+)/g);
         d["term_id"] = courseRE.exec(window.location)[1];
     }
-    d["action"] = "search";
     d["per"] = per;
     d["page"] = page;
     console.log("Searching with");
     console.log(d);
-    $.get("/api", d, (data, status) => {
+    $.get("/api/search", d, (data, status) => {
         callback(data.data, data.pages);
     });
 }

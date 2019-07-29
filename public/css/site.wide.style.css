@@ -186,16 +186,11 @@ footer {
 
 .section-title-thick {
     width: 96%;
-    border-bottom: 4px inset black;
+    border-bottom: 6px double #222222;
     margin-bottom: 25px;
     margin-left: 10px;
     margin-right: 10px;
     transform: translateX(+2%);
-}
-
-button.pageselector {
-    width: 75px;
-    padding: 10px;
 }
 
 .course-header {
@@ -211,6 +206,11 @@ button.pageselector {
 .course-section-header {
     margin-left: 0px;
     margin-top: 10px;
+}
+
+button.pageselector {
+    width: 75px;
+    padding: 10px;
 }
 
 /* Custom checkbox code adapted from W3:                         */

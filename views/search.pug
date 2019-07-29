@@ -18,7 +18,7 @@ block customhead
     
 block content
     
-    .container(id="resultsParent")
+    .container
         .row
             .col-md-12
                 h1(style="margin-bottom:20px;" ).center='Course Search'
@@ -70,27 +70,48 @@ block content
                         .col
                         .col-md-4
                             .form-group
-                                input#days(type="hidden")
+                                input#days(type="hidden" name="days" value=input.days)
                                 label#Mo.uva-checkbox.dayinput Monday
-                                    input(type="checkbox")
+                                    if(input.days && input.days.indexOf("Mo") > -1)
+                                        input(type="checkbox" checked)
+                                    else
+                                        input(type="checkbox")
                                     span.uva-checkmark
                                 label#Tu.uva-checkbox.dayinput Tuesday
-                                    input(type="checkbox")
+                                    if(input.days && input.days.indexOf("Tu") > -1)
+                                        input(type="checkbox" checked)
+                                    else
+                                        input(type="checkbox")
                                     span.uva-checkmark
                                 label#We.uva-checkbox.dayinput Wednesday
-                                    input(type="checkbox")
+                                    if(input.days && input.days.indexOf("We") > -1)
+                                        input(type="checkbox" checked)
+                                    else
+                                        input(type="checkbox")
                                     span.uva-checkmark
                                 label#Th.uva-checkbox.dayinput Thursday
-                                    input(type="checkbox")
+                                    if(input.days && input.days.indexOf("Th") > -1)
+                                        input(type="checkbox" checked)
+                                    else
+                                        input(type="checkbox")
                                     span.uva-checkmark
                                 label#Fr.uva-checkbox.dayinput Friday
-                                    input(type="checkbox")
+                                    if(input.days && input.days.indexOf("Fr") > -1)
+                                        input(type="checkbox" checked)
+                                    else
+                                        input(type="checkbox")
                                     span.uva-checkmark
                                 label#Sa.uva-checkbox.dayinput Saturday
-                                    input(type="checkbox")
+                                    if(input.days && input.days.indexOf("Sa") > -1)
+                                        input(type="checkbox" checked)
+                                    else
+                                        input(type="checkbox")
                                     span.uva-checkmark
                                 label#Su.uva-checkbox.dayinput Sunday
-                                    input(type="checkbox")
+                                    if(input.days && input.days.indexOf("Su") > -1)
+                                        input(type="checkbox" checked)
+                                    else
+                                        input(type="checkbox")
                                     span.uva-checkmark
                                                                                 
                         .col-md-4
@@ -117,12 +138,12 @@ block content
                 each section in sections
                     .row
                         .col-md-12(style="margin-top:50px;")
-                            h3.bg-uva-orange.course-header
+                            h3.bg-uva-orange.course-header.wide
                                 b=section.subject + ' ' + section.catalog_number + ' - ' + section.title
                         .col-md-12.course-section-container
                             .row
-                                .col-md-12
-                                    p.section-title-thick=section.sections[0].desc
+                                .col-md-12.section-title-thick
+                                    p=section.sections[0].desc
                             table.wide
                                 tbody.wide
                                     each course in section.sections
@@ -172,7 +193,7 @@ block content
                                                             p Future home of the grade distribution information!
             .col-md-4
                 div(id="calendar" style="width:100%;min-width:290px;position:sticky;top:0px;")
-                script.
+                //script.
                     var meeting= [];
                     function name_split(name){
                         name.split("-");
