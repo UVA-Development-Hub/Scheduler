@@ -83,14 +83,15 @@ block content
             .col-md-12
                 p.center="Course Description:" + " " + course['desc']
         .row
-            .col-md-6(style="height:338px;")
-                canvas(id='overallChart' style='height:100%;')
+            .col-md-6
+                div(style='height:350px;')
+                    canvas.tall(id='overallChart')
                 script.
                     var course = !{JSON.stringify(course)};
-            .col-md-6(style="height:300px;")
-                select.form-control(id='profSelect')
+            .col-md-6
+                select.form-control(id='profSelect' style="margin-bottom:10px;")
                 div
-                    canvas(id='profChart' style='height:100%;')
+                    canvas(id='profChart' height="302px;")
 
                     
                 
