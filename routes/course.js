@@ -23,56 +23,33 @@ router.get('/:term/:id', (req, res) => {
         }
 
         var subject = req.params.id.replace(/[0-9]{4}$/, "").toUpperCase();
-        console.log(subject);
 
         var course_number = req.params.id.replace(/^[A-Za-z]{2,4}/, "")+"";
-        console.log(course_number);
 
         // Parallel accepts two arguments: a) an array of async functions, and a single function that
         // explains what to do when they're all finished. Access the info with data[i] where i is the
         // i_th async function.
-        async.parallel([
-            async.reflect(function(callback) {
-                // get grade data
-                mongo.searchGrades(subject, course_number, callback);
-            }),
-            async.reflect(function(callback){
-                mongo.searchTerm(req.params.term, {'subject': subject, 'catalog_number': course_number}, callback);
-            })
-        ], function(err, data) {
-          console.log(data[1]['value']);
-          if(!data[1]['value'][0]){
-            res.send("Course not found.");
-          }
-          else if(!data[1]['value']){
-              console.log(data[1]['value'])
-            //No grades -- explicit false
-            res.render('course/term_and_mid', {
-                class_info: data[1]['value'],
-                grades: false,
-                title : subject+" "+course_number,
-                user: req.session.user,
-
-            });
-          }
-          else{
+        mongo.searchTerm(req.params.term, {'subject': subject, 'catalog_number': course_number}, (err, data) => {
+            if(!data[0]){
+                res.send("Course not found.");
+            }
+            else{
             //Grades exist
             res.render('course/term_and_mid', {
-                class_info: data[1]['value'],
-                grades: data[0]['value'],
+                class_info: data,
                 title : subject+course_number,
                 user: req.session.user,
 
-            });
-          }
-      });
+                });
+            }
+        });
     }
 
 
     else {
       mongo.searchTerm(req.params.term, {'sis_id': req.params.id}, (err, data) => {
         if (!(data[0])){
-          res.send("Course not found.");
+            res.send("Course not found.");
         }
         else{
           mongo.searchGrades(data[0]['subject'], data[0]['catalog_number'], (err, grades) => {
