@@ -14,11 +14,13 @@ function buildChart(course){
         success: res => { console.log("Success"); },
     }).always(function(data, status) {
         trendChart(data, bigChart, profSelect, profChart);
+        sectionChart(data, profSelect, profChart);
     });
 }
 
 // This is the graph code.
 function trendChart(grades, bigChart, profSelect, profChart){
+    //Gather data/build dropdown
     var dropdownList = [];
     for (var term in grades['grades']) {
         termGradeDict = grades['grades'][term];
@@ -38,9 +40,6 @@ function trendChart(grades, bigChart, profSelect, profChart){
     for (i = sectionList.length-1; i > -1 ; i--){
         profSelect.append( '<option value="'+sectionList[i]+'">'+dropdownList[i]+'</option>' );
     }
-
-    //Call function to create bar chart.
-    sectionChart(grades, profSelect, profChart);
 
     var data = {
         labels: terms,
@@ -83,14 +82,14 @@ function sectionChart(grades, profSelect, profChart){
     gradeMap = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "F", "OT", "DR", "W"];
     section = profSelect.val().split("*");
     // Gives an array such as ["1118", "'Floryan|Mark|1'"]
-    console.log(grades['grades'][section[0]][section[1]])
+    chartData=grades['grades'][section[0]][section[1]].slice(1,16);
     var data = {
         labels: gradeMap,
         datasets:[
             {
             label:"Number",
             borderColor:'#007bff',
-            data: averages,
+            data: chartData,
             }
         ]
     };
@@ -111,8 +110,8 @@ function sectionChart(grades, profSelect, profChart){
     };
 
 
-    var myBarChart = new Chart(sectionChart, {
-        type: 'line',
+    var myBarChart = new Chart(profChart, {
+        type: 'bar',
         data: data,
         options: options,
     });
