@@ -83,7 +83,7 @@ router.get('/search', function(req, res){
         }),
         async.reflect( callback => {
             // Either uses the requested term or the most recent one
-            mongo.getRecentTerm( term => {
+            mongo.getRecentTerm( (err, term) => {
                 mongo.searchTerm(req.query.term_id || term._id, query, callback);
             });
         })
