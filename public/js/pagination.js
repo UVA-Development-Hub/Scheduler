@@ -3,44 +3,45 @@ var arr;
 
 $(document).ready( function() {
     arr= $(".pageselector");
-    for(var i = maxPage; i < 10; i++) $(arr[i + 1]).hide();
     d = getUrlParams(location.search);
     currentPage = parseInt(d.page || 1) - 1;
     if(currentPage < 0) currentPage = 0;
     window.history.pushState({"html": $('html')[0].outerHTML, "pageTitle": $("title").text()},"", window.location.href.replace(/([&?]page=)(.*)(&{1}.*){0,1}/, '$1' + (currentPage + 1) + '$3'));
-    setButtons(currentPage);
-    loadPage(currentPage);
+    currentPage--;
+    loadPage(currentPage + 1);
 });
 
 function setButtons(pageNumber) {
+    console.log("Configuring buttons: " + pageNumber + " " + maxPage);
     currentPage = pageNumber;
-
+    $(".pageselector").show();
+    for(var i = maxPage; i < 10; i++) $(arr[i + 1]).hide();
     if (currentPage < 5) {
         for(var i=0; i<5;i++ ) {
-            $(arr[i]).attr("onclick", "loadPage("+ parseInt(i)+")");
+            $(arr[i]).attr("onclick", "urlAndLoad("+ parseInt(i)+")");
             $(arr[i]).html(parseInt(i + 1));
         }
 
         for(var i=5; i<10;i++ ) {
-            $(arr[i]).attr("onclick", "loadPage("+ parseInt(i)+")");
+            $(arr[i]).attr("onclick", "urlAndLoad("+ parseInt(i)+")");
             $(arr[i]).html(parseInt(i + 1));
         }
     } else if (currentPage > parseInt(maxPage-10)) {
         for(var i=0; i<5;i++ ) {
-            $(arr[i]).attr("onclick", "loadPage("+ parseInt(i+maxPage-9)+")");
+            $(arr[i]).attr("onclick", "urlAndLoad("+ parseInt(i+maxPage-9)+")");
             $(arr[i]).html(parseInt(i + 1+maxPage-9));
         }
         for(var i=5; i<10;i++ ) {
-            $(arr[i]).attr("onclick", "loadPage("+ parseInt(i+maxPage-9)+")");
+            $(arr[i]).attr("onclick", "urlAndLoad("+ parseInt(i+maxPage-9)+")");
             $(arr[i]).html(parseInt(i + 1+maxPage-9));
         }
     } else {
-        for(var i=0; i<5;i++ ){
-            $(arr[i]).attr("onclick", "loadPage("+ parseInt(pageNumber-5+i)+")");
+        for(var i=0; i<5;i++ ) {
+            $(arr[i]).attr("onclick", "urlAndLoad("+ parseInt(pageNumber-5+i)+")");
             $(arr[i]).html(parseInt((pageNumber-5+i) + 1 ));
         }
-        for(var i=5; i<10;i++ ){
-            $(arr[i]).attr("onclick", "loadPage("+ parseInt(pageNumber+i-5)+")");
+        for(var i=5; i<10;i++ ) {
+            $(arr[i]).attr("onclick", "urlAndLoad("+ parseInt(pageNumber+i-5)+")");
             $(arr[i]).html(parseInt((pageNumber+i-5)+ 1));
         }
     }
@@ -52,9 +53,8 @@ function setButtons(pageNumber) {
 
 };
 
-function loadPage(i) {
-    setButtons(i);
-    getSearchPage(parseInt(getUrlParams(location.search).page || currentPage), 25, (data, max) => {
+function loadPage(pg) {
+    getSearchPage(parseInt(pg), 25, (data, max) => {
         maxPage = max - 1;
         // Write new search results to the #results element
         var newHTML = ` `, i = 0;
@@ -70,7 +70,7 @@ function loadPage(i) {
                         <div class="col-md-12 course-section-container">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <p class="section-title-thick">${course.desc}</p>
+                                    <p class="section-title-thick" style="overflow:hidden">${course.desc}</p>
                                 </div>
                             </div>
                         </div>
@@ -150,21 +150,19 @@ function loadPage(i) {
         }
         // Load the new html into the frame
         $("#results").html(newHTML);
+        setButtons(pg);
     });
 }
 
+function urlAndLoad(pg) {
+    window.history.pushState({"html": $('html')[0].outerHTML, "pageTitle": $("title").text()},"", window.location.href.replace(/([&?]page=)(\w+)(&{1}.*){0,1}/, '$1' + (pg + 1) + '$3'));
+    if(pg != currentPage) loadPage(pg);
+}
+
 function nextPage() {
-    if(currentPage != parseInt(maxPage)) {
-        currentPage++;
-        window.history.pushState({"html": $('html')[0].outerHTML, "pageTitle": $("title").text()},"", window.location.href.replace(/([&?]page=)(\w+)(&{1}.*){0,1}/, '$1' + (currentPage + 1) + '$3'));
-        loadPage(currentPage);
-    }
+    if(currentPage != parseInt(maxPage)) urlAndLoad(currentPage + 1);
 };
 
 function previousPage() {
-    if(currentPage != 0) {
-        currentPage--;
-        window.history.pushState({"html": $('html')[0].outerHTML, "pageTitle": $("title").text()},"", window.location.href.replace(/([&?]page=)(\w+)(&{1}.*){0,1}/, '$1' + (currentPage + 1) + '$3'));
-        loadPage(currentPage);
-    }
+    if(currentPage != 0) urlAndLoad(currentPage - 1);
 };

@@ -74,8 +74,6 @@ router.get('/css/timegrid.css', function(req, res) {
 
 //search page
 router.get('/search', (req, res) => {
-    var query = lib.buildSearchQuery(req.query);
-
     mongo.getTerms( (err, data) => {
         res.render('search', {
             title : 'Search Page',

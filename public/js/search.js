@@ -1,8 +1,5 @@
 
 $(document).ready(function() {
-    params = getUrlParams(location.search);
-    var pg = params.page || 0;
-    loadPage(parseInt(pg));
     $(".dayinput").click( event => {
         var days = "";
         $(".dayinput").each(function() {
