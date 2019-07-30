@@ -1,3 +1,10 @@
+$(document).ready(function(){
+    buildChart(course);
+    $('#profSelect').on('change', function() {
+        updateChart(course);
+    });
+});
+
 var averages = [];
     sectionList = [];
     terms = [];
@@ -14,10 +21,23 @@ function buildChart(course){
         success: res => { console.log("Success"); },
     }).always(function(data, status) {
         trendChart(data, bigChart, profSelect, profChart);
-        sectionChart(data, profSelect, profChart);
+        createSectionChart(data, profSelect, profChart);
     });
 }
-
+function updateChart(course){
+    var profChart = $('#profChart');
+    var profSelect = $('#profSelect');
+    var saveData = $.ajax({
+        type: 'GET',
+        url: "/api/grades",
+        data: {
+            course: course,
+        },
+        success: res => { console.log("Success"); },
+    }).always(function(data, status) {
+        updateSectionChart(data, profSelect, profChart);
+    });
+}
 // This is the graph code.
 function trendChart(grades, bigChart, profSelect, profChart){
     //Gather data/build dropdown
@@ -78,7 +98,7 @@ function trendChart(grades, bigChart, profSelect, profChart){
     });
 }
 
-function sectionChart(grades, profSelect, profChart){
+function createSectionChart(grades, profSelect, profChart){
     gradeMap = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "F", "OT", "DR", "W"];
     section = profSelect.val().split("*");
     // Gives an array such as ["1118", "'Floryan|Mark|1'"]
@@ -110,9 +130,22 @@ function sectionChart(grades, profSelect, profChart){
     };
 
 
-    var myBarChart = new Chart(profChart, {
+    barChart = new Chart(profChart, {
         type: 'bar',
         data: data,
         options: options,
     });
+}
+function updateSectionChart(grades, profSelect, profChart){
+    barChart.data.datasets.pop();
+    gradeMap = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "F", "OT", "DR", "W"];
+    section = profSelect.val().split("*");
+    chartData = grades['grades'][section[0]][section[1]].slice(1,16);
+    var data = {
+            label:"Number",
+            borderColor:'#007bff',
+            data: chartData,
+        }
+    barChart.data.datasets.push(data);
+    barChart.update();
 }
