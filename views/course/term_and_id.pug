@@ -83,16 +83,14 @@ block content
             .col-md-12
                 p.center="Course Description:" + " " + course['desc']
         .row
-            .col-md-6
-                canvas(id='overallChart' style='height:300px;')
+            .col-md-6(style="height:338px;")
+                canvas(id='overallChart' style='height:100%;')
                 script.
                     var course = !{JSON.stringify(course)};
-                    window.onload = function(){
-                        fetchGrades(course);
-                    }
-            .col-md-6
-                select.form-control
-                canvas(id='profSelect')
+            .col-md-6(style="height:300px;")
+                select.form-control(id='profSelect')
+                div
+                    canvas(id='profChart' style='height:100%;')
 
                     
                 
