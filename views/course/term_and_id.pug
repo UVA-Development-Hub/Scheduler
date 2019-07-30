@@ -88,11 +88,11 @@ block content
                 script.
                     var course = !{JSON.stringify(course)};
                     window.onload = function(){
-                        fetchGrades(course);
+                        buildChart(course);
                     }
             .col-md-6
-                select.form-control
-                canvas(id='profSelect')
+                select.form-control(id='profSelect')
+                canvas(id='profChart')
 
                     
                 
