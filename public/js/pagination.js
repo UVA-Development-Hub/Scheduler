@@ -3,41 +3,45 @@ var arr;
 
 $(document).ready( function() {
     arr= $(".pageselector");
-    for(var i = maxPage; i < 10; i++) $(arr[i + 1]).hide();
     d = getUrlParams(location.search);
-    currentPage = parseInt(d.page || 0);
-    setButtons(currentPage);
+    currentPage = parseInt(d.page || 1) - 1;
+    if(currentPage < 0) currentPage = 0;
+    window.history.pushState({"html": $('html')[0].outerHTML, "pageTitle": $("title").text()},"", window.location.href.replace(/([&?]page=)(.*)(&{1}.*){0,1}/, '$1' + (currentPage + 1) + '$3'));
+    currentPage--;
+    loadPage(currentPage + 1);
 });
 
 function setButtons(pageNumber) {
+    console.log("Configuring buttons: " + pageNumber + " " + maxPage);
     currentPage = pageNumber;
-
+    $(".pageselector").show();
+    for(var i = maxPage; i < 10; i++) $(arr[i + 1]).hide();
     if (currentPage < 5) {
         for(var i=0; i<5;i++ ) {
-            $(arr[i]).attr("onclick", "loadPage("+ parseInt(i)+")");
+            $(arr[i]).attr("onclick", "urlAndLoad("+ parseInt(i)+")");
             $(arr[i]).html(parseInt(i + 1));
         }
 
         for(var i=5; i<10;i++ ) {
-            $(arr[i]).attr("onclick", "loadPage("+ parseInt(i)+")");
+            $(arr[i]).attr("onclick", "urlAndLoad("+ parseInt(i)+")");
             $(arr[i]).html(parseInt(i + 1));
         }
     } else if (currentPage > parseInt(maxPage-10)) {
         for(var i=0; i<5;i++ ) {
-            $(arr[i]).attr("onclick", "loadPage("+ parseInt(i+maxPage-9)+")");
+            $(arr[i]).attr("onclick", "urlAndLoad("+ parseInt(i+maxPage-9)+")");
             $(arr[i]).html(parseInt(i + 1+maxPage-9));
         }
         for(var i=5; i<10;i++ ) {
-            $(arr[i]).attr("onclick", "loadPage("+ parseInt(i+maxPage-9)+")");
+            $(arr[i]).attr("onclick", "urlAndLoad("+ parseInt(i+maxPage-9)+")");
             $(arr[i]).html(parseInt(i + 1+maxPage-9));
         }
     } else {
-        for(var i=0; i<5;i++ ){
-            $(arr[i]).attr("onclick", "loadPage("+ parseInt(pageNumber-5+i)+")");
+        for(var i=0; i<5;i++ ) {
+            $(arr[i]).attr("onclick", "urlAndLoad("+ parseInt(pageNumber-5+i)+")");
             $(arr[i]).html(parseInt((pageNumber-5+i) + 1 ));
         }
-        for(var i=5; i<10;i++ ){
-            $(arr[i]).attr("onclick", "loadPage("+ parseInt(pageNumber+i-5)+")");
+        for(var i=5; i<10;i++ ) {
+            $(arr[i]).attr("onclick", "urlAndLoad("+ parseInt(pageNumber+i-5)+")");
             $(arr[i]).html(parseInt((pageNumber+i-5)+ 1));
         }
     }
@@ -49,15 +53,14 @@ function setButtons(pageNumber) {
 
 };
 
-function loadPage(i) {
-    d = getUrlParams(location.search);
-    setButtons(i);
-    getSearchPage(parseInt(d.page || currentPage), 25, (data, max) => {
+function loadPage(pg) {
+    getSearchPage(parseInt(pg), 25, (data, max) => {
         maxPage = max - 1;
         // Write new search results to the #results element
-        var newHTML = ``, i = 0;
+        var newHTML = ` `, i = 0;
         while(i < data.length) {
-            var course = data[i], currentCatalog = course.catalog_number;
+            var course = data[i];
+            var currentCatalog = course.catalog_number;
             const subjectHeader = `
                 <div class="row">
                     <div class="col-md-12" style="margin-top:50px;">
@@ -67,14 +70,13 @@ function loadPage(i) {
                         <div class="col-md-12 course-section-container">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <p class="section-title-thick">${course.desc}</p>
+                                    <p class="section-title-thick" style="overflow:hidden">${course.desc}</p>
                                 </div>
                             </div>
                         </div>
                         <table class="wide">`;
             newHTML += subjectHeader;
-            while(course.catalog_number == currentCatalog && i < data.length) {
-                course = data[i], i++;
+            while(i < data.length && course.catalog_number == currentCatalog) {
                 var spanstyle = "",
                     enrollmentcontents = ``,
                     instructors = ``,
@@ -139,26 +141,28 @@ function loadPage(i) {
                         </td>
                     </tr>`;
                 // Append to the results
+                i++;
+                course = data[i];
                 newHTML += sectionData;
-                // Append closing tags
             }
+            // Append closing tags
             newHTML += `</table></div></div>`;
         }
         // Load the new html into the frame
         $("#results").html(newHTML);
+        setButtons(pg);
     });
 }
 
-function nextPage(){
-    if(currentPage != parseInt(maxPage)) {
-        currentPage++;
-        loadPage(currentPage);
-    }
+function urlAndLoad(pg) {
+    window.history.pushState({"html": $('html')[0].outerHTML, "pageTitle": $("title").text()},"", window.location.href.replace(/([&?]page=)(\w+)(&{1}.*){0,1}/, '$1' + (pg + 1) + '$3'));
+    if(pg != currentPage) loadPage(pg);
+}
+
+function nextPage() {
+    if(currentPage != parseInt(maxPage)) urlAndLoad(currentPage + 1);
 };
 
-function previousPage(){
-    if(currentPage != 0) {
-        currentPage--;
-        loadPage(currentPage);
-    }
+function previousPage() {
+    if(currentPage != 0) urlAndLoad(currentPage - 1);
 };

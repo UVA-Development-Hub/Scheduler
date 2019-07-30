@@ -73,26 +73,11 @@ router.get('/css/timegrid.css', function(req, res) {
 });
 
 //search page
-router.get('/search', function(req, res){
-
-    var query = lib.buildSearchQuery(req.query);
-
-    async.parallel([
-        async.reflect( callback => {
-            mongo.getTerms(callback);
-        }),
-        async.reflect( callback => {
-            // Either uses the requested term or the most recent one
-            mongo.getRecentTerm( (err, term) => {
-                mongo.searchTerm(req.query.term_id || term._id, query, callback);
-            });
-        })
-    ], (err, data) => {
+router.get('/search', (req, res) => {
+    mongo.getTerms( (err, data) => {
         res.render('search', {
             title : 'Search Page',
-            terms: data[0]['value'],
-            sections: lib.sectionate(data[1].value[0]),
-            max_page: parseInt(data[1].value[1]),
+            terms: data,
             input: req.query,
             selected_term: req.query.term_id,
             user: req.session.user

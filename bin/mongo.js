@@ -214,8 +214,9 @@ function getProgramInfo(name, callback) {
 // Gets the most recent term
 function getRecentTerm(callback) {
     var db = client.db(databases.coursedb);
-    db.collection(databases.termcoll).find().sort({_id: -1}).limit(1).forEach(term => {
-        callback(null, term);
+    db.collection(databases.termcoll).find().sort({_id: -1}).limit(1).toArray(data => {
+        console.log(data);
+        callback(null, data);
     });
 }
 
