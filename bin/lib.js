@@ -28,7 +28,6 @@ function sectionate(courseArray) {
     var ret = [], dex = 0;
     for (i = 0; i < courseArray.length; i++) {
         dex = compareSections(ret, courseArray[i]);
-        //console.log(dex);
         if(dex > -1) ret[dex].sections.push(courseArray[i]);
         else {
             ret.push({

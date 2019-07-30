@@ -5,8 +5,11 @@ $(document).ready( function() {
     arr= $(".pageselector");
     for(var i = maxPage; i < 10; i++) $(arr[i + 1]).hide();
     d = getUrlParams(location.search);
-    currentPage = parseInt(d.page || 0);
+    currentPage = parseInt(d.page || 1) - 1;
+    if(currentPage < 0) currentPage = 0;
+    window.history.pushState({"html": $('html')[0].outerHTML, "pageTitle": $("title").text()},"", window.location.href.replace(/([&?]page=)(.*)(&{1}.*){0,1}/, '$1' + (currentPage + 1) + '$3'));
     setButtons(currentPage);
+    loadPage(currentPage);
 });
 
 function setButtons(pageNumber) {
@@ -50,14 +53,14 @@ function setButtons(pageNumber) {
 };
 
 function loadPage(i) {
-    d = getUrlParams(location.search);
     setButtons(i);
-    getSearchPage(parseInt(d.page || currentPage), 25, (data, max) => {
+    getSearchPage(parseInt(getUrlParams(location.search).page || currentPage), 25, (data, max) => {
         maxPage = max - 1;
         // Write new search results to the #results element
-        var newHTML = ``, i = 0;
+        var newHTML = ` `, i = 0;
         while(i < data.length) {
-            var course = data[i], currentCatalog = course.catalog_number;
+            var course = data[i];
+            var currentCatalog = course.catalog_number;
             const subjectHeader = `
                 <div class="row">
                     <div class="col-md-12" style="margin-top:50px;">
@@ -73,8 +76,7 @@ function loadPage(i) {
                         </div>
                         <table class="wide">`;
             newHTML += subjectHeader;
-            while(course.catalog_number == currentCatalog && i < data.length) {
-                course = data[i], i++;
+            while(i < data.length && course.catalog_number == currentCatalog) {
                 var spanstyle = "",
                     enrollmentcontents = ``,
                     instructors = ``,
@@ -139,9 +141,11 @@ function loadPage(i) {
                         </td>
                     </tr>`;
                 // Append to the results
+                i++;
+                course = data[i];
                 newHTML += sectionData;
-                // Append closing tags
             }
+            // Append closing tags
             newHTML += `</table></div></div>`;
         }
         // Load the new html into the frame
@@ -149,16 +153,18 @@ function loadPage(i) {
     });
 }
 
-function nextPage(){
+function nextPage() {
     if(currentPage != parseInt(maxPage)) {
         currentPage++;
+        window.history.pushState({"html": $('html')[0].outerHTML, "pageTitle": $("title").text()},"", window.location.href.replace(/([&?]page=)(\w+)(&{1}.*){0,1}/, '$1' + (currentPage + 1) + '$3'));
         loadPage(currentPage);
     }
 };
 
-function previousPage(){
+function previousPage() {
     if(currentPage != 0) {
         currentPage--;
+        window.history.pushState({"html": $('html')[0].outerHTML, "pageTitle": $("title").text()},"", window.location.href.replace(/([&?]page=)(\w+)(&{1}.*){0,1}/, '$1' + (currentPage + 1) + '$3'));
         loadPage(currentPage);
     }
 };
