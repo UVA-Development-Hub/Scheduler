@@ -144,7 +144,7 @@ footer {
     color: #e2e2e2;
 }
 
-.bg-uva-blue:active {
+button.bg-uva-blue:active {
     color: #e2e2e2;
     background-color: #343e5c;
 }
@@ -171,6 +171,17 @@ footer {
 .bg-uva-orange.btn {
     padding-left: .90em;
     padding-right: .90em;
+}
+
+.bg-uva-orange a {
+    color: white;
+    text-shadow: 0 0 2px #636363, 0 0 2px #636363, 0 0 2px #636363;
+}
+
+.bg-uva-orange a:hover {
+    text-shadow: 0 0 6px #636363, 0 0 6px #636363, 0 0 6px #636363;
+    transform: scale(1.5);
+    transition: .2s ease-in-out;
 }
 
 .outline {
@@ -282,3 +293,15 @@ button.pageselector {
 }
 
 /* End checkbox CSS */
+
+.black-bars {
+    border-bottom: 6px double black;
+}
+
+table.course-display tbody tr {
+    border-top: 2px inset #212529;
+}
+
+table.course-display tbody tr:first-child {
+    border: 0;
+}

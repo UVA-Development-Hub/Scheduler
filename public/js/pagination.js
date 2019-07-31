@@ -73,11 +73,12 @@ function loadPage(pg) {
                         <div class="col-md-12 course-section-container">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <p class="section-title-thick" style="overflow:hidden">${course.desc}</p>
+                                    <p class="" style="overflow:hidden">${course.desc}</p>
                                 </div>
+                                <div class="col-md-12 black-bars"></div>
                             </div>
                         </div>
-                        <table class="wide">`;
+                        <table class="wide course-display">`;
             newHTML += subjectHeader;
             while(i < data.length && course.catalog_number == currentCatalog) {
                 var spanstyle = "",
@@ -116,7 +117,7 @@ function loadPage(pg) {
                 const sectionData = `
                     <tr class="wide">
                         <td class="wide">
-                            <div class="row section-title course-section-header">
+                            <div class="row course-section-header">
                                 <div class="col-sm-2">
                                     <a href=${sisLink}>
                                         <b><p class="sis_id">${course.sis_id} - ${course.section}</p></b>
@@ -131,17 +132,6 @@ function loadPage(pg) {
                                 </div>
                                 <div class="col">
                                     <b><p>${enrollmentcontents}</p></b>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12 calspot">
-                                    <p>Future home of the calendar</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <p>Grade data is fetched by combining the instructor with the subject and number. It does not factor in labs/discussions or their instructors, etc.</p>
-                                    <p>Future home of the grade distribution information</p>
                                 </div>
                             </div>
                         </td>
