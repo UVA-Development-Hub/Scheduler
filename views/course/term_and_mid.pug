@@ -67,8 +67,12 @@ block content
                                                         p
                                                         | Grade data is fetched by combining the instructor with the subject and number. It does not factor in labs/discussions or their instructors, etc.
                                                         p Future home of the grade distribution information!
-
-        
+                .col-md-12
+                    script.
+                        var course = {
+                            subject:"#{class_info[0].subject}",
+                            catalog_number:"{class_info[0].catalog_number}",
+                        };
             
         
             
