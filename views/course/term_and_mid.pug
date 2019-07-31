@@ -1,6 +1,8 @@
 extends  ../layout
 
 block customhead
+    script(src='/js/chart.js')
+    script(src='/js/grade_chart.js')
     link(rel="stylesheet", href="/css/tablesorter.theme.blue.css")
     link(rel="stylesheet", href="/css/course_style_sheet.css")
     link(rel="stylesheet", href="/css/chart.css")
@@ -71,8 +73,18 @@ block content
                     script.
                         var course = {
                             subject:"#{class_info[0].subject}",
-                            catalog_number:"{class_info[0].catalog_number}",
+                            catalog_number:"#{class_info[0].catalog_number}",
                         };
+            .row
+                .col-md-6
+                    div(style='height:350px;')
+                        canvas.tall(id='overallChart')
+                    script.
+                        var course = !{JSON.stringify(course)};
+                .col-md-6
+                    select.form-control(id='profSelect' style="margin-bottom:10px;")
+                    div
+                        canvas(id='profChart' height="302px;")
             
         
             
