@@ -89,17 +89,33 @@ appdir = require('path').dirname(require.main.filename),
 // });
 
 router.get('/:term/:subject', (req, res) => {
-    mongo.searchTerm(req.params.term, {'subject':req.params.subject.toUpperCase()}, (err, data) => {
-        // console.log(data);
-        var newData = lib.sectionate(data);
-        console.log(newData);
-        res.render('subject/subject', {
-            course_subjects: data,
-            section_order: newData,
-            term: req.params.term,
+    mongo.getTerms((err, termsList) => {
+        console.log(termsList)
+        mongo.searchTerm(req.params.term, {'subject':req.params.subject.toUpperCase()}, (err, data) => {
+            // console.log(data);
+            var newData = lib.sectionate(data);
+            console.log(newData);
+            res.render('subject/subject', {
+                course_subjects: data,
+                section_order: newData,
+                term: req.params.term,
+                terms: termsList,
+                subject: req.params.subject.toUpperCase(),
+            });
         });
     });
 });
+//     mongo.searchTerm(req.params.term, {'subject':req.params.subject.toUpperCase()}, (err, data) => {
+//         // console.log(data);
+//         var newData = lib.sectionate(data);
+//         console.log(newData);
+//         res.render('subject/subject', {
+//             course_subjects: data,
+//             section_order: newData,
+//             term: req.params.term,
+//         });
+//     });
+// });
 
 // router.get('/:term/:subject', (req, res) => {
 //     lib.sectionate((courseArray){
