@@ -86,7 +86,8 @@ block content
                                                 .row.section-title(style="margin-left:-10px;")
                                                     .col-sm-2
                                                         b
-                                                            p=course["sis_id"] + ' - ' + course["section"]
+                                                            a(href="/course/"+term+"/"+course["sis_id"])
+                                                                p=course["sis_id"] + ' - ' + course["section"]
                                                     .col-sm-6
                                                         b
                                                             p="Instructor(s):" + " " + course["instructors"]

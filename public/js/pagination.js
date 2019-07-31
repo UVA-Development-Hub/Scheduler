@@ -112,12 +112,15 @@ function loadPage(pg) {
                 });
 
                 // Format the template string
+                var sisLink = "/course/"+term+"/"+course.sis_id;
                 const sectionData = `
                     <tr class="wide">
                         <td class="wide">
                             <div class="row section-title course-section-header">
                                 <div class="col-sm-2">
-                                    <b><p class="sis_id">${course.sis_id} - ${course.section}</p></b>
+                                    <a href=${sisLink}>
+                                        <b><p class="sis_id">${course.sis_id} - ${course.section}</p></b>
+                                    </a>
                                 </div>
                                 <div class="col">
                                     <b><p>${course.type}</p></b>

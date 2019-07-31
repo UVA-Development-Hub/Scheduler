@@ -39,7 +39,7 @@ router.get('/:term/:id', (req, res) => {
                 class_info: data,
                 title : subject+course_number,
                 user: req.session.user,
-
+                term: req.params.term,
                 });
             }
         });
@@ -52,24 +52,11 @@ router.get('/:term/:id', (req, res) => {
             res.send("Course not found.");
         }
         else{
-          mongo.searchGrades(data[0]['subject'], data[0]['catalog_number'], (err, grades) => {
-            if(!grades[0]){
-              //No grades -- explicit false.
-              res.render('course/term_and_id', {
-                course: data[0],
-                title: data[0]['subject']+" "+data[0]['catalog_number'],
-                user: req.session.user,
-
-              });
-            }
-            else{
-              //Grades.
-              res.render('course/term_and_id', {
-                course: data[0],
-                title: data[0]['subject']+data[0]['catalog_number'],
-                user: req.session.user,
-              });
-            }
+          res.render('course/term_and_id', {
+            course: data[0],
+            title: data[0]['subject']+data[0]['catalog_number'],
+            user: req.session.user,
+            term: req.params.term,
           });
         }
       });

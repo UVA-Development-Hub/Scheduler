@@ -43,7 +43,8 @@ block content
                                                 .row.section-title.course-section-header
                                                     .col-sm-2
                                                         b
-                                                            p.sis_id=course.sis_id + ' - ' + course.section
+                                                            a(href="/course/"+term+"/"+course.sis_id)
+                                                                p.sis_id=course.sis_id + ' - ' + course.section
                                                     .col-sm-1
                                                         b
                                                             p=course.type
