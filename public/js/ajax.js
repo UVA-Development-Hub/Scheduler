@@ -29,7 +29,7 @@ function getSearchPage(page, per, callback, dict) {
         d["per"] = per;
         d["page"] = page;
         $.get("/api/search", d, (data, status) => {
-            callback(data.data, data.pages);
+            callback(data.data, data.pages, d['term_id']);
         });
     } catch(e) { $(".pageselector").hide(); }
 }

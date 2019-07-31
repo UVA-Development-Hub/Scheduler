@@ -54,18 +54,21 @@ function setButtons(pageNumber) {
 };
 
 function loadPage(pg) {
-    getSearchPage(parseInt(pg), 25, (data, max) => {
+    getSearchPage(parseInt(pg), 25, (data, max, term) => {
         maxPage = max - 1;
         // Write new search results to the #results element
         var newHTML = ` `, i = 0;
         while(i < data.length) {
             var course = data[i];
             var currentCatalog = course.catalog_number;
+            var courseLink = "/course/"+term+"/"+course.subject+currentCatalog
             const subjectHeader = `
                 <div class="row">
                     <div class="col-md-12" style="margin-top:50px;">
                         <h3 class="bg-uva-orange course-header">
-                            <b>${course.subject} ${currentCatalog} - ${course.title}</b>
+                            <a href=${courseLink}>
+                                <b>${course.subject} ${currentCatalog} - ${course.title}</b>
+                            </a>
                         </h3>
                         <div class="col-md-12 course-section-container">
                             <div class="row">

@@ -97,6 +97,7 @@ router.get('/:term', (req, res) => {
             sections: lib.sectionate(data),
             max_page,
             user: req.session.user,
+            term: req.params.term,
             // subject: data.subject
         });
    });
