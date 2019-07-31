@@ -64,7 +64,7 @@ block content
             //-                     i.fa.fa-minus-square(style='display:none;')
             //-                 div(style='margin-left:10px;')
             //-                     p.vertical=course["subject"] + " " + course["catalog_number"] + " - " + course["title"]
-            each course, i in course_subjects
+            each course, i in section_order
                 .row
                     .col-md-12
                         .row.form-inline
@@ -72,69 +72,69 @@ block content
                                 i.fa.fa-plus-square
                                 i.fa.fa-minus-square(style='display:none;')
                             div(style='margin-left:10px;')
-                                    p.vertical=course_subjects[i]["subject"] + ' ' + course_subjects[i]["catalog_number"] + ' - ' + course_subjects[i]["title"]
+                                    p.vertical=section_order[i]["subject"] + ' ' + section_order[i]["catalog_number"] + ' - ' + section_order[i]["title"]
                     .col-md-12(style='display:none;')
                         table(style="width:100%;")
                             tbody
-                                //- each course_section, index in course
-                                tr
-                                    td
-                                        div(style="margin-top:15px;margin-bottom:15px;padding-left:5px;padding-right:5px;")
-                                            // A single section. Comes in two parts:
-                                            // A button which contains the section header info
-                                            button(onclick="$(this).next().toggle('fast')" style="width:100%;padding:2px;background-color:inherit;outline:none;border:none")
-                                                .row.section-title(style="margin-left:-10px;")
-                                                    .col-sm-2
-                                                        b
-                                                            a(href="/course/"+term+"/"+course["sis_id"])
-                                                                p=course["sis_id"] + ' - ' + course["section"]
-                                                    .col-sm-6
-                                                        b
-                                                            p="Instructor(s):" + " " + course["instructors"]
-                                                    .col-sm-2
-                                                        b
-                                                            p=" Enrollment: " + " " + course['enrolled'] + " / " + course["enroll_limit"]
-                                                    .col-sm-2
-                                                        b
-                                                            p=course["type"]
+                                each course_section, index in course['sections']
+                                    tr
+                                        td
+                                            div(style="margin-top:15px;margin-bottom:15px;padding-left:5px;padding-right:5px;")
+                                                // A single section. Comes in two parts:
+                                                // A button which contains the section header info
+                                                button(onclick="$(this).next().toggle('fast')" style="width:100%;padding:2px;background-color:inherit;outline:none;border:none")
+                                                    .row.section-title(style="margin-left:-10px;")
+                                                        .col-sm-2
+                                                            b
+                                                                a(href="/course/"+term+"/"+course_section["sis_id"])
+                                                                    p=course_section["sis_id"] + ' - ' + course_section["section"]
+                                                        .col-sm-6
+                                                            b
+                                                                p="Instructor(s):" + " " + course_section["instructors"]
+                                                        .col-sm-2
+                                                            b
+                                                                p=" Enrollment: " + " " + course_section['enrolled'] + " / " + course_section["enroll_limit"]
+                                                        .col-sm-2
+                                                            b
+                                                                p=course_section["type"]
                                                                 
-                                                //- if course_section['meetings'].length == 0
-                                                //- 
-                                                //-     div(style="display:none;")
-                                                //-         .row
-                                                //-             .col-md-9
-                                                //-                 p="Credits: " + course_section["credits"]
-                                                //-                 p="Status: " + course_section["status"]
-                                                //-                 p="Waiting List: " + course_section["waiting"]
-                                                //-                 p="Meeting Days: Not Found"
-                                                //-                 p="Start Time: Not Found"
-                                                //-                 p="End Time: Not Found"
-                                                //-                 p="Class Date Begins: Not Found"
-                                                //-                 p="Class Date Ends: NoT Found"
-                                                //-                 //- p=course_section["enrollment"]
-                                                //-             .col-md-3
-                                                //-                 if(course_section.desc.length > 0)
-                                                //-                     p=course_section.desc
-                                                //-                 else
-                                                //-                     p A description for this course is not available :(
-                                                //- else
-                                                //- 
-                                                //-     div(style="display:none;")
-                                                //-         .row
-                                                //-             .col-md-9
-                                                //-                 p="Credits: " + course_section["credits"]
-                                                //-                 p="Status: " + course_section["status"]
-                                                //-                 p="Waiting List: " + course_section['"waiting"']
-                                                //-                 p="Meeting Days: " + course_section['meetings'][0]['days']
-                                                //-                 p="Start Time: " + course_section['meetings'][0]['start']
-                                                //-                 p="End Time: " + course_section['meetings'][0]['finish']
-                                                //-                 p="Class Date Begins: " + course_section['meetings'][0]['begin']
-                                                //-                 p="Class Date Ends: " + course_section['meetings'][0]['complete']
-                                                //-                 //- p=course_section["enrollment"]
-                                                //-             .col-md-3
-                                                //-                 if(course_section.desc.length > 0)
-                                                //-                     p=course_section.desc
-                                                //-                 else
-                                                //-                     p A description for this course is not available :(
-                        
+                                                if course_section['meetings'].length == 0
+                                                
+                                                    div(style="display:none;")
+                                                        .row
+                                                            .col-md-9
+                                                                p="Credits: " + course_section["credits"]
+                                                                p="Status: " + course_section["status"]
+                                                                p="Waiting List: " + course_section["waiting"]
+                                                                p="Meeting Days: Not Found"
+                                                                p="Start Time: Not Found"
+                                                                p="End Time: Not Found"
+                                                                p="Class Date Begins: Not Found"
+                                                                p="Class Date Ends: NoT Found"
+                                                                //- p=course_section["enrollment"]
+                                                            .col-md-3
+                                                                if(course_section.desc.length > 0)
+                                                                    p=course_section.desc
+                                                                else
+                                                                    p A description for this course is not available :(
+                                                else
+                                                
+                                                    div(style="display:none;")
+                                                        .row
+                                                            .col-md-9
+                                                                p="Credits: " + course_section["credits"]
+                                                                p="Status: " + course_section["status"]
+                                                                p="Waiting List: " + course_section['"waiting"']
+                                                                p="Meeting Days: " + course_section['meetings'][0]['days']
+                                                                p="Start Time: " + course_section['meetings'][0]['start']
+                                                                p="End Time: " + course_section['meetings'][0]['finish']
+                                                                p="Class Date Begins: " + course_section['meetings'][0]['begin']
+                                                                p="Class Date Ends: " + course_section['meetings'][0]['complete']
+                                                                //- p=course_section["enrollment"]
+                                                            .col-md-3
+                                                                if(course_section.desc.length > 0)
+                                                                    p=course_section.desc
+                                                                else
+                                                                    p A description for this course is not available :(
+                                                    //- 
                     
