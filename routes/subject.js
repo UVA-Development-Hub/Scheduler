@@ -89,7 +89,7 @@ appdir = require('path').dirname(require.main.filename),
 // });
 
 router.get('/:term/:subject', (req, res) => {
-    mongo.searchTerm(req.params.term, {}, (err, data) => {
+    mongo.searchTerm(req.params.term, {'subject':req.params.subject.toUpperCase()}, (err, data) => {
         // console.log(data);
         var newData = lib.sectionate(data);
         res.render('subject/subject', {
