@@ -1,5 +1,6 @@
 var router = require('express').Router(),
-    session = require('express-session')
+    session = require('express-session'),
+    assert = require('assert');
     mongo = require('../bin/mongo.js');
 
 function res200(res, message) {
@@ -29,7 +30,7 @@ router.get('/search', (req, res) => {
             res.status(200);
             res.send({'pages': pages, 'data': data});
         });
-    } catch(e) { console.log(e); res400(res, '') };
+    } catch(e) { res400(res, '') };
 });
 
 router.post('/cart', (req, res) => {
@@ -106,6 +107,24 @@ router.get('/grades', (req, res) => {
         res.status(200);
         res.send(data[0]);
     });
+});
+
+router.get('/get-meetings', (req, res) => {
+    try {
+        // Run input validation
+        assert(/^1\d{2}[1268]$/.test(req.query.term_id));
+        assert(/^\d{5}$/.test(req.query.sis_id));
+
+        // Get the course data
+        mongo.searchTerm(req.query.term_id, { sis_id: req.query.sis_id }, (err, data) => {
+            if(err || !data[0]) res404(res, ' This should be a 500.');
+            else {
+                res.status(200);
+                res.send(data[0].meetings);
+            }
+        });
+
+    } catch(e) { res400(res, " You must provide querystring arguments 'term_id' (a 4 digit number which begins with 1 end ends with 1, 2, 6, or 8) and 'sis_id' (a 5 digit number)."); }
 });
 
 router.use('/:anything', (req, res) => {
