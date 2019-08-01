@@ -192,68 +192,54 @@ block content
                                                             | Grade data is fetched by combining the instructor with the subject and number. It does not factor in labs/discussions or their instructors, etc.
                                                             p Future home of the grade distribution information!
             .col-md-4
-                div(id="calendar" style="width:100%;min-width:290px;position:sticky;top:0px;")
-                //script.
-                    var meeting= [];
-                    function name_split(name){
-                        name.split("-");
-                    };
-                    
-                    $(':checkbox').on('change',function(){
-                        var result_name= name_split(this.name);
-                        var theClass= result[parseInt(result_name[0])][parseInt(result_name(1))];
+                div(style="width:100%;max-height:100vh;min-width:290px;position:sticky;top:0px;")
+                    div(id="calendar" style="height:100%;")
+                    script.
+                        var meeting= [];
+                        function name_split(name){
+                            name.split("-");
+                        };
                         
-      
-                        if(this.checked){
-                        
-                            for(var i=0;i<theClass.days.split("").length;i++){
-                                meeting.push({
-                                title: theClass.subject+theClass.catalog_number,
-                                start: moment(moment().day(theClass.days.split("")[i]).format("YYYY-MM-DD")+"T"+theClass.meeting_start).format(),
-                                end: moment(moment().day(theClass.days.split("")[i]).format("YYYY-MM-DD")+"T"+theClass.meeting_end).format(),
-                            });
+                        $(':checkbox').on('change',function(){
+                            var result_name= name_split(this.name);
+                            var theClass= result[parseInt(result_name[0])][parseInt(result_name(1))];
+                            
+          
+                            if(this.checked){
+                            
+                                for(var i=0;i<theClass.days.split("").length;i++){
+                                    meeting.push({
+                                    title: theClass.subject+theClass.catalog_number,
+                                    start: moment(moment().day(theClass.days.split("")[i]).format("YYYY-MM-DD")+"T"+theClass.meeting_start).format(),
+                                    end: moment(moment().day(theClass.days.split("")[i]).format("YYYY-MM-DD")+"T"+theClass.meeting_end).format(),
+                                });
+                                }
                             }
-                        }
-                        else{
-                            alert("deselected "+this.name);
-                        }
-                    });
-                    
-                    // This is calendar code.
-                    document.addEventListener('DOMContentLoaded', function() {
-                        var calendarEl = document.getElementById('calendar');
-                        var calendar = new FullCalendar.Calendar(calendarEl, {
-                          plugins: [ 'timeGrid' ],
-                          defaultView: 'timeGridWeek',
-                          nowIndicator:true,
-                          allDaySlot:false,
-                          columnHeaderFormat:{
-                              weekday:'short',
-                          },
-                          minTime:"08:00:00",
-                          header:{
-                              left:'',
-                              center:'',
-                              right:'',
-                          },
-                          events:meeting
+                            else{
+                                alert("deselected "+this.name);
+                            }
                         });
+                        
+                        // This is calendar code.
+                        document.addEventListener('DOMContentLoaded', function() {
+                            var calendarEl = document.getElementById('calendar');
+                            var calendar = new FullCalendar.Calendar(calendarEl, {
+                              plugins: [ 'timeGrid' ],
+                              defaultView: 'timeGridWeek',
+                              nowIndicator:true,
+                              allDaySlot:false,
+                              columnHeaderFormat:{
+                                  weekday:'short',
+                              },
+                              minTime:"08:00:00",
+                              height: 'parent',
+                              header:{
+                                  left:'',
+                                  center:'',
+                                  right:'',
+                              },
+                              events:meeting
+                            });
 
-                        calendar.render();
-                  });
-                  
-                  
-                  
-                    
-                  /*
-                  $(window).scroll(function(e){ 
-                      var $el = $('#calendar'); 
-                      var isPositionFixed = ($el.css('position') == 'fixed');
-                      if ($(this).scrollTop() > 500 && !isPositionFixed){ 
-                          $el.css({'position': 'fixed', 'top': '0px'}); 
-                      }
-                      if ($(this).scrollTop() < 500 && isPositionFixed){
-                          $el.css({'position': 'static', 'top': '0px'}); 
-                      } 
-                 });
-                 */
+                            calendar.render();
+                      });

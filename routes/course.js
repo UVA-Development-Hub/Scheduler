@@ -78,16 +78,12 @@ router.get('/:term/:id', (req, res) => {
 });
 
 router.get('/:term', (req, res) => {
-    mongo.searchTerm(req.params.term, {page: 0, per: 25}, (err, data, max_page) => {
-        res.render('course/term', {
-            title: 'Classes in term ' + req.params.term,
-            sections: lib.sectionate(data),
-            max_page,
-            user: req.session.user,
-            term: req.params.term,
-            // subject: data.subject
-        });
-   });
+    res.render('course/term', {
+        title: 'Classes in term ' + req.params.term,
+        user: req.session.user,
+        term: req.params.term,
+        // subject: data.subject
+    });
 
 
     // res.send("Display all classes from term " + req.params.term + ".");
