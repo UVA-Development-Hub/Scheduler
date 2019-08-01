@@ -38,3 +38,7 @@ function getSearchPage(page, per, callback, dict) {
 function loadSubjects(from, callback) {
     $.get("/api/subjects", { school: from }).always(callback);
 }
+
+function getMeetings(term, sis_id, callback) {
+    $.get("/api/get-meetings", { term_id: term, sis_id: sis_id }).always(callback);
+}
