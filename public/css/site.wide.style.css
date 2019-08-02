@@ -210,12 +210,12 @@ button.bg-uva-blue:active {
 }
 
 .course-section-container {
-    margin-top: 15px;
-    margin-bottom: 15px;
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 
 .course-section-header {
-    margin-left: 0px;
+    margin-bottom: 10px;
     margin-top: 10px;
 }
 
