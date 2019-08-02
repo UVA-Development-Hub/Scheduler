@@ -13,8 +13,8 @@ var express = require('express'),
     router = express.Router(),
     appdir = require('path').dirname(require.main.filename),
     mongo = require("../bin/mongo.js"),
-    async = require('async');
-    moment = require('moment');
+    async = require('async'),
+    moment = require('moment'),
     lib = require('../bin/lib.js');
 
 router.get('/login', function (req, res) {
