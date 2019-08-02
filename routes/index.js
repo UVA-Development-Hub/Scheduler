@@ -101,6 +101,16 @@ router.use('/privacy', (req, res, next) => {
     });
 });
 
+// This is the cart page.
+// TODO: Pass in proper cart.
+router.use('/planner', (req, res, next) => {
+    res.render('cart', {
+        title: 'Shopping Cart',
+        user: req.session.user,
+        cart: null,
+    });
+});
+
 // This is the base landing page. It's always the LAST definition
 router.use('/', function(req, res, next) {
     res.render('index', {

@@ -53,6 +53,8 @@ html
                             | 1
                             i.fas.fa-envelope
                     if(user)
+                        a.nav-link.btn.bg-uva-orange(href="/planner" style="padding:5px;")
+                            i(class="material-icons") shopping_cart
                         li.nav-item.avatar.dropdown
                             a#navbarDropdownMenuLink-55.nav-link.dropdown-toggle(data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
                                 img.rounded-circle.z-depth-0(src=user.profileImg alt='avatar image' style="max-width:30px;")

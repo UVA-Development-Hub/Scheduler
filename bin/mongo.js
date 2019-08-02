@@ -141,8 +141,8 @@ function updateUser(id, specifiers, callback) {
 ////////////////////////////////////////////////
 
 // @specifiers a dictionary containing any search constraints
-function searchTerm(term_id, specifiers, callback) {
-    var per = 25, page = 0;
+function searchTerm(term_id, specifiers, callback, per = 25) {
+    var page = 0;
     if("per" in specifiers) {
         per = parseInt(specifiers.per);
         if(!per || per < 1) per = 1;
@@ -188,7 +188,7 @@ function searchTerm(term_id, specifiers, callback) {
 function getTerms(callback) {
     var db = client.db(databases.coursedb);
     db.collection(databases.termcoll).find().sort({"_id":1}).toArray().then(data => {
-        console.log("Retrieved terms list from Mongo");
+        //console.log("Retrieved terms list from Mongo");
         callback(null, data);
     }).catch(fail => {
         raiseFailedPromise(fail, 'getTerms', callback);
@@ -204,7 +204,7 @@ function getPrograms(typelist, callback) {
             if(formatted[doc.type] == undefined) formatted[doc.type] = [doc];
             else formatted[doc.type].push(doc);
         });
-        console.log("Retrieved specified program list from Mongo");
+        //console.log("Retrieved specified program list from Mongo");
         callback(formatted);
     }).catch(fail => {
         raiseFailedPromise(fail, 'getPrograms', callback);
@@ -214,7 +214,7 @@ function getPrograms(typelist, callback) {
 function getProgramInfo(name, callback) {
     var db = client.db(databases.coursedb);
     db.collection(databases.programcoll).find({'name': name}).toArray().then(data => {
-        console.log('Retrieved program info from Mongo.');
+        //console.log('Retrieved program info from Mongo.');
         callback(null, data[0]);
     }).catch(fail => {
         raiseFailedPromise(fail, 'getProgramInfo', callback);
@@ -225,7 +225,6 @@ function getProgramInfo(name, callback) {
 function getRecentTerm(callback) {
     var db = client.db(databases.coursedb);
     db.collection(databases.termcoll).find().sort({_id: -1}).limit(1).toArray(data => {
-        console.log(data);
         callback(null, data);
     });
 }

@@ -6,12 +6,12 @@ block customhead
     link(rel="stylesheet", href="/css/course_style_sheet.css")
     script(src='/js/ajax.js')
     script(src="/js/pagination.js")
-    script.
-        var maxPage = !{max_page};
 
 block content
     .container
         .row(style="margin-top:30px;")
+            script.
+                var maxPage = !{max_page || 1} - 1;
             button.btn.bg-uva-blue(style="width:100px;" onClick="previousPage()") Previous
             button.btn.bg-uva-blue.pageselector
             button.btn.bg-uva-blue.pageselector

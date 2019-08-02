@@ -90,18 +90,12 @@ appdir = require('path').dirname(require.main.filename),
 
 router.get('/:term/:subject', (req, res) => {
     mongo.getTerms((err, termsList) => {
-        console.log(termsList)
-        mongo.searchTerm(req.params.term, {'subject':req.params.subject.toUpperCase()}, (err, data) => {
-            // console.log(data);
-            var newData = lib.sectionate(data);
-            console.log(newData);
-            res.render('subject/subject', {
-                course_subjects: data,
-                section_order: newData,
-                term: req.params.term,
-                terms: termsList,
-                subject: req.params.subject.toUpperCase(),
-            });
+        res.render("subject/subject", {
+            term: req.params.term,
+            terms: termsList,
+            title: req.params.subject.toUpperCase(),
+            subject: req.params.subject.toUpperCase(),
+            user: req.session.user,
         });
     });
 });
@@ -167,7 +161,6 @@ router.get('/', (req, res) => {
 
     mongo.getTerms((err, termsList) => {
         var recentTerm = termsList[termsList.length-1]["_id"];
-        console.log(recentTerm);
 
         mongo.getSubjects((err, data) => {
             var subjects = {};
@@ -184,6 +177,7 @@ router.get('/', (req, res) => {
             res.render('subject/subject_landing', {
                 course_subjects: subjects,
                 term: recentTerm,
+                user: req.session.user,
                 // uva_schools: values,
             });
         });

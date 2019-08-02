@@ -6,82 +6,27 @@ block customhead
     link(rel="stylesheet", href="/css/tablesorter.theme.blue.css")
     link(rel="stylesheet", href="/css/course_style_sheet.css")
     link(rel="stylesheet", href="/css/chart.css")
+    script(src='/js/ajax.js')
+    script(src="/js/pagination.js")
 
 block content
     .container
-            .row
-                // Top bar for the name and expanding controls
-                .col-md-12
-                    h2=class_info[0].subject + ' ' + class_info[0].catalog_number + ' - ' + class_info[0].title
-                // Column container for all sections
-                .col-md-12
-                    table(style="width:100%;")
-                        tbody
-                            each c in class_info
-                                tr
-                                    td
-                                        div(style="margin-top:15px;margin-bottom:15px;padding-left:5px;padding-right:5px;")
-                                            // A single section. Comes in two parts:
-                                            // A button which contains the section header info
-                                            .row.section-title.top(style="margin-left:-10px;")
-                                                .col-sm-1
-                                                    b
-                                                        button.btn.bg-uva-blue(onclick="$(this).closest('.top').next('div.drop').toggle('fast');$(this).find('i').toggle();return false;" style='font-size:10px;padding:10px;')
-                                                            i.fa.fa-plus-square
-                                                            i.fa.fa-minus-square(style='display:none;')
-                                                .col-sm-2
-                                                    b
-                                                        a(href=c.sis_id)
-                                                            =c.sis_id + ' - ' + c.section
-                                                .col-sm-2
-                                                    b
-                                                        p=c.type
-                                                .col-sm-3
-                                                    b
-                                                        p=c.instructor
-                                                .col-sm-2
-                                                    b
-                                                        p=c.enrollment_max
-                                                .col-sm-2
-                                                    b
-                                                        case c.status
-                                                            when 'Wait List'
-                                                                span(style="color:#e57200;") WL
-                                                            when 'Open'
-                                                                span(style="color:green") O 
-                                                            default
-                                                                span=c.status
-                                            // ... and a div which contains everything else
-                                            div.drop(style="display:none;")
-                                                .row
-                                                    .col-md-9
-                                                        p Future home of the calendar
-                                                        p=c.days
-                                                        p=c.meeting_start
-                                                        p=c.meeting_end
-                                                    .col-md-3
-                                                        if(c.desc.length > 0)
-                                                            p=c.desc
-                                                        else
-                                                            p A description for this course is not available :(
-                                                .row
-                                                    .col-md-12
-                                                        p
-                                                        | Grade data is fetched by combining the instructor with the subject and number. It does not factor in labs/discussions or their instructors, etc.
-                                                        p Future home of the grade distribution information!
-            script.
-                var course = {
-                    subject:"#{class_info[0].subject}",
-                    catalog_number:"#{class_info[0].catalog_number}",
-                };
-            .row
-                .col-md-6
-                    div(style='height:350px;')
-                        canvas.tall(id='overallChart')
-                .col-md-6
-                    select.form-control(id='profSelect' style="margin-bottom:10px;")
-                    div
-                        canvas(id='profChart' height="302px;")
+        script.
+            var maxPage = !{max_page || 1} - 1;
+        .row(style="margin-top:10px;")
+            p#subject(style="display:none;")=subject
+            p(style="display:inline;")=" "
+            p#catalog_number(style="display:none;")=catalog_number
+        .row
+            .col-md-12#results
+        .row
+            .col-md-6
+                div(style='height:350px;')
+                    canvas.tall(id='overallChart')
+            .col-md-6
+                select.form-control(id='profSelect' style="margin-bottom:10px;")
+                div
+                    canvas(id='profChart' height="302px;")
             
         
             

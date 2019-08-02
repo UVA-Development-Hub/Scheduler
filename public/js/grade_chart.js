@@ -1,4 +1,8 @@
 $(document).ready(function(){
+    var course = {
+        catalog_number : $('#catalog_number').text(),
+        subject : $('#subject').text(),
+    };
     buildChart(course);
     $('#profSelect').on('change', function() {
         updateChart(course);

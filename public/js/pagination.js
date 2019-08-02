@@ -1,14 +1,23 @@
 var currentPage = 0;
 var arr;
+var pgInfo = {};
 
 $(document).ready( function() {
     arr= $(".pageselector");
     d = getUrlParams(location.search);
+    var maxResults = 25;
+    if ($('#subject').text()){
+        pgInfo.subject = $('#subject').text();
+        if ($('#catalog_number').text()){
+            pgInfo.catalog_number = $('#catalog_number').text();
+            maxResults = Number.MAX_SAFE_INTEGER;
+        }
+    }
     currentPage = parseInt(d.page || 1) - 1;
     if(currentPage < 0) currentPage = 0;
     window.history.pushState({"html": $('html')[0].outerHTML, "pageTitle": $("title").text()},"", window.location.href.replace(/([&?]page=)(.*)(&{1}.*){0,1}/, '$1' + (currentPage + 1) + '$3'));
     currentPage--;
-    loadPage(currentPage + 1);
+    loadPage(currentPage + 1, pgInfo, maxResults);
 });
 
 function setButtons(pageNumber) {
@@ -48,8 +57,8 @@ function setButtons(pageNumber) {
 
 };
 
-function loadPage(pg) {
-    getSearchPage(parseInt(pg), 25, (data, max, term) => {
+function loadPage(pg, pgInfo, maxResults) {
+    getSearchPage(parseInt(pg), maxResults, (data, max, term) => {
         maxPage = max - 1;
         // Write new search results to the #results element
         var newHTML = ` `, i = 0;
@@ -59,7 +68,7 @@ function loadPage(pg) {
             var courseLink = "/course/"+term+"/"+course.subject+currentCatalog
             const subjectHeader = `
                 <div class="row">
-                    <div class="col-md-12" style="margin-top:50px;">
+                    <div class="col-md-12" style="margin-top:15px;">
                         <h3 class="bg-uva-orange course-header">
                             <a href=${courseLink}>
                                 <b>${course.subject} ${currentCatalog} - ${course.title}</b>
@@ -142,12 +151,12 @@ function loadPage(pg) {
         // Load the new html into the frame
         $("#results").html(newHTML);
         setButtons(pg);
-    });
+    }, pgInfo);
 }
 
 function urlAndLoad(pg) {
     window.history.pushState({"html": $('html')[0].outerHTML, "pageTitle": $("title").text()},"", window.location.href.replace(/([&?]page=)(\w+)(&{1}.*){0,1}/, '$1' + (pg + 1) + '$3'));
-    if(pg != currentPage) loadPage(pg);
+    if(pg != currentPage) loadPage(pg, pgInfo);
 }
 
 function nextPage() {
