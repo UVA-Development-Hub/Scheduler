@@ -73,7 +73,7 @@ function loadPage(pg, pgInfo, maxResults) {
             var courseLink = "/course/"+term+"/"+course.subject+currentCatalog
             const subjectHeader = `
                 <div class="row">
-                    <div class="col-md-12" style="margin-top:15px;">
+                    <div class="col-md-12">
                         <h3 class="bg-uva-orange course-header">
                             <a href=${courseLink}>
                                 <b>${course.subject} ${currentCatalog} - ${course.title}</b>
@@ -127,20 +127,29 @@ function loadPage(pg, pgInfo, maxResults) {
                     <tr class="wide">
                         <td class="wide">
                             <div class="row course-section-header">
-                                <div class="col-sm-2">
+                                <div class="col-sm-1" vertical>
                                     <a href=${sisLink}>
-                                        <b><p class="sis_id">${course.sis_id} - ${course.section}</p></b>
+                                        <b><p class="sis_id">${course.sis_id}</p></b>
                                     </a>
                                 </div>
-                                <div class="col">
+                                <div class="col-sm-2">
+                                    <b><p class="sis_id">Section ${course.section}</p></b>
+                                </div>
+                                <div class="col-sm-1">
                                     <b><p>${course.type}</p></b>
                                 </div>
-                                <div class="col-sm-5">${instructors}</div>
-                                <div class="col-sm-2">
-                                    <b><span style="${spanstyle}">${course.status}</span></b>
+                                <div class="col-sm-3">${instructors}</div>
+                                <div class="col-sm-1">${course.days}</div>
+                                <div class="col-sm-1">
+                                    <b><p style="${spanstyle}">${course.status}</p></b>
                                 </div>
-                                <div class="col">
+                                <div class="col-sm-2">
                                     <b><p>${enrollmentcontents}</p></b>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off" style="padding:5px;">
+                                        <i class="material-icons"> add_shopping_cart </i>
+                                    </button>
                                 </div>
                             </div>
                         </td>
