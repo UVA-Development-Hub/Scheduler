@@ -29,19 +29,13 @@ router.get('/:term/:id', (req, res) => {
         // Parallel accepts two arguments: a) an array of async functions, and a single function that
         // explains what to do when they're all finished. Access the info with data[i] where i is the
         // i_th async function.
-        mongo.searchTerm(req.params.term, {'subject': subject, 'catalog_number': course_number}, (err, data) => {
-            if(!data[0]){
-                res.send("Course not found.");
-            }
-            else{
-                //Grades exist
-                res.render('course/term_and_mid', {
-                    class_info: data,
-                    title : subject+course_number,
-                    user: req.session.user,
-                    term: req.params.term,
-                });
-            }
+
+        res.render('course/term_and_mid', {
+            title : subject+course_number,
+            subject,
+            catalog_number: course_number,
+            user: req.session.user,
+            term: req.params.term,
         });
     }
 
