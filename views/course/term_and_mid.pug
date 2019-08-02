@@ -11,10 +11,12 @@ block customhead
 
 block content
     .container
+        script.
+            var maxPage = !{max_page || 1} - 1;
         .row(style="margin-top:10px;")
-            p#subject(style="display:none;")=class_info[0]['subject'] 
+            p#subject(style="display:none;")=subject
             p(style="display:inline;")=" "
-            p#catalog_number(style="display:none;")=class_info[0]['catalog_number']
+            p#catalog_number(style="display:none;")=catalog_number
         .row
             .col-md-12#results
         .row

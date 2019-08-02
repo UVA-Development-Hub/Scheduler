@@ -10,6 +10,8 @@ block customhead
 block content
     .container
         .row(style="margin-top:30px;")
+            script.
+                var maxPage = !{max_page || 1} - 1;
             button.btn.bg-uva-blue(style="width:100px;" onClick="previousPage()") Previous
             button.btn.bg-uva-blue.pageselector
             button.btn.bg-uva-blue.pageselector
