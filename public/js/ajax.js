@@ -23,8 +23,8 @@ function getSearchPage(page, per, callback, dict) {
             if(!supported.includes(key) || d[key] == '') delete d[key];
         });
         if(!d["term_id"]) {
-            var courseRE = new RegExp(/^.*\/course\/(\d+)/g);
-            d["term_id"] = courseRE.exec(window.location)[1];
+            var courseRE = new RegExp(/^.*\/(course|subject)\/(\d+)/g);
+            d["term_id"] = courseRE.exec(window.location)[2];
         }
         d["per"] = per;
         d["page"] = page;

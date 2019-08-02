@@ -1,10 +1,10 @@
 var currentPage = 0;
 var arr;
+var pgInfo = {};
 
 $(document).ready( function() {
     arr= $(".pageselector");
     d = getUrlParams(location.search);
-    var pgInfo = {};
     var maxResults = 25;
     if ($('#subject').text()){
         pgInfo.subject = $('#subject').text();
@@ -161,7 +161,7 @@ function loadPage(pg, pgInfo, maxResults) {
 
 function urlAndLoad(pg) {
     window.history.pushState({"html": $('html')[0].outerHTML, "pageTitle": $("title").text()},"", window.location.href.replace(/([&?]page=)(\w+)(&{1}.*){0,1}/, '$1' + (pg + 1) + '$3'));
-    if(pg != currentPage) loadPage(pg);
+    if(pg != currentPage) loadPage(pg, pgInfo);
 }
 
 function nextPage() {
