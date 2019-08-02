@@ -17,12 +17,7 @@ function setButtons(pageNumber) {
     $(".pageselector").show();
     for(var i = maxPage; i < 10; i++) $(arr[i + 1]).hide();
     if (currentPage < 5) {
-        for(var i=0; i<5;i++ ) {
-            $(arr[i]).attr("onclick", "urlAndLoad("+ parseInt(i)+")");
-            $(arr[i]).html(parseInt(i + 1));
-        }
-
-        for(var i=5; i<10;i++ ) {
+        for(var i=0; i<10;i++ ) {
             $(arr[i]).attr("onclick", "urlAndLoad("+ parseInt(i)+")");
             $(arr[i]).html(parseInt(i + 1));
         }
