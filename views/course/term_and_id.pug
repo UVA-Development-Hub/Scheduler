@@ -17,7 +17,10 @@ block content
             
         .row
             .col-md-4
-                p.center=course['subject'] + " " + course['catalog_number'] + "-" + course['section']
+                p#subject(style="display:inline;")=course['subject'] 
+                p(style="display:inline;")=" "
+                p#catalog_number(style="display:inline;")=course['catalog_number']
+                p(style="display:inline;")="-"+course['section']
             .col-md-6
                 p.center 
             .col-md-2
@@ -86,8 +89,6 @@ block content
             .col-md-6
                 div(style='height:350px;')
                     canvas.tall(id='overallChart')
-                script.
-                    var course = !{JSON.stringify(course)};
             .col-md-6
                 select.form-control(id='profSelect' style="margin-bottom:10px;")
                 div
