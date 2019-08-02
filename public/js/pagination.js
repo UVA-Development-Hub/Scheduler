@@ -30,7 +30,7 @@ function setButtons(pageNumber) {
             $(arr[i]).attr("onclick", "urlAndLoad("+ parseInt(i)+")");
             $(arr[i]).html(parseInt(i + 1));
         }
-    } else if (currentPage > parseInt(maxPage-10)) {
+    } else if (currentPage > parseInt(maxPage-5)) {
         for(var i=0; i<5;i++ ) {
             $(arr[i]).attr("onclick", "urlAndLoad("+ parseInt(i+maxPage-9)+")");
             $(arr[i]).html(parseInt(i + 1+maxPage-9));
