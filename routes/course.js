@@ -34,12 +34,12 @@ router.get('/:term/:id', (req, res) => {
                 res.send("Course not found.");
             }
             else{
-            //Grades exist
-            res.render('course/term_and_mid', {
-                class_info: data,
-                title : subject+course_number,
-                user: req.session.user,
-                term: req.params.term,
+                //Grades exist
+                res.render('course/term_and_mid', {
+                    class_info: data,
+                    title : subject+course_number,
+                    user: req.session.user,
+                    term: req.params.term,
                 });
             }
         });
