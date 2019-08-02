@@ -90,6 +90,7 @@ router.get('/', (req, res) => {
         data.reverse()
             res.render('course/course', {
                 termsList: data,
+                user: req.session.user,
             });
     });
     // res.send("The future home of a page which explains the course view, searching for courses, etc.");

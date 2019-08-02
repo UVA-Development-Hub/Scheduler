@@ -95,6 +95,7 @@ router.get('/:term/:subject', (req, res) => {
             terms: termsList,
             title: req.params.subject.toUpperCase(),
             subject: req.params.subject.toUpperCase(),
+            user: req.session.user,
         });
     });
 });
@@ -176,6 +177,7 @@ router.get('/', (req, res) => {
             res.render('subject/subject_landing', {
                 course_subjects: subjects,
                 term: recentTerm,
+                user: req.session.user,
                 // uva_schools: values,
             });
         });
