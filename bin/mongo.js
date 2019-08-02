@@ -153,7 +153,17 @@ function searchTerm(term_id, specifiers, callback) {
         if(!page || page < 0) page = 0;
         delete specifiers.page;
     }
-
+    // Use $where to search for instructors, course title
+    if(specifiers.instructor && specifiers.instructor != '') {
+        var ins = specifiers.instructor.toLowerCase();
+        delete specifiers.instructor;
+        specifiers.$where = () => {
+            this.instructors.forEach( item => {
+                if( item.toLowerCase().includes('Dugan') ) return true;
+            });
+            return false;
+        };
+    }
     // Do the search, then paginate / count in parallel
     var coll = client.db(databases.coursedb).collection('term_' + term_id),
         cursor = coll.find(specifiers);
