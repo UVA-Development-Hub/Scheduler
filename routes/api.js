@@ -23,6 +23,12 @@ function res404(res, message) {
     res.send("404 - Not Found. The requested API call does not exist. " + message);
 }
 
+router.use('/current_term', (req, res) => {
+    mongo.getRecentTerm((err, data) => {
+        res.status(200).send({term: data});
+    });
+})
+
 router.get('/search', (req, res) => {
     try {
         var term = req.query.term_id; delete req.query.term_id;

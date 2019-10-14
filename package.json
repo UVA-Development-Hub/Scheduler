@@ -37,5 +37,8 @@
     "pug": "^2.0.4",
     "redis": "^2.8.0",
     "tablesorter": "^2.31.1"
+  },
+  "bin": {
+    "scheduler": "auth.js"
   }
 }

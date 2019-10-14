@@ -16,7 +16,8 @@ var config = require('./config.js'),
         keepAlive: 1,
         connectTimeoutMS: 30000,
         reconnectTries: Number.MAX_VALUE,
-        reconnectInterval: 1000
+        reconnectInterval: 1000,
+        useUnifiedTopology: true
     };
 const mongoUsername = config.mongo_user,
       mongoPass = config.mongo_pass,
@@ -48,7 +49,7 @@ function getUsers(callback){
     client.connect( (err) => {
         if(err) raiseMongoError(err, callback);
         else {
-            var db = client.db(databases.userdb);
+            let db = client.db(databases.userdb);
             db.collection(databases.usercoll).find().sort().toArray(callback).then(data => {
                 console.log("Retrieved list of all users");
                 callback(data);
@@ -63,8 +64,8 @@ function getUsers(callback){
 // Returns a single user from the database
 // @id the id number of the user you wish to retrieve
 function getOneUser(id, callback) {
-    var return_user;
-    var db = client.db(databases.userdb);
+    let return_user;
+    let db = client.db(databases.userdb);
     db.collection(databases.usercoll).find({'_id': id}).toArray().then(data => {
         console.log("Returning results for user " + id);
         callback(data);
@@ -78,10 +79,10 @@ function getOneUser(id, callback) {
 function createUser(profile, callback) {
     let imageUrl = '';
     if (profile.photos && profile.photos.length) imageUrl = profile.photos[0].value;
-    var db = client.db(databases.userdb);
+    let db = client.db(databases.userdb);
     // Fields which are blank are ones which cannot be filled from provider auth.
     // In other words, they are data fields which we have curated.
-    var user = {
+    let user = {
         _id: profile.id,
         firstName: profile.name.givenName,
         lastName: profile.name.familyName,
@@ -124,7 +125,7 @@ function getOrCreateUser(profile, callback) {
 // @ specifiers a dictionary of fields which you'd like to update
 function updateUser(id, specifiers, callback) {
     console.log("Processing update for user " + id);
-    var db = client.db(databases.userdb);
+    let db = client.db(databases.userdb);
     db.collection(databases.usercoll).findOneAndUpdate({ _id : id }, { $set: specifiers }, { returnOriginal: false }).then( status => {
         if(!status.ok) raiseMongoError(status, callback);
         else {
@@ -142,7 +143,7 @@ function updateUser(id, specifiers, callback) {
 
 // @specifiers a dictionary containing any search constraints
 function searchTerm(term_id, specifiers, callback, per = 25) {
-    var page = 0;
+    let page = 0;
     if("per" in specifiers) {
         per = parseInt(specifiers.per);
         if(!per || per < 1) per = 1;
@@ -155,7 +156,7 @@ function searchTerm(term_id, specifiers, callback, per = 25) {
     }
     // Use $where to search for instructors, course title
     if(specifiers.instructor && specifiers.instructor != '') {
-        var ins = specifiers.instructor.toLowerCase();
+        let ins = specifiers.instructor.toLowerCase();
         delete specifiers.instructor;
         specifiers.$where = () => {
             this.instructors.forEach( item => {
@@ -165,7 +166,7 @@ function searchTerm(term_id, specifiers, callback, per = 25) {
         };
     }
     // Do the search, then paginate / count in parallel
-    var coll = client.db(databases.coursedb).collection('term_' + term_id),
+    let coll = client.db(databases.coursedb).collection('term_' + term_id),
         cursor = coll.find(specifiers);
     async.parallel([
         async.reflect(callback => {
@@ -186,7 +187,7 @@ function searchTerm(term_id, specifiers, callback, per = 25) {
 }
 
 function getTerms(callback) {
-    var db = client.db(databases.coursedb);
+    let db = client.db(databases.coursedb);
     db.collection(databases.termcoll).find().sort({"_id":1}).toArray().then(data => {
         //console.log("Retrieved terms list from Mongo");
         callback(null, data);
@@ -197,9 +198,9 @@ function getTerms(callback) {
 
 // Give an array of program types you want to retrieve
 function getPrograms(typelist, callback) {
-    var db = client.db(databases.coursedb);
+    let db = client.db(databases.coursedb);
     db.collection(databases.programcoll).find({'type': { '$in': typelist}}).toArray().then(data => {
-        var formatted = {};
+        let formatted = {};
         data.forEach(doc => {
             if(formatted[doc.type] == undefined) formatted[doc.type] = [doc];
             else formatted[doc.type].push(doc);
@@ -212,7 +213,7 @@ function getPrograms(typelist, callback) {
 }
 
 function getProgramInfo(name, callback) {
-    var db = client.db(databases.coursedb);
+    let db = client.db(databases.coursedb);
     db.collection(databases.programcoll).find({'name': name}).toArray().then(data => {
         //console.log('Retrieved program info from Mongo.');
         callback(null, data[0]);
@@ -222,10 +223,12 @@ function getProgramInfo(name, callback) {
 }
 
 // Gets the most recent term
-function getRecentTerm(callback) {
-    var db = client.db(databases.coursedb);
-    db.collection(databases.termcoll).find().sort({_id: -1}).limit(1).toArray(data => {
+async function getRecentTerm(callback) {
+    let db = client.db(databases.coursedb);
+    let cursor = await db.collection(databases.termcoll).find().sort({_id: -1}).limit(1).toArray().then(data => {
         callback(null, data);
+    }).catch(err => {
+        raiseFailedPromise(err, 'getRecentTerm', callback);
     });
 }
 
@@ -234,7 +237,7 @@ function getRecentTerm(callback) {
 ////////////////////////////////////////////////
 
 function searchGrades(subject, number, callback) {
-    var db = client.db(databases.gradesdb);
+    let db = client.db(databases.gradesdb);
     db.collection(subject).find({'catalog_number':number}).toArray().then(results => {
         callback(null, results);
     }).catch(fail => {
@@ -247,7 +250,7 @@ function searchGrades(subject, number, callback) {
 ////////////////////////////////////////////////
 
 function getSubjects(callback) {
-    var db = client.db(databases.coursedb);
+    let db = client.db(databases.coursedb);
     db.collection("subjects").find().toArray().then(results => {
         callback(null, results);
     }).catch(fail => {
@@ -256,7 +259,7 @@ function getSubjects(callback) {
 }
 
 function searchSubjects(school, callback) {
-    var db = client.db(databases.coursedb);
+    let db = client.db(databases.coursedb);
     db.collection("subjects").find({'school':school}).toArray().then(results => {
         callback(null, results);
     }).catch(fail => {
