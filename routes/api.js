@@ -47,7 +47,7 @@ router.get('/search', (req, res) => {
         mongo.searchTerm(term, req.query, (err, data, pages) => {
             res.status(200);
             res.send({pages, data});
-        }, fuzzy=this.fuzzy);
+        }, null, fuzzy=fuzzy);
     } catch(e) { res400(res, '') };
 });
 

@@ -171,7 +171,7 @@ function updateUser(id, specifiers, callback) {
 async function searchTerm(term_id, specifiers, callback, per = 25, fuzzy = false) {
     //let's get fuzzy...
     console.log(fuzzy);
-    if(fuzzy == true){
+    if(fuzzy){
         var courses = client.db(databases.coursedb).collection('term_' + term_id).find().toArray().then(data => {
             var fuse = new Fuse(data, fuseOptions);
             var result = fuse.search(specifiers.query);
