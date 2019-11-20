@@ -21,9 +21,35 @@ var config = require('./config.js'),
     };
 const mongoUsername = config.mongo_user,
       mongoPass = config.mongo_pass,
-      MongoClient = require('mongodb').MongoClient;
+      MongoClient = require('mongodb').MongoClient,
       uri = "mongodb+srv://" + mongoUsername + ":" + mongoPass + "@userdata-r5w4z.mongodb.net/test?retryWrites=true&w=majority",
       client = new MongoClient(uri, mongo_options);
+
+var fuseKeys = [{
+    name: 'instructors',
+  },{
+    name: 'subject',
+  }, {
+    name: 'catalog_number',
+  }, {
+    name: 'title',
+  }, {
+    name: 'location',
+}];
+
+var fuseOptions = {
+  shouldSort: true,
+  tokenize: false,
+  findAllMatches: true,
+  threshold: 0.4,
+  location: 0,
+  distance: 1000,
+  maxPatternLength: 32,
+  minMatchCharLength: 1,
+  keys: fuseKeys,
+};
+
+import Fuse from 'fuse.js';
 
 ////////////////////////////////////////////////
 ///////////// User Data Functions //////////////
@@ -142,48 +168,59 @@ function updateUser(id, specifiers, callback) {
 ////////////////////////////////////////////////
 
 // @specifiers a dictionary containing any search constraints
-function searchTerm(term_id, specifiers, callback, per = 25) {
-    let page = 0;
-    if("per" in specifiers) {
-        per = parseInt(specifiers.per);
-        if(!per || per < 1) per = 1;
-        delete specifiers.per;
+async function searchTerm(term_id, specifiers, callback, per = 25, fuzzy = false) {
+    //let's get fuzzy...
+    console.log(fuzzy);
+    if(fuzzy == true){
+        var courses = client.db(databases.coursedb).collection('term_' + term_id).find().toArray().then(data => {
+            var fuse = new Fuse(data, fuseOptions);
+            var result = fuse.search(specifiers.query);
+            callback(null, result);
+        });
     }
-    if("page" in specifiers) {
-        page = parseInt(specifiers.page);
-        if(!page || page < 0) page = 0;
-        delete specifiers.page;
+    else{
+        let page = 0;
+        if("per" in specifiers) {
+            per = parseInt(specifiers.per);
+            if(!per || per < 1) per = 1;
+            delete specifiers.per;
+        }
+        if("page" in specifiers) {
+            page = parseInt(specifiers.page);
+            if(!page || page < 0) page = 0;
+            delete specifiers.page;
+        }
+        // Use $where to search for instructors, course title
+        if(specifiers.instructor && specifiers.instructor != '') {
+            let ins = specifiers.instructor.toLowerCase();
+            delete specifiers.instructor;
+            specifiers.$where = () => {
+                this.instructors.forEach( item => {
+                    if( item.toLowerCase().includes('Dugan') ) return true;
+                });
+                return false;
+            };
+        }
+        // Do the search, then paginate / count in parallel
+        let coll = client.db(databases.coursedb).collection('term_' + term_id),
+            cursor = coll.find(specifiers);
+        async.parallel([
+            async.reflect(callback => {
+                cursor.count().then( count => {
+                    callback(null, Math.ceil(count / per));
+                });
+            }),
+            async.reflect(callback => {
+                cursor.skip(page * per).limit(per).toArray().then(results => {
+                    callback(null, results);
+                }).catch(fail => {
+                    raiseFailedPromise(fail, 'searchTerm', callback);
+                });
+            })
+        ], (err, data) => {
+            callback(null, data[1].value, data[0].value);
+        });
     }
-    // Use $where to search for instructors, course title
-    if(specifiers.instructor && specifiers.instructor != '') {
-        let ins = specifiers.instructor.toLowerCase();
-        delete specifiers.instructor;
-        specifiers.$where = () => {
-            this.instructors.forEach( item => {
-                if( item.toLowerCase().includes('Dugan') ) return true;
-            });
-            return false;
-        };
-    }
-    // Do the search, then paginate / count in parallel
-    let coll = client.db(databases.coursedb).collection('term_' + term_id),
-        cursor = coll.find(specifiers);
-    async.parallel([
-        async.reflect(callback => {
-            cursor.count().then( count => {
-                callback(null, Math.ceil(count / per));
-            });
-        }),
-        async.reflect(callback => {
-            cursor.skip(page * per).limit(per).toArray().then(results => {
-                callback(null, results);
-            }).catch(fail => {
-                raiseFailedPromise(fail, 'searchTerm', callback);
-            });
-        })
-    ], (err, data) => {
-        callback(null, data[1].value, data[0].value);
-    });
 }
 
 function getTerms(callback) {

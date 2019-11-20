@@ -1,6 +1,6 @@
 var router = require('express').Router(),
     session = require('express-session'),
-    assert = require('assert');
+    assert = require('assert'),
     mongo = require('../bin/mongo.js');
 
 function res200(res, message) {
@@ -38,10 +38,16 @@ router.get('/all_terms', (req, res) => {
 router.get('/search', (req, res) => {
     try {
         var term = req.query.term_id; delete req.query.term_id;
+
+        var fuzzy = false;
+        if(req.query.fuzzy == 1){
+            fuzzy = true;
+            console.log(req.query.fuzzy)
+        }
         mongo.searchTerm(term, req.query, (err, data, pages) => {
             res.status(200);
-            res.send({'pages': pages, 'data': data});
-        });
+            res.send({pages, data});
+        }, fuzzy=this.fuzzy);
     } catch(e) { res400(res, '') };
 });
 
@@ -128,7 +134,7 @@ router.get('/get-meetings', (req, res) => {
         assert(/^\d{5}$/.test(req.query.sis_id));
 
         // Get the course data
-        mongo.searchTerm(req.query.term_id, { sis_id: req.query.sis_id }, (err, data) => {
+        mongo.searchTerm(req.query.term_id, { sis_id: req.query.sis_id }, false, (err, data) => {
             if(err || !data[0]) res404(res, ' This should be a 500.');
             else {
                 res.status(200);
