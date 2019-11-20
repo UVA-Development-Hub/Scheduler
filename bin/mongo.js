@@ -26,6 +26,8 @@ const mongoUsername = config.mongo_user,
       client = new MongoClient(uri, mongo_options);
 
 var fuseKeys = [{
+    name: 'common_name',
+  },{
     name: 'instructors',
   },{
     name: 'subject',
