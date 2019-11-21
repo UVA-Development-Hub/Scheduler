@@ -51,6 +51,13 @@ router.get('/search', (req, res) => {
     } catch(e) { res400(res, '') };
 });
 
+router.get('/subjects', (req, res) => {
+    mongo.getSubjects((err, data) => {
+        if(err) res.status(500).send("Request could not be processed")
+        else res.send(data);
+    })
+});
+
 router.post('/cart', (req, res) => {
     try {
         if(req.session.user) {
