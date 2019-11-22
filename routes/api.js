@@ -37,16 +37,30 @@ router.get('/all_terms', (req, res) => {
 
 router.get('/search', (req, res) => {
     try {
-        var term = req.query.term_id; delete req.query.term_id;
+        let term = req.query.term_id; delete req.query.term_id;
+        let scratch = req.query.scratch_duplicates !== undefined; delete req.query.scratch_duplicates;
 
-        var fuzzy = false;
+        req.query.per = req.query.per || 50; // Default to 50 items per page.
+
+        let fuzzy = false;
         if(req.query.fuzzy == 1){
             fuzzy = true;
             console.log(req.query.fuzzy)
         }
+
         mongo.searchTerm(term, req.query, (err, data, pages) => {
             res.status(200);
-            res.send({pages, data});
+            if(scratch) {
+                let Clean = data.reduce((noDupes, item, index, src) => {
+                    if(index === 0 || src[index - 1].common_name !== item.common_name)
+                        noDupes.push(item);
+                    return noDupes;
+                }, []);
+                res.send({
+                    pages,
+                    data: Clean
+                });
+            } else res.send({pages, data});
         }, null, fuzzy=fuzzy);
     } catch(e) { res400(res, '') };
 });
