@@ -30,7 +30,7 @@
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "express-session": "^1.16.2",
-    "fullcalendar": "^4.0.0-alpha.4",
+    "fullcalendar": "^6.0.2",
     "fuse.js": "^3.4.5",
     "mongodb": "^3.2.7",
     "node-fetch": "^2.6.1",
